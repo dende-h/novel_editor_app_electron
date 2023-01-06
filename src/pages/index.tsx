@@ -1,9 +1,12 @@
+import { Box } from "@chakra-ui/react";
+import TemplateArea from "../components/templates/TemplateArea";
 
-const Index = ({ user, note }) => {
-	
+const Index = () => {
 	return (
 		<>
-		 	<p>へろーわーるど</p>
+			<TemplateArea>
+				<Box>Hello</Box>
+			</TemplateArea>
 		</>
 	);
 };
