@@ -12,16 +12,13 @@ const TemplateArea: VFC<Props> = memo((props: Props) => {
 	return (
 		<>
 			<Grid
-				gridTemplateColumns={"1fr 3fr 1fr"}
+				gridTemplateColumns={"4fr 1fr"}
 				gridTemplateRows={"auto"}
-				gridTemplateAreas={`'header header header' 'leftcolumns main rightcolumns' 'footer footer footer'`}
+				gridTemplateAreas={`'header header' 'main rightcolumns' 'footer footer'`}
 				gap={1}
 			>
 				<Box gridArea="header" bg="gray.500">
 					<Header />
-				</Box>
-				<Box gridArea="leftcolumns" bg="green.500">
-					leftcard
 				</Box>
 				<Box gridArea="main" bg="blue.500">
 					{children}
