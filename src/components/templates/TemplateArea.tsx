@@ -1,5 +1,6 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { memo, ReactNode, VFC } from "react";
+import { LeftColumnArea } from "../molecule/LeftColumnArea";
 import { Footer } from "../organism/Footer";
 import { Header } from "../organism/Header";
 
@@ -12,18 +13,21 @@ const TemplateArea: VFC<Props> = memo((props: Props) => {
 	return (
 		<>
 			<Grid
-				gridTemplateColumns={"4fr 1fr"}
+				gridTemplateColumns={"1fr 4fr 1fr"}
 				gridTemplateRows={"auto"}
-				gridTemplateAreas={`'header header' 'main rightcolumns' 'footer footer'`}
+				gridTemplateAreas={`'header header header' 'left main right' 'footer footer footer'`}
 				gap={1}
 			>
 				<Box gridArea="header" bg="gray.500">
 					<Header />
 				</Box>
+				<Box gridArea="left" bg="red.200">
+					<LeftColumnArea />
+				</Box>
 				<Box gridArea="main" bg="blue.500">
 					{children}
 				</Box>
-				<Box gridArea="rightcolumns" bg="green.500">
+				<Box gridArea="right" bg="green.500">
 					rightcard
 				</Box>
 				<Box gridArea="footer" bg="gray.500">

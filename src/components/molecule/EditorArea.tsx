@@ -1,13 +1,14 @@
-import { Box, Textarea } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { memo } from "react";
 import { useTextArea } from "../../hooks/useTextArea";
+import { PrimaryTextArea } from "../atoms/PrimaryTextArea";
 
 export const EditorArea = memo(() => {
 	const { value, onChangeTextArea, charCount } = useTextArea();
 
 	return (
 		<Box p={10}>
-			<Textarea
+			<PrimaryTextArea
 				placeholder="Here is a sample placeholder"
 				width={"800px"}
 				height={"800px"}
