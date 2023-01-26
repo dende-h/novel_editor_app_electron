@@ -8,3 +8,5 @@ export const Footer = memo(() => {
 		</>
 	);
 });
+
+Footer.displayName = "Footer"

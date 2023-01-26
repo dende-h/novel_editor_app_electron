@@ -1,3 +1,5 @@
+/* eslint no-irregular-whitespace: 0 */
+
 import { useState } from "react";
 
 export const useTextArea = () => {

@@ -8,3 +8,5 @@ export const Header = memo(() => {
 		</>
 	);
 });
+
+Header.displayName = "Header"

@@ -11,3 +11,5 @@ export const PrimaryIconButton: VFC<Props> = memo((props) => {
 		</>
 	);
 });
+
+PrimaryIconButton.displayName = "PrimaryIconButton"

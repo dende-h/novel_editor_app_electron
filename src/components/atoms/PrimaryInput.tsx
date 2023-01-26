@@ -11,3 +11,5 @@ export const PrimaryInput: VFC<Props> = memo((props) => {
 		</>
 	);
 });
+
+PrimaryInput.displayName = "PrimaryInput";

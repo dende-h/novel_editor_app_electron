@@ -23,3 +23,5 @@ export const EditorArea = memo(() => {
 		</Box>
 	);
 });
+
+EditorArea.displayName = "EditorArea"

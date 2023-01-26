@@ -38,3 +38,5 @@ const TemplateArea: VFC<Props> = memo((props: Props) => {
 	);
 });
 export default TemplateArea;
+
+TemplateArea.displayName= "TemplateArea"

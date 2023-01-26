@@ -11,3 +11,5 @@ export const PrimaryTextArea: VFC<Props> = memo((props) => {
 		</>
 	);
 });
+
+PrimaryTextArea.displayName = "PrimaryTextArea"
