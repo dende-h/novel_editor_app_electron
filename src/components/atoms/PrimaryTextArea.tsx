@@ -4,7 +4,7 @@ import { memo, VFC } from "react";
 type Props = TextareaProps;
 
 export const PrimaryTextArea: VFC<Props> = memo((props) => {
-	const { ...TextareaProps } = props;
+	const { ...TextareaProps }: Props = props;
 	return (
 		<>
 			<Textarea {...TextareaProps} />
@@ -12,4 +12,4 @@ export const PrimaryTextArea: VFC<Props> = memo((props) => {
 	);
 });
 
-PrimaryTextArea.displayName = "PrimaryTextArea"
+PrimaryTextArea.displayName = "PrimaryTextArea";

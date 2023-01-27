@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrimaryIconButton renders without crashing 1`] = `
+<button
+  aria-label="Primary Button"
+  class="chakra-button css-198bfjk"
+  type="button"
+/>
+`;
