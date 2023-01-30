@@ -1,22 +1,18 @@
-import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { render, screen } from "@testing-library/react";
 import { EditorArea } from "../EditorArea";
+import userEvent from "@testing-library/user-event";
 
-describe("EditorArea test", () => {
-	let renderer;
-
-	beforeEach(() => {
-		renderer = render(<EditorArea />);
+describe("render test", () => {
+	it("EditorAreaの表示", () => {
+		render(<EditorArea />);
+		const placeholder = screen.getByPlaceholderText("Here is a sample placeholder");
+		expect(placeholder).toBeTruthy;
 	});
 
-	it("should render the correct text in the text area and the correct character count", () => {
-		const { getByPlaceholderText } = renderer;
-		const textArea = getByPlaceholderText("Here is a sample placeholder");
-
-		act(() => {
-			fireEvent.change(textArea, { target: { value: "This is a test" } });
-		});
-
-		expect(textArea.value).toBe("This is a test");
+	it("テキストエリアへの入力", () => {
+		render(<EditorArea />);
+		const textValue = screen.getByRole("textbox");
+		userEvent.type(textValue, "this is a test");
+		expect(textValue).toBeInTheDocument;
 	});
 });

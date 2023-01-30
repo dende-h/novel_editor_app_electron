@@ -1,8 +1,15 @@
 /* eslint no-irregular-whitespace: 0 */
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export const useTextArea = () => {
+type TextAreaHooks = () => {
+	onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement>;
+	value: string;
+	setValue: Dispatch<SetStateAction<string>>;
+	charCount: number;
+};
+
+export const useTextArea: TextAreaHooks = () => {
 	const [value, setValue] = useState("");
 	const [charCount, setCharCount] = useState(0);
 

@@ -4,7 +4,7 @@ import { useTextArea } from "../../hooks/useTextArea";
 import { PrimaryTextArea } from "../atoms/PrimaryTextArea";
 
 export const EditorArea = memo(() => {
-	const { value, onChangeTextArea, charCount } = useTextArea();
+	const { value, onChangeTextArea, charCount } = useTextArea(); //カスタムフック
 
 	return (
 		<Box p={10}>
@@ -24,4 +24,4 @@ export const EditorArea = memo(() => {
 	);
 });
 
-EditorArea.displayName = "EditorArea"
+EditorArea.displayName = "EditorArea";
