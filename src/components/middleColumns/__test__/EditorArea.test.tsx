@@ -46,4 +46,16 @@ describe("render test", () => {
 		});
 		expect(result.current.value).toBe("third changed"); //チェンジイベント後の値の確認
 	});
+
+	it("値の永続化しているか", () => {
+		let { result } = renderHook(useTextArea, { wrapper: RecoilRoot });
+		render(<Textarea onChange={result.current.onChangeTextArea} />); //内部コンポーネントのレンダリング
+		const textValue = screen.getByRole("textbox");
+		act(() => {
+			fireEvent.change(textValue, { target: { value: "this is a test" } }); //チェンジイベントの発火
+		});
+		expect(result.current.value).toBe("this is a test");
+		const rerender = renderHook(useTextArea, { wrapper: RecoilRoot }).result; //再度レンダリング
+		expect(rerender.current.value).toBe("this is a test");
+	});
 });
