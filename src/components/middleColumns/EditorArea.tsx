@@ -1,8 +1,7 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Textarea } from "@chakra-ui/react";
 import { memo, useEffect } from "react";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useTextArea } from "../../hooks/useTextArea";
-import { PrimaryTextArea } from "../atoms/PrimaryTextArea";
 
 export const EditorArea = memo(() => {
 	const { value, onChangeTextArea } = useTextArea(); //テキストエリア入力のカスタムフック
@@ -14,7 +13,7 @@ export const EditorArea = memo(() => {
 
 	return (
 		<Box p={10}>
-			<PrimaryTextArea
+			<Textarea
 				placeholder="Here is a sample placeholder"
 				width={"800px"}
 				height={"800px"}

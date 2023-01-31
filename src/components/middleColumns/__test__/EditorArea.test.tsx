@@ -4,11 +4,12 @@ import userEvent from "@testing-library/user-event";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useTextArea } from "../../../hooks/useTextArea";
 import { useCalcCharCount } from "../../../hooks/useCalcCharCount";
-import { PrimaryTextArea } from "../../atoms/PrimaryTextArea";
+import { Textarea } from "@chakra-ui/react";
+import { RecoilRoot } from "recoil";
 
 describe("render test", () => {
 	it("テキストエリアへの入力と文字数の表示が変更されるか", () => {
-		render(<EditorArea />); //テキストエリアのコンポーネントをレンダリング
+		render(<EditorArea />, { wrapper: RecoilRoot }); //テキストエリアのコンポーネントをレンダリング
 		const textValue = screen.getByRole("textbox"); //textbox要素取得
 		expect(textValue.innerHTML).toBe(""); //初期値確認
 		const charCountView = screen.getByText("現在の文字数", { exact: false }); //文字数表示のdiv要素取得
@@ -19,7 +20,7 @@ describe("render test", () => {
 	});
 
 	it("テキストの文字数を計算", () => {
-		render(<EditorArea />);
+		render(<EditorArea />, { wrapper: RecoilRoot });
 		let { result } = renderHook(useCalcCharCount);
 		expect(result.current.charCount).toBe(0);
 		act(() => {
@@ -29,13 +30,20 @@ describe("render test", () => {
 	});
 
 	it("useTextAreaが動作しているか", () => {
-		const { result } = renderHook(useTextArea);
-		render(<PrimaryTextArea onChange={result.current.onChangeTextArea} />); //内部コンポーネントのレンダリング
-		expect(result.current.value).toBe(""); //初期値の確認
+		const { result } = renderHook(useTextArea, { wrapper: RecoilRoot });
+		render(<Textarea onChange={result.current.onChangeTextArea} />); //内部コンポーネントのレンダリング
 		const textValue = screen.getByRole("textbox");
 		act(() => {
-			fireEvent.change(textValue, { target: { value: "test text" } }); //チェンジイベントの発火
+			fireEvent.change(textValue, { target: { value: "first changed" } }); //チェンジイベントの発火
 		});
-		expect(result.current.value).toBe("test text"); //チェンジイベント後の値の確認
+		expect(result.current.value).toBe("first changed"); //チェンジイベント後の値の確認
+		act(() => {
+			fireEvent.change(textValue, { target: { value: "second changed" } }); //チェンジイベントの発火
+		});
+		expect(result.current.value).toBe("second changed"); //チェンジイベント後の値の確認
+		act(() => {
+			fireEvent.change(textValue, { target: { value: "third changed" } }); //チェンジイベントの発火
+		});
+		expect(result.current.value).toBe("third changed"); //チェンジイベント後の値の確認
 	});
 });

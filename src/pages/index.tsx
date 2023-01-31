@@ -1,13 +1,13 @@
 import { NextPage } from "next";
-import { EditorArea } from "../components/molecule/EditorArea";
-import TemplateArea from "../components/templates/TemplateArea";
+import { EditorArea } from "../components/middleColumns/EditorArea";
+import ThreeColumnTemplate from "../components/templates/ThreeColumnTemplate";
 
 const Index: NextPage = () => {
 	return (
 		<>
-			<TemplateArea>
+			<ThreeColumnTemplate>
 				<EditorArea />
-			</TemplateArea>
+			</ThreeColumnTemplate>
 		</>
 	);
 };

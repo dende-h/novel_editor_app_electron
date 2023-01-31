@@ -1,10 +1,7 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, IconButton, Input } from "@chakra-ui/react";
 import { memo } from "react";
 import { useInput } from "../../hooks/useInput";
-import { PrimaryIconButton } from "../atoms/PrimaryIconButton";
-import { PrimaryInput } from "../atoms/PrimaryInput";
 import { ImQuill } from "react-icons/im";
-
 
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm } = useInput();
@@ -12,7 +9,7 @@ export const LeftColumnArea = memo(() => {
 	return (
 		<Box p={6}>
 			<HStack>
-				<PrimaryInput
+				<Input
 					placeholder="Please input your novel title"
 					width={"full"}
 					backgroundColor={"gray.100"}
@@ -22,7 +19,7 @@ export const LeftColumnArea = memo(() => {
 					value={value}
 					_focus={{ _focus: "none" }}
 				/>
-				<PrimaryIconButton
+				<IconButton
 					aria-label="titleInput"
 					icon={<ImQuill />}
 					color={"brown"}
@@ -36,4 +33,4 @@ export const LeftColumnArea = memo(() => {
 	);
 });
 
-LeftColumnArea.displayName="LeftColumnArea"
+LeftColumnArea.displayName = "LeftColumnArea";

@@ -1,14 +1,14 @@
 import { Box, Grid } from "@chakra-ui/react";
 import { memo, ReactNode, VFC } from "react";
-import { LeftColumnArea } from "../molecule/LeftColumnArea";
-import { Footer } from "../organism/Footer";
-import { Header } from "../organism/Header";
+import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
+import { Footer } from "../footers/Footer";
+import { Header } from "../headers/Header";
 
 type Props = {
 	children: ReactNode;
 };
 
-const TemplateArea: VFC<Props> = memo((props: Props) => {
+const ThreeColumnTemplate: VFC<Props> = memo((props: Props) => {
 	const { children } = props;
 	return (
 		<>
@@ -37,6 +37,6 @@ const TemplateArea: VFC<Props> = memo((props: Props) => {
 		</>
 	);
 });
-export default TemplateArea;
+export default ThreeColumnTemplate;
 
-TemplateArea.displayName= "TemplateArea"
+ThreeColumnTemplate.displayName = "TemplateArea";
