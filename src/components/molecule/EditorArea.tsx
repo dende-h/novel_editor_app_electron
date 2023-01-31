@@ -1,10 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { memo, useEffect } from "react";
+import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useTextArea } from "../../hooks/useTextArea";
 import { PrimaryTextArea } from "../atoms/PrimaryTextArea";
 
 export const EditorArea = memo(() => {
-	const { value, onChangeTextArea, charCount, calcCharCount } = useTextArea(); //カスタムフック
+	const { value, onChangeTextArea } = useTextArea(); //テキストエリア入力のカスタムフック
+	const { charCount, calcCharCount } = useCalcCharCount(); //文字数計算のロジック部
 
 	useEffect(() => {
 		calcCharCount(value);
