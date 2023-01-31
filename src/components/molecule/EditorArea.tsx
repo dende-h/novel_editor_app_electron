@@ -1,10 +1,14 @@
 import { Box } from "@chakra-ui/react";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useTextArea } from "../../hooks/useTextArea";
 import { PrimaryTextArea } from "../atoms/PrimaryTextArea";
 
 export const EditorArea = memo(() => {
-	const { value, onChangeTextArea, charCount } = useTextArea(); //カスタムフック
+	const { value, onChangeTextArea, charCount, calcCharCount } = useTextArea(); //カスタムフック
+
+	useEffect(() => {
+		calcCharCount(value);
+	}, [value]);
 
 	return (
 		<Box p={10}>
