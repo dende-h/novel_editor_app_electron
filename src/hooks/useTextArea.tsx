@@ -1,6 +1,5 @@
 /* eslint no-irregular-whitespace: 0 */
 
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { textDtaftValue } from "../globalState/atoms/textDraft";
 
