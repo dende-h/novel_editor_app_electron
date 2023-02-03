@@ -1,5 +1,5 @@
 import { Box, Center, Text, Textarea } from "@chakra-ui/react";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { numberOfCharacters } from "../../constant/constant";
 import { drafts } from "../../globalState/atoms/drafts";
@@ -20,7 +20,7 @@ export const EditorArea = memo(() => {
 		<Box p={10}>
 			<Center marginY={5}>
 				{/* <Text as="b" fontSize={"x-large"}>
-					{title}
+					{draftTitle[0].title}
 				</Text> */}
 			</Center>
 			<Textarea

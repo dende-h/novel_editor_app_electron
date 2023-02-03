@@ -9,4 +9,4 @@ export const Header = memo(() => {
 	);
 });
 
-Header.displayName = "Header"
+Header.displayName = "Header";

@@ -1,7 +1,5 @@
-/* eslint no-irregular-whitespace: 0 */
-
 import { useRecoilState } from "recoil";
-import { textDtaftValue } from "../globalState/atoms/textDraft";
+import { textDraftValue } from "../globalState/atoms/textDraft";
 
 export type TextAreaHooks = () => {
 	onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement>;
@@ -9,7 +7,7 @@ export type TextAreaHooks = () => {
 };
 
 export const useTextArea: TextAreaHooks = () => {
-	const [value, setValue] = useRecoilState(textDtaftValue);
+	const [value, setValue] = useRecoilState(textDraftValue);
 
 	const onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
 		setValue(e.target.value);

@@ -1,19 +1,33 @@
-import { Box, Center, Grid, Heading, HStack, IconButton, Input, VStack } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { ImQuill } from "react-icons/im";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { useToggle } from "../../hooks/useToggle";
+import {
+	VStack,
+	Box,
+	Center,
+	Heading,
+	HStack,
+	IconButton,
+	Input,
+	AccordionPanel,
+	AccordionIcon,
+	AccordionButton,
+	Accordion,
+	AccordionItem
+} from "@chakra-ui/react";
+import { draftArrayIndex } from "../../globalState/selector/draftArrayIndex";
+import { DraftControllButton } from "./draftControllButton";
 
 export type draftObjectArray = { title: string; body: string }[];
 
 export const LeftColumnArea = memo(() => {
-	const { value, onChangeInputForm } = useInput();
+	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
-	const indexArray = draft.map((_, index) => index);
-	const { toggleOn, booleanArray, toggleOff } = useToggle(indexArray);
+	const { toggleOn, booleanArray, toggleOff } = useToggle();
 	const [isClient, setIsClient] = useState(false);
 
 	useEffect(() => {
@@ -31,11 +45,14 @@ export const LeftColumnArea = memo(() => {
 			}
 		];
 		setDraft(newDraft);
+		setValue("");
+		console.log(draft.length);
+		console.log(booleanArray.length);
 	};
 
 	return (
 		<>
-			<Grid p={6}>
+			<VStack p={6}>
 				<Center>
 					<HStack>
 						<Input
@@ -66,34 +83,36 @@ export const LeftColumnArea = memo(() => {
 							return (
 								<Center key={index}>
 									<Box
-										_hover={{ shadow: "lg", color: "gray.700", h: "100px" }}
-										h={"50px"}
+										shadow={booleanArray[index] ? "2xl" : "none"}
+										h={booleanArray[index] ? 170 : 110}
 										w={250}
 										backgroundColor={"red.200"}
 										marginTop={3}
 										borderRadius={5}
-										color={"gray.400"}
+										color={booleanArray[index] ? "gray.700" : "gray.400"}
 										border={"none"}
 										transitionProperty="all"
 										transitionDuration="0.5s"
 										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
-										onMouseOver={() => toggleOn(index)}
-										onMouseLeave={() => toggleOff()}
+										as={"button"}
+										onClick={() => toggleOn(index)}
+										marginBottom={booleanArray[index] ? 8 : 1}
 									>
 										<VStack padding={2}>
 											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
 												{item.title}
 											</Heading>
-											<IntroductionNovelBody bodyText={item.body} isOpen={booleanArray[index]} />
+											<IntroductionNovelBody bodyText={item.body} />
+											<DraftControllButton isOpen={booleanArray[index]} />
 										</VStack>
 									</Box>
 								</Center>
 							);
 					  })
 					: undefined}
-			</Grid>
+			</VStack>
 		</>
 	);
 });

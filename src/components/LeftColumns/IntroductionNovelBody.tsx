@@ -1,14 +1,14 @@
-import { Box, SlideFade, Text } from "@chakra-ui/react";
-import { memo, useState } from "react";
+import { Box, Text } from "@chakra-ui/react";
+import { memo } from "react";
 
-type Props = { bodyText: string; isOpen: boolean };
+type Props = { bodyText: string };
 
 export const IntroductionNovelBody = memo((props: Props) => {
-	const { bodyText, isOpen } = props;
-	const displayCharacters: number = 45;
+	const { bodyText } = props;
+	const displayCharacters = 45;
 
 	return (
-		<SlideFade in={isOpen}>
+		<Box>
 			<Text
 				h="50px"
 				color="gray.500"
@@ -26,6 +26,8 @@ export const IntroductionNovelBody = memo((props: Props) => {
 							})
 							.join("")}...`}
 			</Text>
-		</SlideFade>
+		</Box>
 	);
 });
+
+IntroductionNovelBody.displayName = "IntroductionNovelBody";

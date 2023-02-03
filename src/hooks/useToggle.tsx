@@ -1,35 +1,30 @@
 import { useCallback, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { draftArrayIndex } from "../globalState/selector/draftArrayIndex";
 
-type Props = number[];
-
-export const useToggle = (props?: Props) => {
+export const useToggle = () => {
 	const [isOn, setIsOn] = useState(false);
 	const [booleanArray, setBooleanArray] = useState<boolean[]>([]);
+	const indexArray = useRecoilValue<number[]>(draftArrayIndex);
 
-	const propsArray: number[] | undefined = props;
-
-	const toggleOn = useCallback((callIndex?: number) => {
-		if (props) {
+	const toggleOn = useCallback(
+		(callIndex?: number) => {
 			setBooleanArray(
-				propsArray.map((item) => {
+				indexArray.map((item) => {
 					return item === callIndex ? true : false;
 				})
 			);
-		} else {
-			setIsOn(true);
-		}
-	}, []);
+		},
+		[indexArray]
+	);
+
 	const toggleOff = useCallback(() => {
-		if (props) {
-			setBooleanArray(
-				propsArray.map(() => {
-					return false;
-				})
-			);
-		} else {
-			setIsOn(false);
-		}
-	}, []);
+		setBooleanArray(
+			indexArray.map(() => {
+				return false;
+			})
+		);
+	}, [indexArray]);
 
 	return { toggleOn, isOn, toggleOff, booleanArray };
 };
