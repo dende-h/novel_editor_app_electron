@@ -46,8 +46,6 @@ export const LeftColumnArea = memo(() => {
 		];
 		setDraft(newDraft);
 		setValue("");
-		console.log(draft.length);
-		console.log(booleanArray.length);
 	};
 
 	return (
@@ -83,8 +81,9 @@ export const LeftColumnArea = memo(() => {
 							return (
 								<Center key={index}>
 									<Box
+										paddingBottom={1}
 										shadow={booleanArray[index] ? "2xl" : "none"}
-										h={booleanArray[index] ? 170 : 110}
+										h={booleanArray[index] ? 150 : 100}
 										w={250}
 										backgroundColor={"red.200"}
 										marginTop={3}
@@ -93,12 +92,13 @@ export const LeftColumnArea = memo(() => {
 										border={"none"}
 										transitionProperty="all"
 										transitionDuration="0.5s"
-										transitionTimingFunction={"ease-out"}
+										transitionTimingFunction={"ease-in-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
-										as={"button"}
-										onClick={() => toggleOn(index)}
 										marginBottom={booleanArray[index] ? 8 : 1}
+										as={"button"}
+										onClick={booleanArray[index] ? () => toggleOff() : () => toggleOn(index)}
+										sx={booleanArray[index] ? undefined : { _hover: { shadow: "lg", color: "gray.500" } }}
 									>
 										<VStack padding={2}>
 											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
