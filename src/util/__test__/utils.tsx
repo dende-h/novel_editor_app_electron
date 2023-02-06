@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any :0*/
 import { ChakraProvider } from "@chakra-ui/react";
 import { render } from "@testing-library/react";
 import React from "react";

@@ -6,8 +6,8 @@ const { persistAtom } = recoilPersist({
 	storage: typeof window === "undefined" ? undefined : localStorage
 });
 
-export const textDtaftValue = atom({
-	key: "textDtaftValue",
+export const textDraftValue = atom({
+	key: "textDraftValue",
 	default: "",
 	effects_UNSTABLE: [persistAtom]
 });

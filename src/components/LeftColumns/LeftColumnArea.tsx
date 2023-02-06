@@ -1,34 +1,40 @@
+import { memo, useEffect, useState } from "react";
+import { useInput } from "../../hooks/useInput";
+import { ImQuill } from "react-icons/im";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { drafts } from "../../globalState/atoms/drafts";
+import { IntroductionNovelBody } from "./IntroductionNovelBody";
+import { useToggle } from "../../hooks/useToggle";
 import {
-	background,
+	VStack,
 	Box,
-	Divider,
+	Center,
 	Heading,
 	HStack,
 	IconButton,
 	Input,
-	SlideFade,
-	Text,
-	VStack
+	AccordionPanel,
+	AccordionIcon,
+	AccordionButton,
+	Accordion,
+	AccordionItem
 } from "@chakra-ui/react";
-import { memo, useEffect, useState } from "react";
-import { useInput } from "../../hooks/useInput";
-import { ImQuill } from "react-icons/im";
-import { useRecoilState } from "recoil";
-import { drafts } from "../../globalState/atoms/drafts";
-import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import { useToggle } from "../../hooks/useToggle";
-import Index from "../../pages";
+import { draftArrayIndex } from "../../globalState/selector/draftArrayIndex";
+import { DraftControllButton } from "./DraftControllButton";
 
 export type draftObjectArray = { title: string; body: string }[];
 
 export const LeftColumnArea = memo(() => {
-	const { value, onChangeInputForm } = useInput();
-	useEffect(() => {
-		setDraft([...draft]);
-	}, []);
+	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
-	// const indexArray = draft.map((_, index) => index);
-	// const { toggleOn, booleanArray, toggleOff } = useToggle(indexArray);
+	const { toggleOn, booleanArray, toggleOff } = useToggle();
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		if (typeof window !== undefined) {
+			setIsClient(true);
+		}
+	}, []);
 
 	const onClickButton = (value = "無題") => {
 		const newDraft = [
@@ -39,64 +45,74 @@ export const LeftColumnArea = memo(() => {
 			}
 		];
 		setDraft(newDraft);
+		setValue("");
+		console.log(draft.length);
+		console.log(booleanArray.length);
 	};
 
 	return (
 		<>
-			<Box p={6}>
-				<HStack>
-					<Input
-						placeholder="Please input your novel title"
-						width={"full"}
-						backgroundColor={"gray.100"}
-						borderRadius={6}
-						border={"none"}
-						onChange={onChangeInputForm}
-						value={value}
-						_focus={{ _focus: "none" }}
-					/>
-					<IconButton
-						aria-label="titleInput"
-						icon={<ImQuill />}
-						color={"brown"}
-						backgroundColor={"gray.100"}
-						border={"none"}
-						_focus={{ _focus: "none" }}
-						borderRadius={"full"}
-						onClick={() => onClickButton(value === "" ? undefined : value)}
-					/>
-				</HStack>
-			</Box>
+			<VStack p={6}>
+				<Center>
+					<HStack>
+						<Input
+							placeholder="Please input your novel title"
+							width={"full"}
+							backgroundColor={"gray.100"}
+							borderRadius={6}
+							border={"none"}
+							onChange={onChangeInputForm}
+							value={value}
+							_focus={{ _focus: "none" }}
+						/>
+						<IconButton
+							aria-label="titleInput"
+							icon={<ImQuill />}
+							color={"brown"}
+							backgroundColor={"gray.100"}
+							border={"none"}
+							_focus={{ _focus: "none" }}
+							borderRadius={"full"}
+							onClick={() => onClickButton(value === "" ? undefined : value)}
+						/>
+					</HStack>
+				</Center>
 
-			{/* {draft.map((item, index) => {
-				return ( */}
-			<Box
-				_hover={{ shadow: "dark-lg", color: "gray.700", h: "100px" }}
-				// key={index}
-				h={"50px"}
-				w={"130px"}
-				backgroundColor={"red.200"}
-				marginTop={3}
-				borderRadius={5}
-				color={"gray.400"}
-				border={"none"}
-				transitionProperty="all"
-				transitionDuration="0.5s"
-				transitionTimingFunction={"ease-out"}
-				fontWeight={"normal"}
-				textAlign={"center"}
-				// onMouseOver={() => toggleOn(index)}
-				// onMouseLeave={() => toggleOff()}
-			>
-				<VStack padding={2}>
-					<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
-						{/* {item.title} */}
-					</Heading>
-					{/* <IntroductionNovelBody bodyText={item.body} isOpen={booleanArray[index]} /> */}
-				</VStack>
-			</Box>
-			{/* );
-			})} */}
+				{isClient
+					? draft.map((item, index) => {
+							return (
+								<Center key={index}>
+									<Box
+										shadow={booleanArray[index] ? "2xl" : "none"}
+										h={booleanArray[index] ? 170 : 110}
+										w={250}
+										backgroundColor={"red.200"}
+										marginTop={3}
+										borderRadius={5}
+										color={booleanArray[index] ? "gray.700" : "gray.400"}
+										border={"none"}
+										transitionProperty="all"
+										transitionDuration="0.5s"
+										transitionTimingFunction={"ease-out"}
+										fontWeight={"normal"}
+										textAlign={"center"}
+										as={"button"}
+										onClick={() => toggleOn(index)}
+										marginBottom={booleanArray[index] ? 8 : 1}
+									>
+										<VStack padding={2}>
+											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
+												{item.title}
+											</Heading>
+											<IntroductionNovelBody bodyText={item.body} />
+											<DraftControllButton isOpen={booleanArray[index]} />
+										</VStack>
+									</Box>
+								</Center>
+							);
+					  })
+					: undefined}
+			</VStack>
 		</>
 	);
 });
