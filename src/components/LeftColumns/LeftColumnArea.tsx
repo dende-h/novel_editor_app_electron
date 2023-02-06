@@ -10,7 +10,7 @@ import {
 	Text,
 	VStack
 } from "@chakra-ui/react";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { ImQuill } from "react-icons/im";
 import { useRecoilState } from "recoil";
@@ -23,8 +23,11 @@ export type draftObjectArray = { title: string; body: string }[];
 
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm } = useInput();
+	useEffect(() => {
+		setDraft([...draft]);
+	}, []);
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
-	const indexArray = draft.map((_, index) => index);
+	// const indexArray = draft.map((_, index) => index);
 	// const { toggleOn, booleanArray, toggleOff } = useToggle(indexArray);
 
 	const onClickButton = (value = "無題") => {
