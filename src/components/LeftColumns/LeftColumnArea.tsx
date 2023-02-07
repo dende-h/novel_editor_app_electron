@@ -13,7 +13,7 @@ export type draftObjectArray = { title: string; body: string }[];
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
-	const { toggleOn, booleanArray, toggleOff } = useToggle();
+	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
 
 	useEffect(() => {
@@ -61,37 +61,43 @@ export const LeftColumnArea = memo(() => {
 						/>
 					</HStack>
 				</Center>
-
+				{/* クライアントサイドのみでのレンダリング */}
 				{isClient
 					? draft.map((item, index) => {
+							//配列をmap関数で回してレンダリングするため、クリックで選択した際の状態をboolean配列で管理
 							return (
 								<Center key={index}>
 									<Box
+										onClick={
+											selectFlug.booleanArray[index]
+												? () => selectFlug.toggleFlugOneOfTheArrays()
+												: () => selectFlug.toggleFlugOneOfTheArrays(index)
+										}
+										sx={selectFlug.booleanArray[index] ? undefined : { _hover: { shadow: "lg", color: "gray.500" } }}
+										shadow={selectFlug.booleanArray[index] ? "2xl" : "none"}
+										h={selectFlug.booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
+										color={selectFlug.booleanArray[index] ? "gray.700" : "gray.400"}
+										marginBottom={selectFlug.booleanArray[index] ? 8 : 1}
+										// ここから下は固定値、上は受け取った真偽値によって変化
 										paddingTop={2}
-										shadow={booleanArray[index] ? "2xl" : "none"}
-										h={booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
 										w={"250px"}
 										backgroundColor={"red.200"}
 										marginTop={3}
 										borderRadius={5}
-										color={booleanArray[index] ? "gray.700" : "gray.400"}
 										border={"none"}
 										transitionProperty="all"
 										transitionDuration="0.8s"
 										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
-										marginBottom={booleanArray[index] ? 8 : 1}
 										as={"button"}
-										onClick={booleanArray[index] ? () => toggleOff() : () => toggleOn(index)}
-										sx={booleanArray[index] ? undefined : { _hover: { shadow: "lg", color: "gray.500" } }}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
 												{item.title}
 											</Heading>
 											<IntroductionNovelBody bodyText={item.body} />
-											<DraftControllButton isOpen={booleanArray[index]} />
+											<DraftControllButton isOpen={selectFlug.booleanArray[index]} />
 										</VStack>
 									</Box>
 								</Center>

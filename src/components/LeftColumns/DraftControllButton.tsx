@@ -1,4 +1,4 @@
-import { HStack, Button, Collapse, SlideFade, Box } from "@chakra-ui/react";
+import { HStack, Button, SlideFade } from "@chakra-ui/react";
 import { memo } from "react";
 
 type Props = { isOpen: boolean };
