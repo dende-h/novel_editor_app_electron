@@ -1,25 +1,11 @@
 import { memo, useEffect, useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { ImQuill } from "react-icons/im";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { useToggle } from "../../hooks/useToggle";
-import {
-	VStack,
-	Box,
-	Center,
-	Heading,
-	HStack,
-	IconButton,
-	Input,
-	AccordionPanel,
-	AccordionIcon,
-	AccordionButton,
-	Accordion,
-	AccordionItem
-} from "@chakra-ui/react";
-import { draftArrayIndex } from "../../globalState/selector/draftArrayIndex";
+import { VStack, Box, Center, Heading, HStack, IconButton, Input } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 
 export type draftObjectArray = { title: string; body: string }[];
@@ -81,18 +67,18 @@ export const LeftColumnArea = memo(() => {
 							return (
 								<Center key={index}>
 									<Box
-										paddingBottom={1}
+										paddingTop={2}
 										shadow={booleanArray[index] ? "2xl" : "none"}
-										h={booleanArray[index] ? 150 : 100}
-										w={250}
+										h={booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
+										w={"250px"}
 										backgroundColor={"red.200"}
 										marginTop={3}
 										borderRadius={5}
 										color={booleanArray[index] ? "gray.700" : "gray.400"}
 										border={"none"}
 										transitionProperty="all"
-										transitionDuration="0.5s"
-										transitionTimingFunction={"ease-in-out"}
+										transitionDuration="0.8s"
+										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
 										marginBottom={booleanArray[index] ? 8 : 1}
@@ -100,7 +86,7 @@ export const LeftColumnArea = memo(() => {
 										onClick={booleanArray[index] ? () => toggleOff() : () => toggleOn(index)}
 										sx={booleanArray[index] ? undefined : { _hover: { shadow: "lg", color: "gray.500" } }}
 									>
-										<VStack padding={2}>
+										<VStack p={2} marginBottom={"100%"}>
 											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
 												{item.title}
 											</Heading>

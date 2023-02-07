@@ -10,7 +10,7 @@ export const IntroductionNovelBody = memo((props: Props) => {
 	return (
 		<Box>
 			<Text
-				h="50px"
+				h="auto"
 				color="gray.500"
 				textAlign={"left"}
 				fontSize={"xs"}
