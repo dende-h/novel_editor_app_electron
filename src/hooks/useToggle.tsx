@@ -1,35 +1,29 @@
 import { useCallback, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { draftArrayIndex } from "../globalState/selector/draftArrayIndex";
 
 export const useToggle = () => {
 	const [isOn, setIsOn] = useState(false);
 	const [booleanArray, setBooleanArray] = useState<boolean[]>([]);
-	const indexArray = useRecoilValue<number[]>(draftArrayIndex);
 
 	//isOnのStateを明示的に切り替える
 	const toggleFlug = useCallback((isOnFulg: boolean) => setIsOn(isOnFulg), []);
 
-	//引数を受け取った場合、受け取った引数のインデックスだけtrueの配列を返す
-	const toggleFlugOneOfTheArrays = useCallback(
-		(callIndex?: number) => {
-			if (callIndex) {
-				setBooleanArray(
-					indexArray.map((item) => {
-						return item === callIndex ? true : false;
-					})
-				);
-			} else {
-				//引数がない場合は全てFalseの配列を返す
-				setBooleanArray(
-					indexArray.map(() => {
-						return false;
-					})
-				);
-			}
-		},
-		[indexArray]
-	);
+	//引数を2つ受け取った場合、受け取った引数のインデックスだけtrueの配列を返す
+	const toggleFlugOneOfTheArrays = useCallback((setArray: any[], callIndex?: number) => {
+		if (callIndex !== undefined) {
+			setBooleanArray(
+				setArray.map((_, index) => {
+					return index === callIndex ? true : false;
+				})
+			);
+		} else {
+			//引数１つの場合は全てFalseの配列を返す
+			setBooleanArray(
+				setArray.map(() => {
+					return false;
+				})
+			);
+		}
+	}, []);
 
 	return { toggleFlugOneOfTheArrays, isOn, toggleFlug, booleanArray };
 };

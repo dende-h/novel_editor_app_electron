@@ -7,14 +7,16 @@ import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { useToggle } from "../../hooks/useToggle";
 import { VStack, Box, Center, Heading, HStack, IconButton, Input } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
+import { selectedFlugArray } from "../../globalState/atoms/selectedFlugArray";
 
-export type draftObjectArray = { title: string; body: string }[];
+export type draftObjectArray = { title: string; body: string; userName?: string }[];
 
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
+	const [isSelectArray, setIsSelectArray] = useRecoilState<boolean[]>(selectedFlugArray);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -27,12 +29,17 @@ export const LeftColumnArea = memo(() => {
 			...draft,
 			{
 				title: value,
-				body: ""
+				body: "",
+				userName: "名無し"
 			}
 		];
 		setDraft(newDraft);
 		setValue("");
 	};
+
+	useEffect(() => {
+		setIsSelectArray(selectFlug.booleanArray), [selectFlug.booleanArray];
+	});
 
 	return (
 		<>
@@ -70,10 +77,14 @@ export const LeftColumnArea = memo(() => {
 									<Box
 										onClick={
 											selectFlug.booleanArray[index]
-												? () => selectFlug.toggleFlugOneOfTheArrays()
-												: () => selectFlug.toggleFlugOneOfTheArrays(index)
+												? () => selectFlug.toggleFlugOneOfTheArrays(draft)
+												: () => selectFlug.toggleFlugOneOfTheArrays(draft, index)
 										}
-										sx={selectFlug.booleanArray[index] ? undefined : { _hover: { shadow: "lg", color: "gray.500" } }}
+										sx={
+											selectFlug.booleanArray[index]
+												? undefined
+												: { _hover: { shadow: "lg", color: "gray.500", cursor: "pointer" } }
+										}
 										shadow={selectFlug.booleanArray[index] ? "2xl" : "none"}
 										h={selectFlug.booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
 										color={selectFlug.booleanArray[index] ? "gray.700" : "gray.400"}
@@ -90,7 +101,6 @@ export const LeftColumnArea = memo(() => {
 										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
-										as={"button"}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>

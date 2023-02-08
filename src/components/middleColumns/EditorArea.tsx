@@ -10,7 +10,6 @@ import { draftObjectArray } from "../LeftColumns/LeftColumnArea";
 export const EditorArea = memo(() => {
 	const { value, onChangeTextArea } = useTextArea(); //テキストエリア入力のカスタムフック
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
-	const draftTitle = useRecoilValue<draftObjectArray>(drafts);
 
 	useEffect(() => {
 		calcCharCount(value);
