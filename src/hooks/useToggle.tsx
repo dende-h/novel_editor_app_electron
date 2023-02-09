@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 
+//真偽値のフラグ切替などに利用するカスタムフック
 export const useToggle = () => {
 	const [isOn, setIsOn] = useState(false);
 	const [booleanArray, setBooleanArray] = useState<boolean[]>([]);
