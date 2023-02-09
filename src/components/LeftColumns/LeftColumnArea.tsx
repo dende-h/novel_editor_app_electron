@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { ImQuill } from "react-icons/im";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { useToggle } from "../../hooks/useToggle";
@@ -16,7 +16,7 @@ export const LeftColumnArea = memo(() => {
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
-	const [isSelectArray, setIsSelectArray] = useRecoilState<boolean[]>(selectedFlugArray);
+	const setIsSelectArray = useSetRecoilState<boolean[]>(selectedFlugArray);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -54,7 +54,7 @@ export const LeftColumnArea = memo(() => {
 							border={"none"}
 							onChange={onChangeInputForm}
 							value={value}
-							_focus={{ _focus: "none" }}
+							_focus={{ boxShadow: "none" }}
 						/>
 						<IconButton
 							aria-label="titleInput"
@@ -62,7 +62,7 @@ export const LeftColumnArea = memo(() => {
 							color={"brown"}
 							backgroundColor={"gray.100"}
 							border={"none"}
-							_focus={{ _focus: "none" }}
+							_focus={{ boxShadow: "none" }}
 							borderRadius={"full"}
 							onClick={() => onClickButton(value === "" ? undefined : value)}
 						/>
@@ -103,7 +103,14 @@ export const LeftColumnArea = memo(() => {
 										textAlign={"center"}
 									>
 										<VStack p={2} marginBottom={"100%"}>
-											<Heading fontSize={"lg"} fontWeight="bold" textOverflow={"ellipsis"}>
+											<Heading
+												fontSize={"lg"}
+												fontWeight="bold"
+												textOverflow={"ellipsis"}
+												overflow={"hidden"}
+												whiteSpace={"nowrap"}
+												w={"200px"}
+											>
 												{item.title}
 											</Heading>
 											<IntroductionNovelBody bodyText={item.body} />

@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedFlugArray } from "../globalState/atoms/selectedFlugArray";
 import { drafts } from "../globalState/atoms/drafts";
 import { draftObjectArray } from "../components/LeftColumns/LeftColumnArea";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export const useNovelTitleEdit = () => {
 	const selectedFlug = useRecoilValue<boolean[]>(selectedFlugArray);
