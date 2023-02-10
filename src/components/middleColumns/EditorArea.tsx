@@ -73,7 +73,6 @@ export const EditorArea = memo(() => {
 								value={selectedDraft.body}
 								isInvalid={isCharCountOverflow}
 								ref={bodyFocus}
-								autoFocus
 							/>
 						</Center>
 						<Box>

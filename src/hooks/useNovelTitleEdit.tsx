@@ -16,6 +16,7 @@ export const useNovelTitleEdit = () => {
 		//日本語入力時の変換のエンターの場合は処理しない
 		if (conposing === false) {
 			if (e.key === "Enter") {
+				console.log(e.key);
 				const selectedIndex = selectedFlug.indexOf(true);
 				//関数発火時にタイトル未入力の場合”無題”を挿入
 				setTitle(

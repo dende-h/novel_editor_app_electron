@@ -8,6 +8,7 @@ import { useToggle } from "../../hooks/useToggle";
 import { VStack, Box, Center, Heading, HStack, IconButton, Input } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 import { selectedFlugArray } from "../../globalState/atoms/selectedFlugArray";
+import { isSelectedReset } from "../../globalState/atoms/isSelectedReset";
 
 export type draftObjectArray = { title: string; body: string; userName?: string }[];
 
@@ -16,7 +17,8 @@ export const LeftColumnArea = memo(() => {
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
-	const setIsSelectArray = useSetRecoilState<boolean[]>(selectedFlugArray);
+	const [selectedFlug, setIsSelectArray] = useRecoilState<boolean[]>(selectedFlugArray);
+	const [selectedReset, setSelectedReset] = useRecoilState(isSelectedReset);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -38,8 +40,8 @@ export const LeftColumnArea = memo(() => {
 	};
 
 	useEffect(() => {
-		setIsSelectArray(selectFlug.booleanArray), [selectFlug.booleanArray];
-	});
+		setIsSelectArray(selectFlug.booleanArray);
+	}, [selectFlug.booleanArray]);
 
 	return (
 		<>
@@ -114,7 +116,7 @@ export const LeftColumnArea = memo(() => {
 												{item.title}
 											</Heading>
 											<IntroductionNovelBody bodyText={item.body} />
-											<DraftControllButton isOpen={selectFlug.booleanArray[index]} />
+											<DraftControllButton isAccordionOpen={selectFlug.booleanArray[index]} />
 										</VStack>
 									</Box>
 								</Center>

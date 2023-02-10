@@ -1,17 +1,17 @@
-import { HStack, Button, SlideFade } from "@chakra-ui/react";
-import { memo } from "react";
+import { HStack, Button, SlideFade, IconButton } from "@chakra-ui/react";
+import { memo, MouseEventHandler } from "react";
+import { ImFire, ImLock, ImShare, ImUnlocked } from "react-icons/im";
+import { AlertDialogDelete } from "./AlertDialogDelete";
 
-type Props = { isOpen: boolean };
+type Props = { isAccordionOpen: boolean };
 
 export const DraftControllButton = memo((props: Props) => {
-	const { isOpen } = props;
+	const { isAccordionOpen } = props;
 
 	return (
-		<SlideFade in={isOpen} unmountOnExit={true}>
-			<HStack spacing={2} p={1}>
-				<Button>1</Button>
-				<Button>2</Button>
-				<Button>3</Button>
+		<SlideFade in={isAccordionOpen} unmountOnExit={true}>
+			<HStack spacing={3} p={2}>
+				<AlertDialogDelete />
 			</HStack>
 		</SlideFade>
 	);
