@@ -9,16 +9,19 @@ import {
 	IconButton,
 	useDisclosure
 } from "@chakra-ui/react";
+import { type } from "os";
 import React from "react";
 import { ImFire } from "react-icons/im";
 import { useDeleteDraft } from "../../hooks/useDeleteDraft";
 
-export const AlertDialogDelete = () => {
+type Props = { deleteAction: () => void };
+
+export const AlertDialogDelete = (props: Props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = React.useRef();
-	const onDelete = useDeleteDraft();
+	const { deleteAction } = props;
 	const onClickDeleteButton = () => {
-		onDelete.deleteAction();
+		deleteAction();
 		onClose();
 	};
 
@@ -30,7 +33,6 @@ export const AlertDialogDelete = () => {
 				color={"orange.500"}
 				backgroundColor={"red.200"}
 				border={"none"}
-				_focus={{ boxShadow: "none" }}
 				borderRadius={"full"}
 				onClick={(e) => {
 					onOpen();

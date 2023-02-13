@@ -8,12 +8,13 @@ import { useNovelBodyEdit } from "../../hooks/useNovelBodyEdit";
 import { useNovelTitleEdit } from "../../hooks/useNovelTitleEdit";
 
 export const EditorArea = memo(() => {
-	const { onChangeTitleArea, setConposing, onEnterKeyDown, isFocus, setIsFocus } = useNovelTitleEdit(); //タイトル入力のカスタムフック
+	const { onChangeTitleArea, setConposing, onEnterKeyDown, isFocus, setIsFocus, onBlurFocus } = useNovelTitleEdit(); //フォーカス移動
 	const { onChangeTextArea } = useNovelBodyEdit(); //本文エリア入力のカスタムフック
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
-	const bodyFocus = useRef(null);
+	const bodyFocus = useRef<HTMLTextAreaElement>(null);
+
 	const focusEvent = () => {
 		bodyFocus.current.focus();
 		setIsFocus(false);
@@ -27,9 +28,6 @@ export const EditorArea = memo(() => {
 
 	useEffect(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "");
-		if (selectedDraft) {
-			setIsFocus(true);
-		}
 	}, [selectedDraft]);
 
 	useEffect(() => {
@@ -57,6 +55,7 @@ export const EditorArea = memo(() => {
 									setConposing(false);
 								}}
 								onKeyDown={onEnterKeyDown}
+								onBlur={onBlurFocus}
 								placeholder="novel title"
 							/>
 						</Center>
@@ -73,6 +72,7 @@ export const EditorArea = memo(() => {
 								value={selectedDraft.body}
 								isInvalid={isCharCountOverflow}
 								ref={bodyFocus}
+								autoFocus={true}
 							/>
 						</Center>
 						<Box>

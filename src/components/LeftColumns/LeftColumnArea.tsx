@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useInput } from "../../hooks/useInput";
 import { ImQuill } from "react-icons/im";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -9,6 +9,9 @@ import { VStack, Box, Center, Heading, HStack, IconButton, Input } from "@chakra
 import { DraftControllButton } from "./DraftControllButton";
 import { selectedFlugArray } from "../../globalState/atoms/selectedFlugArray";
 import { isSelectedReset } from "../../globalState/atoms/isSelectedReset";
+import { useDeleteDraft } from "../../hooks/useDeleteDraft";
+import { useNovelTitleEdit } from "../../hooks/useNovelTitleEdit";
+import { useFocusEvent } from "../../hooks/useFocusEvent";
 
 export type draftObjectArray = { title: string; body: string; userName?: string }[];
 
@@ -17,8 +20,16 @@ export const LeftColumnArea = memo(() => {
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
-	const [selectedFlug, setIsSelectArray] = useRecoilState<boolean[]>(selectedFlugArray);
-	const [selectedReset, setSelectedReset] = useRecoilState(isSelectedReset);
+	const setIsSelectArray = useSetRecoilState<boolean[]>(selectedFlugArray);
+	const { isSelectedReset, setSelectedReset, deleteAction } = useDeleteDraft();
+	const { setConposing, onEnterKeyDown, isFocus, setIsFocus } = useFocusEvent(); //フォーカスイベント
+	const [isAddNovel, setIsAddNovel] = useState(false);
+	const inputFocus = useRef<HTMLInputElement>(null);
+
+	const focusEvent = () => {
+		inputFocus.current.focus();
+		setIsFocus(false);
+	};
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -37,11 +48,31 @@ export const LeftColumnArea = memo(() => {
 		];
 		setDraft(newDraft);
 		setValue("");
+		setIsAddNovel(true);
 	};
+
+	useEffect(() => {
+		const lastIndex = draft.length - 1;
+		selectFlug.toggleFlugOneOfTheArrays(draft, lastIndex);
+		setIsAddNovel(false);
+	}, [isAddNovel]);
 
 	useEffect(() => {
 		setIsSelectArray(selectFlug.booleanArray);
 	}, [selectFlug.booleanArray]);
+
+	useEffect(() => {
+		if (isSelectedReset) {
+			selectFlug.toggleFlugOneOfTheArrays(draft);
+			setSelectedReset(false);
+		}
+	}, [isSelectedReset]);
+
+	useEffect(() => {
+		if (isFocus) {
+			focusEvent();
+		}
+	}, [isFocus]);
 
 	return (
 		<>
@@ -49,24 +80,21 @@ export const LeftColumnArea = memo(() => {
 				<Center>
 					<HStack>
 						<Input
-							placeholder="Please input your novel title"
+							placeholder="Please input novel title"
 							width={"full"}
 							backgroundColor={"gray.100"}
 							borderRadius={6}
 							border={"none"}
 							onChange={onChangeInputForm}
 							value={value}
-							_focus={{ boxShadow: "none" }}
-						/>
-						<IconButton
-							aria-label="titleInput"
-							icon={<ImQuill />}
-							color={"brown"}
-							backgroundColor={"gray.100"}
-							border={"none"}
-							_focus={{ boxShadow: "none" }}
-							borderRadius={"full"}
-							onClick={() => onClickButton(value === "" ? undefined : value)}
+							onCompositionStart={() => setConposing(true)}
+							onCompositionEnd={() => {
+								setConposing(false);
+							}}
+							onKeyDown={(e) => e.key === "Enter" && onClickButton(value === "" ? undefined : value)}
+							onFocus={() => selectFlug.toggleFlugOneOfTheArrays(draft)}
+							ref={inputFocus}
+							autoFocus
 						/>
 					</HStack>
 				</Center>
@@ -103,6 +131,15 @@ export const LeftColumnArea = memo(() => {
 										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
+										tabIndex={0}
+										onKeyDown={(e) => {
+											if (e.key === "Enter") {
+												console.log(0);
+												selectFlug.booleanArray[index]
+													? selectFlug.toggleFlugOneOfTheArrays(draft)
+													: selectFlug.toggleFlugOneOfTheArrays(draft, index);
+											}
+										}}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading
@@ -116,13 +153,27 @@ export const LeftColumnArea = memo(() => {
 												{item.title}
 											</Heading>
 											<IntroductionNovelBody bodyText={item.body} />
-											<DraftControllButton isAccordionOpen={selectFlug.booleanArray[index]} />
+											<DraftControllButton
+												isAccordionOpen={selectFlug.booleanArray[index]}
+												deleteAction={deleteAction}
+											/>
 										</VStack>
 									</Box>
 								</Center>
 							);
 					  })
 					: undefined}
+				<IconButton
+					aria-label="titleInput"
+					icon={<ImQuill />}
+					color={"orange.500"}
+					backgroundColor={"red.200"}
+					border={"none"}
+					width={"250px"}
+					onClick={() => {
+						focusEvent();
+					}}
+				/>
 			</VStack>
 		</>
 	);

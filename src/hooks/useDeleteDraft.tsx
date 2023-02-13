@@ -3,12 +3,13 @@ import { selectedFlugArray } from "../globalState/atoms/selectedFlugArray";
 import { drafts } from "../globalState/atoms/drafts";
 import { draftObjectArray } from "../components/LeftColumns/LeftColumnArea";
 import { isSelectedReset } from "../globalState/atoms/isSelectedReset";
+import { useState } from "react";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDeleteDraft = () => {
 	const selectedFlug = useRecoilValue<boolean[]>(selectedFlugArray); //表示対象のフラグを配列で取得
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts); //下書きのオブジェクトを配列で取得
-	const setSelectedReset = useSetRecoilState(isSelectedReset);
+	const [isSelectedReset, setSelectedReset] = useState(false);
 
 	//draftObjectの削除処理
 	const deleteAction = () => {
@@ -17,5 +18,5 @@ export const useDeleteDraft = () => {
 		setDraft(newDraft);
 		setSelectedReset(true);
 	};
-	return { deleteAction };
+	return { deleteAction, isSelectedReset, setSelectedReset };
 };
