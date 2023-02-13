@@ -37,7 +37,7 @@ export const LeftColumnArea = memo(() => {
 		}
 	}, []);
 
-	const onClickButton = (value = "無題") => {
+	const onInputTitle = (value = "無題") => {
 		const newDraft = [
 			...draft,
 			{
@@ -91,7 +91,7 @@ export const LeftColumnArea = memo(() => {
 							onCompositionEnd={() => {
 								setConposing(false);
 							}}
-							onKeyDown={(e) => e.key === "Enter" && onClickButton(value === "" ? undefined : value)}
+							onKeyDown={(e) => e.key === "Enter" && onInputTitle(value === "" ? undefined : value)}
 							onFocus={() => selectFlug.toggleFlugOneOfTheArrays(draft)}
 							ref={inputFocus}
 							autoFocus
@@ -134,7 +134,6 @@ export const LeftColumnArea = memo(() => {
 										tabIndex={0}
 										onKeyDown={(e) => {
 											if (e.key === "Enter") {
-												console.log(0);
 												selectFlug.booleanArray[index]
 													? selectFlug.toggleFlugOneOfTheArrays(draft)
 													: selectFlug.toggleFlugOneOfTheArrays(draft, index);
