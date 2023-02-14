@@ -2,7 +2,7 @@ import { selector } from "recoil";
 import { drafts } from "../atoms/drafts";
 import { selectedFlugArray } from "../atoms/selectedFlugArray";
 
-export type draftObject = { title: string; body: string; userName?: string };
+export type draftObject = { title: string; body: string; userName?: string; maxLength: number };
 
 export const editorState = selector({
 	key: "editorState",

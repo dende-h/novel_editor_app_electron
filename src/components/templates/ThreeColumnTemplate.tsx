@@ -1,11 +1,11 @@
 import { Box, Grid } from "@chakra-ui/react";
-import { memo, ReactNode, VFC } from "react";
+import { memo, ReactNode, FC } from "react";
 import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
 import { Footer } from "../footers/Footer";
 import { Header } from "../headers/Header";
 import { EditorArea } from "../middleColumns/EditorArea";
 
-const ThreeColumnTemplate: VFC = memo(() => {
+const ThreeColumnTemplate: FC = memo(() => {
 	return (
 		<>
 			<Grid

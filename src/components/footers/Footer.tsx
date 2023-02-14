@@ -1,4 +1,4 @@
-import { Center} from "@chakra-ui/react"
+import { Center } from "@chakra-ui/react";
 import { memo } from "react";
 
 export const Footer = memo(() => {
@@ -9,4 +9,4 @@ export const Footer = memo(() => {
 	);
 });
 
-Footer.displayName = "Footer"
+Footer.displayName = "Footer";

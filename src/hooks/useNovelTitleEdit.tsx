@@ -32,6 +32,7 @@ export const useNovelTitleEdit = () => {
 	const onChangeTitleArea: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		const selectedIndex = selectedFlug.indexOf(true); //現在選択中のオブジェクトのインデックスを取得する
 		const newTitle = e.target.value;
+
 		setTitle(title.map((item, index) => (index === selectedIndex ? { ...item, title: newTitle } : item)));
 	};
 	return { onChangeTitleArea, setConposing, onEnterKeyDown, isFocus, setIsFocus, onBlurFocus };

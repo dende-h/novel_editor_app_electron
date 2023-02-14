@@ -13,7 +13,7 @@ import { useDeleteDraft } from "../../hooks/useDeleteDraft";
 import { useNovelTitleEdit } from "../../hooks/useNovelTitleEdit";
 import { useFocusEvent } from "../../hooks/useFocusEvent";
 
-export type draftObjectArray = { title: string; body: string; userName?: string }[];
+export type draftObjectArray = { title: string; body: string; userName?: string; maxLength: number }[];
 
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm, setValue } = useInput();
@@ -44,7 +44,8 @@ export const LeftColumnArea = memo(() => {
 			{
 				title: value,
 				body: "",
-				userName: "名無し"
+				userName: "名無し",
+				maxLength: 800
 			}
 		];
 		setDraft(newDraft);
