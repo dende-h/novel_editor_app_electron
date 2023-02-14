@@ -35,6 +35,7 @@ export const LeftColumnArea = memo(() => {
 		if (typeof window !== undefined) {
 			setIsClient(true);
 		}
+		setSelectedReset(true);
 	}, []);
 
 	const onInputTitle = (value = "無題") => {
@@ -113,16 +114,18 @@ export const LeftColumnArea = memo(() => {
 										sx={
 											selectFlug.booleanArray[index]
 												? undefined
-												: { _hover: { shadow: "lg", color: "gray.500", cursor: "pointer" } }
+												: {
+														_hover: { shadow: "lg", color: "gray.600", cursor: "pointer" }
+												  }
 										}
 										shadow={selectFlug.booleanArray[index] ? "2xl" : "none"}
 										h={selectFlug.booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
-										color={selectFlug.booleanArray[index] ? "gray.700" : "gray.400"}
+										color={selectFlug.booleanArray[index] ? "gray.800" : "gray.400"}
 										marginBottom={selectFlug.booleanArray[index] ? 8 : 1}
+										backgroundColor={selectFlug.booleanArray[index] ? "gray.300" : "gray.200"}
 										// ここから下は固定値、上は受け取った真偽値によって変化
 										paddingTop={2}
 										w={"250px"}
-										backgroundColor={"red.200"}
 										marginTop={3}
 										borderRadius={5}
 										border={"none"}
@@ -163,10 +166,15 @@ export const LeftColumnArea = memo(() => {
 					  })
 					: undefined}
 				<IconButton
+					transitionProperty="all"
+					transitionDuration="0.8s"
+					transitionTimingFunction={"ease-out"}
 					aria-label="titleInput"
+					_focus={{ backgroundColor: "gray.300", shadow: "lg", color: "gray.600", cursor: "pointer" }}
+					_hover={{ backgroundColor: "gray.300", shadow: "lg", color: "gray.600", cursor: "pointer" }}
 					icon={<ImQuill />}
-					color={"orange.500"}
-					backgroundColor={"red.200"}
+					color={"gray.400"}
+					backgroundColor={"gray.200"}
 					border={"none"}
 					width={"250px"}
 					onClick={() => {

@@ -19,7 +19,7 @@ const theme = extendTheme({
 	styles: {
 		global: {
 			body: {
-				backgroundColor: "gray.100",
+				backgroundColor: "gray.200",
 				color: "gray.750",
 				fonts: "メイリオ"
 			}

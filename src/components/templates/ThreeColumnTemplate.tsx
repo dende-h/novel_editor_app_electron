@@ -3,13 +3,9 @@ import { memo, ReactNode, VFC } from "react";
 import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
 import { Footer } from "../footers/Footer";
 import { Header } from "../headers/Header";
+import { EditorArea } from "../middleColumns/EditorArea";
 
-type Props = {
-	children: ReactNode;
-};
-
-const ThreeColumnTemplate: VFC<Props> = memo((props: Props) => {
-	const { children } = props;
+const ThreeColumnTemplate: VFC = memo(() => {
 	return (
 		<>
 			<Grid
@@ -21,11 +17,11 @@ const ThreeColumnTemplate: VFC<Props> = memo((props: Props) => {
 				<Box gridArea="header" bg="gray.500">
 					<Header />
 				</Box>
-				<Box gridArea="left" bg="red.200">
+				<Box gridArea="left" bg="gray.200">
 					<LeftColumnArea />
 				</Box>
-				<Box gridArea="main" bg="blue.500">
-					{children}
+				<Box gridArea="main" bg="gray.200">
+					<EditorArea />
 				</Box>
 				<Box gridArea="right" bg="green.500">
 					rightcard

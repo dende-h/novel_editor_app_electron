@@ -28,10 +28,15 @@ export const AlertDialogDelete = (props: Props) => {
 	return (
 		<>
 			<IconButton
+				transitionProperty="all"
+				transitionDuration="0.8s"
+				transitionTimingFunction={"ease-out"}
+				_hover={{ color: "red.600", fontSize: "30px" }}
+				_focus={{ color: "red.600", fontSize: "30px" }}
 				aria-label="titleInput"
 				icon={<ImFire />}
-				color={"orange.500"}
-				backgroundColor={"red.200"}
+				color={"orange.300"}
+				backgroundColor={"gray.300"}
 				border={"none"}
 				borderRadius={"full"}
 				onClick={(e) => {

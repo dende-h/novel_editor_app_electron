@@ -43,12 +43,13 @@ export const EditorArea = memo(() => {
 					<Box p={10}>
 						<Center marginY={5}>
 							<Input
+								color={"gray.500"}
 								fontSize={"lg"}
 								value={selectedDraft.title}
 								onChange={onChangeTitleArea}
 								border={"none"}
 								borderRadius={0}
-								backgroundColor={"gray.100"}
+								backgroundColor={"gray.200"}
 								width={"300px"}
 								onCompositionStart={() => setConposing(true)}
 								onCompositionEnd={() => {
@@ -64,7 +65,7 @@ export const EditorArea = memo(() => {
 								placeholder="Enter the text of your novel here"
 								width={"800px"}
 								height={"800px"}
-								backgroundColor={"gray.100"}
+								backgroundColor={"gray.200"}
 								resize={"none"}
 								borderRadius={0}
 								border={"none"}
@@ -73,10 +74,11 @@ export const EditorArea = memo(() => {
 								isInvalid={isCharCountOverflow}
 								ref={bodyFocus}
 								autoFocus={true}
+								_focus={{ boxShadow: "none" }}
 							/>
 						</Center>
 						<Box>
-							<Text textColor={isCharCountOverflow ? "red" : "gray.700"}>
+							<Text textColor={isCharCountOverflow ? "red" : "gray.500"}>
 								現在の文字数 {charCount} / {numberOfCharacters.veryShortNovel} 文字
 							</Text>
 						</Box>
