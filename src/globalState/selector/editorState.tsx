@@ -2,7 +2,16 @@ import { selector } from "recoil";
 import { drafts } from "../atoms/drafts";
 import { selectedState } from "./selectedState";
 
-export type draftObject = { title: string; body: string; userName?: string; isSelected: boolean; maxLength: number };
+export type draftObject = {
+	title: string;
+	body: string;
+	userName?: string;
+	isSelected: boolean;
+	maxLength: number;
+	isPublished?: boolean;
+	tag?: string[];
+	lastEditedTime: string;
+};
 
 export const editorState = selector({
 	key: "editorState",

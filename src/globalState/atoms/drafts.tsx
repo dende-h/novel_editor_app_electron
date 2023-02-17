@@ -1,6 +1,8 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { draftObjectArray } from "../../components/LeftColumns/LeftColumnArea";
+import { draftObject } from "../selector/editorState";
+
+export type draftObjectArray = draftObject[];
 
 const { persistAtom } = recoilPersist({
 	key: "recoil-persist",

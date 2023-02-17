@@ -1,27 +1,18 @@
 import { memo, useEffect, useState } from "react";
 import { ImPointUp, ImQuill } from "react-icons/im";
 import { useRecoilState } from "recoil";
-import { drafts } from "../../globalState/atoms/drafts";
+import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import { VStack, Box, Center, Heading, HStack, IconButton } from "@chakra-ui/react";
+import { VStack, Box, Center, Heading, IconButton, Text } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
-import { useDraft } from "../../hooks/useDraft";
 import { isSelected } from "../../globalState/atoms/isSelected";
-
-export type draftObjectArray = {
-	title: string;
-	body: string;
-	userName?: string;
-	isSelected: boolean;
-	maxLength: number;
-}[];
+import { draftObject } from "../../globalState/selector/editorState";
+import format from "date-fns/format";
 
 export const LeftColumnArea = memo(() => {
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const [isClient, setIsClient] = useState(false);
-	const { deleteAction } = useDraft();
 	const [isSelect, setIsSelect] = useRecoilState(isSelected);
-	const [addNovel, setAddNovel] = useState(false);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -29,14 +20,7 @@ export const LeftColumnArea = memo(() => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (addNovel) {
-			onAddNovel();
-		}
-		setAddNovel(false);
-	}, [addNovel]);
-
-	const onClickAddDraft = (selectIndex: number) => {
+	const onClickOpenDraft = (selectIndex: number) => {
 		if (isSelect === false) {
 			setDraft(
 				draft.map((item, index) =>
@@ -64,51 +48,54 @@ export const LeftColumnArea = memo(() => {
 		}
 	};
 
-	const onAddNovelInit = () => {
+	const onAddNovel = () => {
+		const createTime = format(new Date(), "yyyy-MM-dd-hh:mm");
 		setDraft(
 			draft.map((item) => {
 				return { ...item, isSelected: false };
 			})
 		);
 		setIsSelect(false);
-		setAddNovel(true);
-	};
-
-	const onAddNovel = () => {
-		const newDraft: draftObjectArray = [
-			{
-				title: "",
-				body: "",
-				userName: "名無し",
-				isSelected: true,
-				maxLength: 800
-			},
-			...draft
-		];
-		setDraft(newDraft);
+		const newDraft: draftObject = {
+			title: "",
+			body: "",
+			userName: "名無し",
+			isSelected: true,
+			maxLength: 800,
+			isPublished: false,
+			tag: [],
+			lastEditedTime: createTime
+		};
+		const oldDraft = [...draft].map((item) => {
+			return { ...item, isSelected: false };
+		});
+		setDraft([newDraft, ...oldDraft]);
 		setIsSelect(true);
-		setAddNovel(true);
 	};
 
-	const cssTranstionPropaty = { "transition-property": "color , shadow , height , background-color " };
+	const cssTranstionPropaty = { transitionProperty: "color , shadow , height , backgroundColor " };
 
 	return (
 		<>
 			<VStack p={6}>
 				<Center>
-					<HStack>
+					<VStack>
 						<IconButton
 							aria-label="addNewDraft"
 							icon={<ImQuill />}
 							color={"brown"}
 							backgroundColor={"orange.100"}
 							border={"none"}
-							_focus={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
-							_hover={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+							_focus={{ backgroundColor: "orange.200", shadow: "2xl" }}
+							_hover={{ backgroundColor: "orange.200", shadow: "2xl" }}
 							w={"250px"}
-							onClick={onAddNovelInit}
+							onClick={onAddNovel}
+							isDisabled={isSelect}
 						/>
-					</HStack>
+						<Text fontWeight={"bold"} fontStyle="italic" color={"gray.500"}>
+							{draft.length}:drafts
+						</Text>
+					</VStack>
 				</Center>
 				{/* クライアントサイドのみでのレンダリング */}
 				{isClient
@@ -143,7 +130,7 @@ export const LeftColumnArea = memo(() => {
 										textAlign={"center"}
 										tabIndex={0}
 										onKeyUp={(e) => onEnterKey(e.key, index)}
-										onClick={() => onClickAddDraft(index)}
+										onClick={() => onClickOpenDraft(index)}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading
@@ -156,8 +143,8 @@ export const LeftColumnArea = memo(() => {
 											>
 												{item.title}
 											</Heading>
-											<IntroductionNovelBody bodyText={item.body} />
-											<DraftControllButton isAccordionOpen={item.isSelected} deleteAction={deleteAction} />
+											<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />
+											<DraftControllButton isAccordionOpen={item.isSelected} />
 										</VStack>
 									</Box>
 								</Center>
@@ -174,11 +161,12 @@ export const LeftColumnArea = memo(() => {
 					transitionDuration="0.8s"
 					transitionTimingFunction={"ease-out"}
 					aria-label="scrollTop"
-					_focus={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
-					_hover={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+					_focus={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
+					_hover={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
 					icon={<ImPointUp />}
 					color={"brown"}
 					backgroundColor={"orange.100"}
+					opacity={"0.6"}
 					border={"none"}
 					borderRadius={"full"}
 					onClick={() => {

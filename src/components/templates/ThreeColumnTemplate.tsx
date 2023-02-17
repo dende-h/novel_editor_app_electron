@@ -20,7 +20,7 @@ const ThreeColumnTemplate: FC = memo(() => {
 				<Box gridArea="left" bg="gray.200">
 					<LeftColumnArea />
 				</Box>
-				<Box gridArea="main" bg="gray.200">
+				<Box gridArea="main" bg="gray.200" minH={"942px"}>
 					<EditorArea />
 				</Box>
 				<Box gridArea="right" bg="gray.200"></Box>

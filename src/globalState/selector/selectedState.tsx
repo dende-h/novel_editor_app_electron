@@ -1,12 +1,13 @@
 import { selector } from "recoil";
-import { draftObjectArray } from "../../components/LeftColumns/LeftColumnArea";
-import { drafts } from "../atoms/drafts";
+import { draftObjectArray, drafts } from "../atoms/drafts";
+
+export type selectedStateArray = boolean[];
 
 export const selectedState = selector({
 	key: "selectedState",
 	get: ({ get }) => {
 		const draftArray: draftObjectArray = get(drafts);
-		const selectedStateArray: boolean[] = draftArray.map((item) => item.isSelected);
+		const selectedStateArray: selectedStateArray = draftArray.map((item) => item.isSelected);
 		return selectedStateArray;
 	}
 });

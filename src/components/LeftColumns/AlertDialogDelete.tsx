@@ -11,13 +11,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { ImFire } from "react-icons/im";
+import { useDraft } from "../../hooks/useDraft";
 
-type Props = { deleteAction: () => void };
-
-export const AlertDialogDelete = (props: Props) => {
+export const AlertDialogDelete = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = React.useRef();
-	const { deleteAction } = props;
+	const { deleteAction } = useDraft();
 	const onClickDeleteButton = () => {
 		deleteAction();
 		onClose();
