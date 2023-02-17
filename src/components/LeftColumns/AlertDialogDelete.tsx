@@ -9,10 +9,8 @@ import {
 	IconButton,
 	useDisclosure
 } from "@chakra-ui/react";
-import { type } from "os";
 import React from "react";
 import { ImFire } from "react-icons/im";
-import { useDeleteDraft } from "../../hooks/useDeleteDraft";
 
 type Props = { deleteAction: () => void };
 

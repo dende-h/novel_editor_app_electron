@@ -9,7 +9,7 @@ const ThreeColumnTemplate: FC = memo(() => {
 	return (
 		<>
 			<Grid
-				gridTemplateColumns={"1fr 4fr 1fr"}
+				gridTemplateColumns={"1fr 3fr 1fr"}
 				gridTemplateRows={"auto"}
 				gridTemplateAreas={`'header header header' 'left main right' 'footer footer footer'`}
 				gap={1}
@@ -23,9 +23,7 @@ const ThreeColumnTemplate: FC = memo(() => {
 				<Box gridArea="main" bg="gray.200">
 					<EditorArea />
 				</Box>
-				<Box gridArea="right" bg="green.500">
-					rightcard
-				</Box>
+				<Box gridArea="right" bg="gray.200"></Box>
 				<Box gridArea="footer" bg="gray.500">
 					<Footer />
 				</Box>

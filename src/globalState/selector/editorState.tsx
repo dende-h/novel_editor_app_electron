@@ -1,13 +1,13 @@
 import { selector } from "recoil";
 import { drafts } from "../atoms/drafts";
-import { selectedFlugArray } from "../atoms/selectedFlugArray";
+import { selectedState } from "./selectedState";
 
-export type draftObject = { title: string; body: string; userName?: string; maxLength: number };
+export type draftObject = { title: string; body: string; userName?: string; isSelected: boolean; maxLength: number };
 
 export const editorState = selector({
 	key: "editorState",
 	get: ({ get }) => {
-		const selected: number = get(selectedFlugArray).indexOf(true);
+		const selected = get(selectedState).indexOf(true);
 		const selectedDraftObject: draftObject = get(drafts)[selected];
 		return selectedDraftObject;
 	}

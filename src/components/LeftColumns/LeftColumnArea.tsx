@@ -1,29 +1,32 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { useInput } from "../../hooks/useInput";
-import { ImQuill } from "react-icons/im";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { ImPointUp, ImQuill } from "react-icons/im";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { useToggle } from "../../hooks/useToggle";
-import { VStack, Box, Center, Heading, HStack, IconButton, Input } from "@chakra-ui/react";
+import { VStack, Box, Center, Heading, HStack, IconButton, Input, Button } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
-import { selectedFlugArray } from "../../globalState/atoms/selectedFlugArray";
-import { isSelectedReset } from "../../globalState/atoms/isSelectedReset";
 import { useDeleteDraft } from "../../hooks/useDeleteDraft";
-import { useNovelTitleEdit } from "../../hooks/useNovelTitleEdit";
 import { useFocusEvent } from "../../hooks/useFocusEvent";
+import { selectedState } from "../../globalState/selector/selectedState";
+import { resolve } from "path";
 
-export type draftObjectArray = { title: string; body: string; userName?: string; maxLength: number }[];
+export type draftObjectArray = {
+	title: string;
+	body: string;
+	userName?: string;
+	isSelected: boolean;
+	maxLength: number;
+}[];
 
 export const LeftColumnArea = memo(() => {
 	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
-	const selectFlug = useToggle();
 	const [isClient, setIsClient] = useState(false);
-	const setIsSelectArray = useSetRecoilState<boolean[]>(selectedFlugArray);
-	const { isSelectedReset, setSelectedReset, deleteAction } = useDeleteDraft();
-	const { setConposing, onEnterKeyDown, isFocus, setIsFocus } = useFocusEvent(); //フォーカスイベント
-	const [isAddNovel, setIsAddNovel] = useState(false);
+	const { setSelectedReset, deleteAction } = useDeleteDraft();
+	const { setConposing, setIsFocus } = useFocusEvent(); //フォーカスイベント
+	const [isSelect, setIsSelect] = useState(false);
 	const inputFocus = useRef<HTMLInputElement>(null);
 
 	const focusEvent = () => {
@@ -38,49 +41,83 @@ export const LeftColumnArea = memo(() => {
 		setSelectedReset(true);
 	}, []);
 
-	const onInputTitle = (value = "無題") => {
-		const newDraft = [
-			...draft,
+	const onClickNewDraft = () => {
+		onInputFocus();
+		onInputTitle();
+	};
+
+	const onClickDraft = (selectIndex: number) => {
+		if (isSelect === false) {
+			setDraft(
+				draft.map((item, index) =>
+					selectIndex === index ? { ...item, isSelected: true } : { ...item, isSelected: false }
+				)
+			);
+			setIsSelect(true);
+		} else {
+			setDraft(
+				draft.map((item) => {
+					return { ...item, isSelected: false };
+				})
+			);
+			setIsSelect(false);
+		}
+	};
+
+	const onEnterKey = (key: string, selectIndex: number) => {
+		if (key === "Enter") {
+			setDraft(
+				draft.map((item, index) =>
+					selectIndex === index ? { ...item, isSelected: true } : { ...item, isSelected: false }
+				)
+			);
+		}
+	};
+
+	const onInputFocus = () => {
+		setDraft(
+			draft.map((item) => {
+				return { ...item, isSelected: false };
+			})
+		);
+		setIsSelect(false);
+	};
+
+	const onInputTitle = () => {
+		console.log("title");
+		const newDraft: draftObjectArray = [
 			{
-				title: value,
-				body: "",
+				title: "無題",
+				body: undefined,
 				userName: "名無し",
+				isSelected: true,
 				maxLength: 800
-			}
+			},
+			...draft
 		];
 		setDraft(newDraft);
 		setValue("");
-		setIsAddNovel(true);
+		setIsSelect(true);
 	};
 
-	useEffect(() => {
-		const lastIndex = draft.length - 1;
-		selectFlug.toggleFlugOneOfTheArrays(draft, lastIndex);
-		setIsAddNovel(false);
-	}, [isAddNovel]);
-
-	useEffect(() => {
-		setIsSelectArray(selectFlug.booleanArray);
-	}, [selectFlug.booleanArray]);
-
-	useEffect(() => {
-		if (isSelectedReset) {
-			selectFlug.toggleFlugOneOfTheArrays(draft);
-			setSelectedReset(false);
-		}
-	}, [isSelectedReset]);
-
-	useEffect(() => {
-		if (isFocus) {
-			focusEvent();
-		}
-	}, [isFocus]);
+	const cssTranstionPropaty = { "transition-property": "color , shadow , height , background-color " };
 
 	return (
 		<>
 			<VStack p={6}>
 				<Center>
 					<HStack>
+						<IconButton
+							aria-label="addNewDraft"
+							icon={<ImQuill />}
+							color={"brown"}
+							backgroundColor={"orange.100"}
+							border={"none"}
+							_focus={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+							_hover={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+							w={"full"}
+							onClick={onClickNewDraft}
+						/>
 						<Input
 							placeholder="Please input novel title"
 							width={"full"}
@@ -93,8 +130,8 @@ export const LeftColumnArea = memo(() => {
 							onCompositionEnd={() => {
 								setConposing(false);
 							}}
-							onKeyDown={(e) => e.key === "Enter" && onInputTitle(value === "" ? undefined : value)}
-							onFocus={() => selectFlug.toggleFlugOneOfTheArrays(draft)}
+							// onKeyDown={(e) => e.key === "Enter" && onInputTitle(value === "" ? undefined : value)}
+							onFocus={onInputFocus}
 							ref={inputFocus}
 							autoFocus
 						/>
@@ -107,42 +144,33 @@ export const LeftColumnArea = memo(() => {
 							return (
 								<Center key={index}>
 									<Box
-										onClick={
-											selectFlug.booleanArray[index]
-												? () => selectFlug.toggleFlugOneOfTheArrays(draft)
-												: () => selectFlug.toggleFlugOneOfTheArrays(draft, index)
-										}
+										visibility={isSelect ? (item.isSelected ? "visible" : "hidden") : "visible"}
 										sx={
-											selectFlug.booleanArray[index]
+											item.isSelected
 												? undefined
 												: {
 														_hover: { shadow: "lg", color: "gray.600", cursor: "pointer" }
 												  }
 										}
-										shadow={selectFlug.booleanArray[index] ? "2xl" : "none"}
-										h={selectFlug.booleanArray[index] ? (item.body === "" ? "128px" : "163px") : "100px"}
-										color={selectFlug.booleanArray[index] ? "gray.800" : "gray.400"}
-										marginBottom={selectFlug.booleanArray[index] ? 8 : 1}
-										backgroundColor={selectFlug.booleanArray[index] ? "gray.300" : "gray.200"}
+										shadow={item.isSelected ? "2xl" : "none"}
+										h={item.isSelected ? (item.body === "" ? "128px" : "163px") : "100px"}
+										color={item.isSelected ? "gray.800" : "gray.400"}
+										marginBottom={item.isSelected ? 8 : 1}
+										backgroundColor={item.isSelected ? "gray.300" : "gray.200"}
 										// ここから下は固定値、上は受け取った真偽値によって変化
 										paddingTop={2}
 										w={"250px"}
 										marginTop={3}
 										borderRadius={5}
 										border={"none"}
-										transitionProperty="all"
+										css={cssTranstionPropaty}
 										transitionDuration="0.8s"
 										transitionTimingFunction={"ease-out"}
 										fontWeight={"normal"}
 										textAlign={"center"}
 										tabIndex={0}
-										onKeyDown={(e) => {
-											if (e.key === "Enter") {
-												selectFlug.booleanArray[index]
-													? selectFlug.toggleFlugOneOfTheArrays(draft)
-													: selectFlug.toggleFlugOneOfTheArrays(draft, index);
-											}
-										}}
+										onKeyDown={(e) => onEnterKey(e.key, index)}
+										onClick={() => onClickDraft(index)}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading
@@ -156,10 +184,7 @@ export const LeftColumnArea = memo(() => {
 												{item.title}
 											</Heading>
 											<IntroductionNovelBody bodyText={item.body} />
-											<DraftControllButton
-												isAccordionOpen={selectFlug.booleanArray[index]}
-												deleteAction={deleteAction}
-											/>
+											<DraftControllButton isAccordionOpen={item.isSelected} deleteAction={deleteAction} />
 										</VStack>
 									</Box>
 								</Center>
@@ -167,18 +192,24 @@ export const LeftColumnArea = memo(() => {
 					  })
 					: undefined}
 				<IconButton
+					size={"lg"}
+					position={"fixed"}
+					bottom={"30px"}
+					left={"30px"}
+					shadow={"lg"}
 					transitionProperty="all"
 					transitionDuration="0.8s"
 					transitionTimingFunction={"ease-out"}
-					aria-label="titleInput"
-					_focus={{ backgroundColor: "gray.300", shadow: "lg", color: "gray.600", cursor: "pointer" }}
-					_hover={{ backgroundColor: "gray.300", shadow: "lg", color: "gray.600", cursor: "pointer" }}
-					icon={<ImQuill />}
-					color={"gray.400"}
-					backgroundColor={"gray.200"}
+					aria-label="scrollTop"
+					_focus={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+					_hover={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
+					icon={<ImPointUp />}
+					color={"brown"}
+					backgroundColor={"orange.100"}
 					border={"none"}
-					width={"250px"}
+					borderRadius={"full"}
 					onClick={() => {
+						window.scrollTo({ top: 0, behavior: "smooth" });
 						focusEvent();
 					}}
 				/>

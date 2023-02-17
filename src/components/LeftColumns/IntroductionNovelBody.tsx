@@ -18,7 +18,7 @@ export const IntroductionNovelBody = memo((props: Props) => {
 				_before={{ content: `"“"`, color: "gray" }}
 				_after={{ content: `"”"`, color: "gray" }}
 			>
-				{bodyText === ""
+				{bodyText === undefined || bodyText === ""
 					? "No content"
 					: `${[...bodyText]
 							.filter((_, index) => {

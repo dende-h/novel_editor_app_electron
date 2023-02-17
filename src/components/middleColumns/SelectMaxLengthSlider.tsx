@@ -1,18 +1,11 @@
-import {
-	Slider,
-	SliderMark,
-	SliderTrack,
-	SliderFilledTrack,
-	Tooltip,
-	SliderThumb,
-	UseSliderProps
-} from "@chakra-ui/react";
-import { count } from "console";
+import { Slider, SliderMark, SliderTrack, SliderFilledTrack, Tooltip, SliderThumb } from "@chakra-ui/react";
+
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
-import { selectedFlugArray } from "../../globalState/atoms/selectedFlugArray";
+
 import { draftObject, editorState } from "../../globalState/selector/editorState";
+import { selectedState } from "../../globalState/selector/selectedState";
 import { draftObjectArray } from "../LeftColumns/LeftColumnArea";
 
 type Props = { maxLength: number };
@@ -27,13 +20,12 @@ export const SelectMaxLengthSlider = (props: Props) => {
 	}, []);
 
 	const selectedDraft: draftObject = useRecoilValue(editorState);
-	const selectedFlug = useRecoilValue(selectedFlugArray);
+	const selectedFlug = useRecoilValue(selectedState);
 	const [draftLength, setDraftLength] = useRecoilState<draftObjectArray>(drafts);
 	const minCharCount = 400;
 	const maxCharCount = 18000;
 	const veryShortNovel = 1200;
 	const ssNovel = 6000;
-	const [sliderValue, setSliderValue] = useState(5);
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	const onChangeMaxLength = (e: number) => {
