@@ -6,8 +6,8 @@ const { persistAtom } = recoilPersist({
 	storage: typeof window === "undefined" ? undefined : localStorage
 });
 
-export const textDraftValue = atom({
-	key: "textDraftValue",
-	default: "",
+export const isSelected = atom({
+	key: "isSelected",
+	default: false,
 	effects_UNSTABLE: [persistAtom]
 });

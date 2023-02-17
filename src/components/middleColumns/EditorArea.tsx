@@ -1,26 +1,19 @@
 import { Box, Center, HStack, Input, Text, Textarea, VStack } from "@chakra-ui/react";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { numberOfCharacters } from "../../constant/constant";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
-import { useNovelBodyEdit } from "../../hooks/useNovelBodyEdit";
-import { useNovelTitleEdit } from "../../hooks/useNovelTitleEdit";
+import { useDraft } from "../../hooks/useDraft";
+import { useFocusEvent } from "../../hooks/useFocusEvent";
 import { SelectMaxLengthSlider } from "./SelectMaxLengthSlider";
 
 export const EditorArea = memo(() => {
-	const { onChangeTitleArea, setConposing, onEnterKeyDown, isFocus, setIsFocus, onBlurFocus } = useNovelTitleEdit(); //フォーカス移動
-	const { onChangeTextArea } = useNovelBodyEdit(); //本文エリア入力のカスタムフック
+	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
+	const { focus, onEnterKeyUp, setConposing } = useFocusEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
-	const bodyFocus = useRef<HTMLTextAreaElement>(null);
-
-	const focusEvent = () => {
-		bodyFocus.current.focus();
-		setIsFocus(false);
-	};
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -32,12 +25,6 @@ export const EditorArea = memo(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "", selectedDraft ? selectedDraft.maxLength : 0);
 		setBodyMaxLength(selectedDraft ? selectedDraft.maxLength : 0);
 	}, [selectedDraft]);
-
-	useEffect(() => {
-		if (isFocus) {
-			focusEvent();
-		}
-	}, [isFocus]);
 
 	return (
 		<>
@@ -61,8 +48,7 @@ export const EditorArea = memo(() => {
 										onCompositionEnd={() => {
 											setConposing(false);
 										}}
-										onKeyDown={onEnterKeyDown}
-										onBlur={onBlurFocus}
+										onKeyUp={onEnterKeyUp} //KeyDownだとテキストエリアに改行が入ってしまうのでUp
 										placeholder="novel title"
 										textAlign={"center"}
 										maxLength={30}
@@ -70,6 +56,8 @@ export const EditorArea = memo(() => {
 										transitionProperty="all"
 										transitionDuration="1.0s"
 										transitionTimingFunction={"ease-out"}
+										onBlur={onBlurFocusTitleInput}
+										autoFocus={true}
 									/>
 								</VStack>
 								<HStack w={"900px"}>
@@ -90,8 +78,7 @@ export const EditorArea = memo(() => {
 									onChange={onChangeTextArea}
 									value={selectedDraft.body}
 									isInvalid={isCharCountOverflow}
-									ref={bodyFocus}
-									autoFocus={true}
+									ref={focus}
 									_focus={{ color: "gray.600", backgroundColor: "gray.100", boxShadow: "none" }}
 									transitionProperty="all"
 									transitionDuration="1.0s"

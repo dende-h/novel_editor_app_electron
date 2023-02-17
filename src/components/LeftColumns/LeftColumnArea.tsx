@@ -1,16 +1,12 @@
-import { memo, useEffect, useRef, useState } from "react";
-import { useInput } from "../../hooks/useInput";
+import { memo, useEffect, useState } from "react";
 import { ImPointUp, ImQuill } from "react-icons/im";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import { useToggle } from "../../hooks/useToggle";
-import { VStack, Box, Center, Heading, HStack, IconButton, Input, Button } from "@chakra-ui/react";
+import { VStack, Box, Center, Heading, HStack, IconButton } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
-import { useDeleteDraft } from "../../hooks/useDeleteDraft";
-import { useFocusEvent } from "../../hooks/useFocusEvent";
-import { selectedState } from "../../globalState/selector/selectedState";
-import { resolve } from "path";
+import { useDraft } from "../../hooks/useDraft";
+import { isSelected } from "../../globalState/atoms/isSelected";
 
 export type draftObjectArray = {
 	title: string;
@@ -21,32 +17,26 @@ export type draftObjectArray = {
 }[];
 
 export const LeftColumnArea = memo(() => {
-	const { value, onChangeInputForm, setValue } = useInput();
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const [isClient, setIsClient] = useState(false);
-	const { setSelectedReset, deleteAction } = useDeleteDraft();
-	const { setConposing, setIsFocus } = useFocusEvent(); //フォーカスイベント
-	const [isSelect, setIsSelect] = useState(false);
-	const inputFocus = useRef<HTMLInputElement>(null);
-
-	const focusEvent = () => {
-		inputFocus.current.focus();
-		setIsFocus(false);
-	};
+	const { deleteAction } = useDraft();
+	const [isSelect, setIsSelect] = useRecoilState(isSelected);
+	const [addNovel, setAddNovel] = useState(false);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
 			setIsClient(true);
 		}
-		setSelectedReset(true);
 	}, []);
 
-	const onClickNewDraft = () => {
-		onInputFocus();
-		onInputTitle();
-	};
+	useEffect(() => {
+		if (addNovel) {
+			onAddNovel();
+		}
+		setAddNovel(false);
+	}, [addNovel]);
 
-	const onClickDraft = (selectIndex: number) => {
+	const onClickAddDraft = (selectIndex: number) => {
 		if (isSelect === false) {
 			setDraft(
 				draft.map((item, index) =>
@@ -74,21 +64,21 @@ export const LeftColumnArea = memo(() => {
 		}
 	};
 
-	const onInputFocus = () => {
+	const onAddNovelInit = () => {
 		setDraft(
 			draft.map((item) => {
 				return { ...item, isSelected: false };
 			})
 		);
 		setIsSelect(false);
+		setAddNovel(true);
 	};
 
-	const onInputTitle = () => {
-		console.log("title");
+	const onAddNovel = () => {
 		const newDraft: draftObjectArray = [
 			{
-				title: "無題",
-				body: undefined,
+				title: "",
+				body: "",
 				userName: "名無し",
 				isSelected: true,
 				maxLength: 800
@@ -96,8 +86,8 @@ export const LeftColumnArea = memo(() => {
 			...draft
 		];
 		setDraft(newDraft);
-		setValue("");
 		setIsSelect(true);
+		setAddNovel(true);
 	};
 
 	const cssTranstionPropaty = { "transition-property": "color , shadow , height , background-color " };
@@ -115,25 +105,8 @@ export const LeftColumnArea = memo(() => {
 							border={"none"}
 							_focus={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
 							_hover={{ backgroundColor: "orange.200", shadow: "2xl", cursor: "pointer" }}
-							w={"full"}
-							onClick={onClickNewDraft}
-						/>
-						<Input
-							placeholder="Please input novel title"
-							width={"full"}
-							backgroundColor={"gray.100"}
-							borderRadius={6}
-							border={"none"}
-							onChange={onChangeInputForm}
-							value={value}
-							onCompositionStart={() => setConposing(true)}
-							onCompositionEnd={() => {
-								setConposing(false);
-							}}
-							// onKeyDown={(e) => e.key === "Enter" && onInputTitle(value === "" ? undefined : value)}
-							onFocus={onInputFocus}
-							ref={inputFocus}
-							autoFocus
+							w={"250px"}
+							onClick={onAddNovelInit}
 						/>
 					</HStack>
 				</Center>
@@ -169,8 +142,8 @@ export const LeftColumnArea = memo(() => {
 										fontWeight={"normal"}
 										textAlign={"center"}
 										tabIndex={0}
-										onKeyDown={(e) => onEnterKey(e.key, index)}
-										onClick={() => onClickDraft(index)}
+										onKeyUp={(e) => onEnterKey(e.key, index)}
+										onClick={() => onClickAddDraft(index)}
 									>
 										<VStack p={2} marginBottom={"100%"}>
 											<Heading
@@ -210,7 +183,6 @@ export const LeftColumnArea = memo(() => {
 					borderRadius={"full"}
 					onClick={() => {
 						window.scrollTo({ top: 0, behavior: "smooth" });
-						focusEvent();
 					}}
 				/>
 			</VStack>
