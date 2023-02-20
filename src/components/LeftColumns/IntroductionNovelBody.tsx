@@ -7,6 +7,10 @@ type Props = { bodyText: string; lastEditedTime: Date };
 export const IntroductionNovelBody = memo((props: Props) => {
 	const { bodyText, lastEditedTime } = props;
 	const displayCharacters = 45;
+	const displayDate =
+		lastEditedTime instanceof Date
+			? format(lastEditedTime, "yyyy-MM-dd-hh:mm")
+			: format(new Date(lastEditedTime), "yyyy-MM-dd-hh:mm");
 
 	const css = {
 		h: "auto",
@@ -30,7 +34,7 @@ export const IntroductionNovelBody = memo((props: Props) => {
 								})
 								.join("")}...`}
 				</Text>
-				<Text sx={css}>{format(lastEditedTime, "yyyy-MM-dd-hh:mm")}</Text>
+				<Text sx={css}>{displayDate}</Text>
 			</VStack>
 		</Center>
 	);

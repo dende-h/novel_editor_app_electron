@@ -118,7 +118,7 @@ export const LeftColumnArea = memo(() => {
 											  }
 									}
 									shadow={item.isSelected ? "2xl" : "none"}
-									h={item.isSelected ? (item.body === "" ? "128px" : "163px") : "100px"}
+									h={item.isSelected ? "163px" : "100px"}
 									color={item.isSelected ? "gray.800" : "gray.400"}
 									marginBottom={item.isSelected ? 8 : 1}
 									backgroundColor={item.isSelected ? "gray.300" : "gray.200"}

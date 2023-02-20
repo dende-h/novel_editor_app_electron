@@ -24,7 +24,7 @@ export const EditorArea = memo(() => {
 	useEffect(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "", selectedDraft ? selectedDraft.maxLength : 0);
 		setBodyMaxLength(selectedDraft ? selectedDraft.maxLength : 0);
-		if (selectedDraft) {
+		if (isClient && selectedDraft) {
 			selectedDraft.title !== "" && focusEvent();
 		}
 	}, [selectedDraft]);
