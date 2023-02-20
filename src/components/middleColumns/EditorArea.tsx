@@ -9,7 +9,7 @@ import { SelectMaxLengthSlider } from "./SelectMaxLengthSlider";
 
 export const EditorArea = memo(() => {
 	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
-	const { focus, onEnterKeyUp, setConposing } = useFocusEvent();
+	const { focus, onEnterKeyUp, setConposing, focusEvent } = useFocusEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
@@ -24,6 +24,9 @@ export const EditorArea = memo(() => {
 	useEffect(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "", selectedDraft ? selectedDraft.maxLength : 0);
 		setBodyMaxLength(selectedDraft ? selectedDraft.maxLength : 0);
+		if (selectedDraft) {
+			selectedDraft.title !== "" && focusEvent();
+		}
 	}, [selectedDraft]);
 
 	return (

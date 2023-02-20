@@ -21,14 +21,14 @@ export const useDraft = () => {
 
 	//タイトルの入力を受け取ってオブジェクトのタイトルプロパティを更新
 	const onChangeTitleArea: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-		const editTime = format(new Date(), "yyyy-MM-dd-hh:mm");
+		const editTime = new Date();
 		const newTitle = e.target.value;
 		setDraft(draft.map((item) => (item.isSelected ? { ...item, title: newTitle, lastEditedTime: editTime } : item)));
 	};
 
 	//本文の入力を受け取ってオブジェクトのボディプロパティを更新
 	const onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-		const editTime = format(new Date(), "yyyy-MM-dd-hh:mm");
+		const editTime = new Date();
 		const newBody = e.target.value;
 		setDraft(draft.map((item) => (item.isSelected ? { ...item, body: newBody, lastEditedTime: editTime } : item)));
 	};

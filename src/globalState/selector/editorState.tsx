@@ -10,7 +10,7 @@ export type draftObject = {
 	maxLength: number;
 	isPublished?: boolean;
 	tag?: string[];
-	lastEditedTime: string;
+	lastEditedTime: Date;
 };
 
 export const editorState = selector({

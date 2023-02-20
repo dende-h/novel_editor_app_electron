@@ -19,5 +19,5 @@ export const useFocusEvent = () => {
 		}
 	}, []);
 
-	return { setConposing, onEnterKeyUp, focus };
+	return { setConposing, onEnterKeyUp, focus, focusEvent };
 };

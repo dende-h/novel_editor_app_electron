@@ -1,7 +1,8 @@
 import { Box, Center, Text, VStack } from "@chakra-ui/react";
+import format from "date-fns/format";
 import { memo } from "react";
 
-type Props = { bodyText: string; lastEditedTime: string };
+type Props = { bodyText: string; lastEditedTime: Date };
 
 export const IntroductionNovelBody = memo((props: Props) => {
 	const { bodyText, lastEditedTime } = props;
@@ -29,7 +30,7 @@ export const IntroductionNovelBody = memo((props: Props) => {
 								})
 								.join("")}...`}
 				</Text>
-				<Text sx={css}>{lastEditedTime}</Text>
+				<Text sx={css}>{format(lastEditedTime, "yyyy-MM-dd-hh:mm")}</Text>
 			</VStack>
 		</Center>
 	);
