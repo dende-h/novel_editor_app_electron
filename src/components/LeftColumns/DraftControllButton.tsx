@@ -1,6 +1,6 @@
 import { HStack, SlideFade } from "@chakra-ui/react";
 import { memo } from "react";
-import { AddTagsFormModal } from "./addTagsFormModal";
+import { AddTagsFormModal } from "./AddTagsFormModal";
 import { AlertDialogDelete } from "./AlertDialogDelete";
 
 type Props = { isAccordionOpen: boolean };

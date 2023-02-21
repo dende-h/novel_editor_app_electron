@@ -1,14 +1,29 @@
 import { memo, useEffect, useState } from "react";
-import { ImPointUp, ImQuill } from "react-icons/im";
+import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import { VStack, Box, Center, Heading, IconButton, Text } from "@chakra-ui/react";
+import {
+	VStack,
+	Box,
+	Center,
+	Heading,
+	IconButton,
+	Text,
+	GridItem,
+	HStack,
+	List,
+	ListIcon,
+	ListItem,
+	SimpleGrid,
+	Icon
+} from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject } from "../../globalState/selector/editorState";
 import format from "date-fns/format";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
 export const LeftColumnArea = memo(() => {
 	const setDraft = useSetRecoilState<draftObjectArray>(drafts);
@@ -118,12 +133,12 @@ export const LeftColumnArea = memo(() => {
 											  }
 									}
 									shadow={item.isSelected ? "2xl" : "none"}
-									h={item.isSelected ? "163px" : "100px"}
+									h={item.isSelected ? "180px" : "120px"}
 									color={item.isSelected ? "gray.800" : "gray.400"}
 									marginBottom={item.isSelected ? 8 : 1}
 									backgroundColor={item.isSelected ? "gray.300" : "gray.200"}
 									// ここから下は固定値、上は受け取った真偽値によって変化
-									paddingTop={2}
+									paddingTop={6}
 									w={"250px"}
 									marginTop={3}
 									borderRadius={5}
@@ -136,6 +151,7 @@ export const LeftColumnArea = memo(() => {
 									tabIndex={0}
 									onKeyUp={(e) => onEnterKey(e.key, index)}
 									onClick={() => onClickOpenDraft(index)}
+									position={"relative"}
 								>
 									<VStack p={2} marginBottom={"100%"}>
 										<Heading
@@ -148,6 +164,19 @@ export const LeftColumnArea = memo(() => {
 										>
 											{item.title}
 										</Heading>
+										<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2}>
+											<Icon as={ImPriceTag} size={"xs"} color={"teal.400"} />
+											<Text
+												textOverflow={"ellipsis"}
+												overflow={"hidden"}
+												fontSize={"xs"}
+												whiteSpace={"nowrap"}
+												w={"160px"}
+												color={"gray.500"}
+											>
+												{[...item.tag].toString()}
+											</Text>
+										</HStack>
 										<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />
 										<DraftControllButton isAccordionOpen={item.isSelected} />
 									</VStack>

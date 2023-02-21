@@ -4,12 +4,12 @@ import { useRecoilValue } from "recoil";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
-import { useFocusEvent } from "../../hooks/useFocusEvent";
+import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { SelectMaxLengthSlider } from "./SelectMaxLengthSlider";
 
 export const EditorArea = memo(() => {
 	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
-	const { focus, onEnterKeyUp, setConposing, focusEvent } = useFocusEvent();
+	const { focus, onEnterKeyFocusEvent, setConposing, focusEvent } = useEnterKeyEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
@@ -51,7 +51,7 @@ export const EditorArea = memo(() => {
 										onCompositionEnd={() => {
 											setConposing(false);
 										}}
-										onKeyUp={onEnterKeyUp} //KeyDownだとテキストエリアに改行が入ってしまうのでUp
+										onKeyUp={onEnterKeyFocusEvent} //KeyDownだとテキストエリアに改行が入ってしまうのでUp
 										placeholder="novel title"
 										textAlign={"center"}
 										maxLength={30}

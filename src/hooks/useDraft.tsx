@@ -3,7 +3,6 @@ import { drafts } from "../globalState/atoms/drafts";
 import { draftObjectArray } from "../globalState/atoms/drafts";
 import { useCallback } from "react";
 import { isSelected } from "../globalState/atoms/isSelected";
-import format from "date-fns/format";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDraft = () => {
