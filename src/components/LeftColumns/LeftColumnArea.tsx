@@ -164,19 +164,21 @@ export const LeftColumnArea = memo(() => {
 										>
 											{item.title}
 										</Heading>
-										<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2}>
-											<Icon as={ImPriceTag} size={"xs"} color={"teal.400"} />
-											<Text
-												textOverflow={"ellipsis"}
-												overflow={"hidden"}
-												fontSize={"xs"}
-												whiteSpace={"nowrap"}
-												w={"160px"}
-												color={"gray.500"}
-											>
-												{[...item.tag].toString()}
-											</Text>
-										</HStack>
+										{item.tag.length === 0 ? undefined : (
+											<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2}>
+												<Icon as={ImPriceTag} size={"xs"} color={"teal.400"} />
+												<Text
+													textOverflow={"ellipsis"}
+													overflow={"hidden"}
+													fontSize={"xs"}
+													whiteSpace={"nowrap"}
+													w={"160px"}
+													color={"gray.500"}
+												>
+													{[...item.tag].toString()}
+												</Text>
+											</HStack>
+										)}
 										<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />
 										<DraftControllButton isAccordionOpen={item.isSelected} />
 									</VStack>

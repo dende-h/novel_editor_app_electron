@@ -12,6 +12,7 @@ import {
 import React from "react";
 import { ImFire } from "react-icons/im";
 import { useDraft } from "../../hooks/useDraft";
+import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const AlertDialogDelete = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,18 +25,13 @@ export const AlertDialogDelete = () => {
 
 	return (
 		<>
-			<IconButton
-				transitionProperty="all"
-				transitionDuration="0.8s"
-				transitionTimingFunction={"ease-out"}
-				_hover={{ color: "red.600", fontSize: "30px" }}
-				_focus={{ color: "red.600", fontSize: "30px" }}
+			<PrimaryIconButton
 				aria-label="titleInput"
 				icon={<ImFire />}
-				color={"orange.300"}
-				backgroundColor={"gray.300"}
-				border={"none"}
-				borderRadius={"full"}
+				defaultColor={"orange.300"}
+				changeColor={"red.500"}
+				bgColor={"gray.300"}
+				focusOutline={"none"}
 				onClick={(e) => {
 					onOpen();
 					e.stopPropagation(); //親要素へのバブリングを停止

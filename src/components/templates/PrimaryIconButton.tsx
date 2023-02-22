@@ -5,20 +5,22 @@ type Props = {
 	defaultColor: string;
 	changeColor: string;
 	bgColor: string;
+	focusOutline?: string;
+	isDisableHoverAnimation?: boolean;
 } & IconButtonProps;
 
 export const PrimaryIconButton = (props: Props) => {
-	const { icon, defaultColor, changeColor, bgColor, ...IconButtonProps } = props;
+	const { icon, defaultColor, changeColor, bgColor, focusOutline, isDisableHoverAnimation, ...IconButtonProps } = props;
 
 	return (
 		<>
 			<IconButton
 				{...IconButtonProps}
 				transitionProperty="all"
-				transitionDuration="0.8s"
+				transitionDuration="0.5s"
 				transitionTimingFunction={"ease-out"}
-				_hover={{ color: changeColor, fontSize: "20px" }}
-				_focus={{ color: changeColor, fontSize: "20px", boxShadow: "outline" }}
+				_hover={isDisableHoverAnimation ? { color: defaultColor } : { color: changeColor, fontSize: "24px" }}
+				_focus={{ boxShadow: focusOutline }}
 				icon={icon}
 				color={defaultColor}
 				backgroundColor={bgColor}

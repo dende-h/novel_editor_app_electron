@@ -22,12 +22,13 @@ import {
 	Text
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { ImPlus, ImPriceTags } from "react-icons/im";
+import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { editorState } from "../../globalState/selector/editorState";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
+import Index from "../../pages";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const AddTagsFormModal = () => {
@@ -72,7 +73,8 @@ export const AddTagsFormModal = () => {
 			});
 		} else {
 			const newTags = [...tags, inputs.value];
-			if (newTags.length < 5) {
+			const tagArrayMaxLength = 4;
+			if (newTags.length < tagArrayMaxLength + 1) {
 				setTags(newTags);
 			} else {
 				toast({
@@ -97,6 +99,10 @@ export const AddTagsFormModal = () => {
 		onClose();
 	};
 
+	const onClickTagDelete = (deleteIndex: number) => {
+		setTags(tags.filter((_, index) => index !== deleteIndex));
+	};
+
 	return (
 		<>
 			<PrimaryIconButton
@@ -105,6 +111,7 @@ export const AddTagsFormModal = () => {
 				changeColor={"twitter.700"}
 				bgColor={"gray.300"}
 				aria-label="titleInput"
+				focusOutline="none"
 				onClick={(e) => {
 					onOpen();
 					e.stopPropagation(); //親要素へのバブリングを停止
@@ -137,6 +144,7 @@ export const AddTagsFormModal = () => {
 								/>
 								<PrimaryIconButton
 									isDisabled={inputs.value.length === 0}
+									isDisableHoverAnimation={inputs.value.length === 0}
 									icon={<ImPlus />}
 									defaultColor={"teal.400"}
 									changeColor={"teal.600"}
@@ -153,7 +161,15 @@ export const AddTagsFormModal = () => {
 										<GridItem key={index}>
 											<ListItem>
 												<HStack spacing={0}>
-													<ListIcon as={CheckCircleIcon} color="green.500" />
+													<PrimaryIconButton
+														icon={<ImCancelCircle />}
+														defaultColor="red.500"
+														changeColor="red.500"
+														bgColor={"gray.300"}
+														onClick={(e) => onClickTagDelete(index)}
+														aria-label="tagDelete"
+														focusOutline="none"
+													/>
 													<Text fontStyle={"italic"} fontWeight={"bold"} color={"gray.700"}>
 														{item}
 													</Text>
