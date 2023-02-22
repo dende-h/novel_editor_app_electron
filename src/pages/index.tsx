@@ -1,11 +1,10 @@
 import { NextPage } from "next";
-import { EditorArea } from "../components/middleColumns/EditorArea";
-import ThreeColumnTemplate from "../components/templates/ThreeColumnTemplate";
+import TwoColumnTemplate from "../components/templates/TwoColumnTemplate";
 
 const Index: NextPage = () => {
 	return (
 		<>
-			<ThreeColumnTemplate />
+			<TwoColumnTemplate />
 		</>
 	);
 };
