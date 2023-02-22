@@ -5,7 +5,7 @@ export type numberOfCharacters = {
 };
 
 export const numberOfCharacters: numberOfCharacters = {
-	veryShortNovel: 800,
-	shortShortNovel: 3500,
-	shortNovel: 8000
+	veryShortNovel: 1200,
+	shortShortNovel: 6000,
+	shortNovel: 32000
 };

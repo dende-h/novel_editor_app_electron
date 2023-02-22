@@ -3,7 +3,7 @@ import { Slider, SliderMark, SliderTrack, SliderFilledTrack, Tooltip, SliderThum
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
-
+import { numberOfCharacters } from "../../constant/constant";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { draftObjectArray } from "../../globalState/atoms/drafts";
 
@@ -22,8 +22,7 @@ export const SelectMaxLengthSlider = (props: Props) => {
 	const [draftLength, setDraftLength] = useRecoilState<draftObjectArray>(drafts);
 	const minCharCount = 400;
 	const maxCharCount = 18000;
-	const veryShortNovel = 1200;
-	const ssNovel = 6000;
+	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	const onChangeMaxLength = (setLength: number) => {
@@ -64,7 +63,11 @@ export const SelectMaxLengthSlider = (props: Props) => {
 						placement="top"
 						isOpen={showTooltip}
 						label={
-							selectedDraft.maxLength <= veryShortNovel ? "掌編" : selectedDraft.maxLength <= ssNovel ? "SS" : "短編"
+							selectedDraft.maxLength <= veryShortNovel
+								? "掌編"
+								: selectedDraft.maxLength <= shortShortNovel
+								? "SS"
+								: "短編"
 						}
 					>
 						<SliderThumb boxSize={4} />

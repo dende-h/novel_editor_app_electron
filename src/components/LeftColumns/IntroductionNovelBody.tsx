@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { Box, Center, Text, VStack } from "@chakra-ui/react";
 import format from "date-fns/format";
 import { memo } from "react";
@@ -12,8 +13,14 @@ export const IntroductionNovelBody = memo((props: Props) => {
 			? format(lastEditedTime, "yyyy-MM-dd-hh:mm")
 			: format(new Date(lastEditedTime), "yyyy-MM-dd-hh:mm");
 
+	const introductionBody = [...bodyText].filter((char) => {
+		return !char.match(/(\s+|　)/g); //空白文字、全角半角スペース、改行は除外
+	});
+
 	const css = {
 		h: "auto",
+		maxW: "220px",
+		paddingX: "3",
 		color: "gray.500",
 		textAlign: "left",
 		fontSize: "xs",
@@ -26,9 +33,9 @@ export const IntroductionNovelBody = memo((props: Props) => {
 		<Center>
 			<VStack>
 				<Text sx={css}>
-					{bodyText === undefined || bodyText === ""
+					{bodyText === ""
 						? "No content"
-						: `${[...bodyText]
+						: `${introductionBody
 								.filter((_, index) => {
 									return index < displayCharacters;
 								})

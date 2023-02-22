@@ -36,8 +36,10 @@ export const AddTagsFormModal = () => {
 	const inputs = useInput(maxLength);
 	const [tags, setTags] = useState<string[]>([]);
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
+	const [isChanged, setIsChanged] = useState(false);
 
 	useEffect(() => {
+		setIsChanged(false);
 		setTags(displayDraft.tag);
 	}, [isOpen]);
 
@@ -82,7 +84,7 @@ export const AddTagsFormModal = () => {
 				});
 			}
 		}
-
+		setIsChanged(true);
 		inputs.setValue("");
 	};
 
@@ -97,6 +99,7 @@ export const AddTagsFormModal = () => {
 
 	const onClickTagDelete = (deleteIndex: number) => {
 		setTags(tags.filter((_, index) => index !== deleteIndex));
+		setIsChanged(true);
 	};
 
 	return (
@@ -162,7 +165,7 @@ export const AddTagsFormModal = () => {
 														defaultColor="red.500"
 														changeColor="red.500"
 														bgColor={"gray.300"}
-														onClick={(e) => onClickTagDelete(index)}
+														onClick={() => onClickTagDelete(index)}
 														aria-label="tagDelete"
 														focusOutline="none"
 													/>
@@ -178,7 +181,7 @@ export const AddTagsFormModal = () => {
 						</List>
 					</ModalBody>
 					<ModalFooter>
-						<Button colorScheme="blue" mr={3} onClick={onClickSave}>
+						<Button colorScheme="blue" mr={3} onClick={onClickSave} isDisabled={!isChanged}>
 							Save
 						</Button>
 						<Button onClick={onClose}>Cancel</Button>

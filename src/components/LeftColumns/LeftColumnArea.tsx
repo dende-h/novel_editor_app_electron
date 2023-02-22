@@ -8,12 +8,14 @@ import { DraftControllButton } from "./DraftControllButton";
 import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject } from "../../globalState/selector/editorState";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
+import { numberOfCharacters } from "../../constant/constant";
 
 export const LeftColumnArea = memo(() => {
 	const setDraft = useSetRecoilState<draftObjectArray>(drafts);
 	const draft = useRecoilValue(lastEditedTimeSort);
 	const [isClient, setIsClient] = useState(false);
 	const [isSelect, setIsSelect] = useRecoilState(isSelected);
+	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -117,7 +119,7 @@ export const LeftColumnArea = memo(() => {
 											  }
 									}
 									shadow={item.isSelected ? "2xl" : "none"}
-									h={item.isSelected ? "180px" : "120px"}
+									h={item.isSelected ? "200px" : "155px"}
 									color={item.isSelected ? "gray.800" : "gray.400"}
 									marginBottom={item.isSelected ? 8 : 1}
 									backgroundColor={item.isSelected ? "gray.300" : "gray.200"}
@@ -163,6 +165,11 @@ export const LeftColumnArea = memo(() => {
 												</Text>
 											</HStack>
 										)}
+										<Box position={"absolute"} top={0} right={2.5}>
+											<Text fontSize={"xs"} color={"gray.500"}>
+												{item.maxLength <= veryShortNovel ? "掌編" : item.maxLength <= shortShortNovel ? "SS" : "短編"}
+											</Text>
+										</Box>
 										<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />
 										<DraftControllButton isAccordionOpen={item.isSelected} />
 									</VStack>

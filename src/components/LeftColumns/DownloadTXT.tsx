@@ -9,26 +9,41 @@ import {
 	useDisclosure
 } from "@chakra-ui/react";
 import React from "react";
-import { ImFire } from "react-icons/im";
-import { useDraft } from "../../hooks/useDraft";
+import { ImDownload2 } from "react-icons/im";
+import { useRecoilValue } from "recoil";
+import { editorState } from "../../globalState/selector/editorState";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
-export const AlertDialogDelete = () => {
+export const DownloadTXT = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = React.useRef();
-	const { deleteAction } = useDraft();
-	const onClickDeleteButton = () => {
-		deleteAction();
+	const downloadDraft = useRecoilValue(editorState);
+
+	const downloadLink = () => {
+		if (downloadDraft) {
+			const blob = new Blob([downloadDraft.body], { type: "text/plain" });
+
+			const link = document.createElement("a");
+
+			link.href = URL.createObjectURL(blob);
+
+			link.download = `${downloadDraft.title}.txt`;
+
+			return link;
+		}
+	};
+	const onClickDownloadButton = () => {
+		downloadLink().click();
 		onClose();
 	};
 
 	return (
 		<>
 			<PrimaryIconButton
-				aria-label="deleteDraft"
-				icon={<ImFire />}
-				defaultColor={"orange.300"}
-				changeColor={"red.500"}
+				aria-label="downloadText"
+				icon={<ImDownload2 />}
+				defaultColor={"teal.300"}
+				changeColor={"teal.500"}
 				bgColor={"gray.300"}
 				focusOutline={"none"}
 				onClick={(e) => {
@@ -41,17 +56,17 @@ export const AlertDialogDelete = () => {
 				<AlertDialogOverlay>
 					<AlertDialogContent>
 						<AlertDialogHeader fontSize="lg" fontWeight="bold">
-							小説の焼却炉
+							小説のダウンロード
 						</AlertDialogHeader>
 
-						<AlertDialogBody>本当に焼却しますか？後から取り消すことはできません。</AlertDialogBody>
+						<AlertDialogBody>テキスト形式で小説を保存できます</AlertDialogBody>
 
 						<AlertDialogFooter>
 							<Button ref={cancelRef} onClick={onClose} _focus={{ boxShadow: "none" }}>
 								キャンセル
 							</Button>
-							<Button colorScheme="red" onClick={onClickDeleteButton} ml={3} _focus={{ boxShadow: "none" }}>
-								焼却する
+							<Button colorScheme="teal" onClick={onClickDownloadButton} ml={3} _focus={{ boxShadow: "none" }}>
+								ダウンロード
 							</Button>
 						</AlertDialogFooter>
 					</AlertDialogContent>

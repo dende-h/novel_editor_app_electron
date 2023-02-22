@@ -9,7 +9,7 @@ import { SelectMaxLengthSlider } from "./SelectMaxLengthSlider";
 
 export const EditorArea = memo(() => {
 	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
-	const { focus, onEnterKeyFocusEvent, setConposing, focusEvent } = useEnterKeyEvent();
+	const { focus, onEnterKeyFocusEvent, setConposing } = useEnterKeyEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
@@ -24,9 +24,6 @@ export const EditorArea = memo(() => {
 	useEffect(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "", selectedDraft ? selectedDraft.maxLength : 0);
 		setBodyMaxLength(selectedDraft ? selectedDraft.maxLength : 0);
-		if (isClient && selectedDraft) {
-			selectedDraft.title !== "" && focusEvent();
-		}
 	}, [selectedDraft]);
 
 	return (
@@ -55,12 +52,12 @@ export const EditorArea = memo(() => {
 										placeholder="novel title"
 										textAlign={"center"}
 										maxLength={30}
-										_focus={{ color: "gray.600", backgroundColor: "gray.100", boxShadow: "none" }}
+										_focus={{ color: "gray.600", backgroundColor: "gray.100", boxShadow: "outline" }}
 										transitionProperty="all"
 										transitionDuration="1.0s"
 										transitionTimingFunction={"ease-out"}
 										onBlur={onBlurFocusTitleInput}
-										autoFocus={true}
+										autoFocus={selectedDraft.title === "" ? true : false}
 									/>
 								</VStack>
 								<HStack w={"900px"}>
@@ -86,6 +83,7 @@ export const EditorArea = memo(() => {
 									transitionProperty="all"
 									transitionDuration="1.0s"
 									transitionTimingFunction={"ease-out"}
+									autoFocus={selectedDraft.title !== "" ? true : false}
 								/>
 							</VStack>
 						</Center>
