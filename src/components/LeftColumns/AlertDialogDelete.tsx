@@ -6,7 +6,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogOverlay,
 	Button,
-	IconButton,
 	useDisclosure
 } from "@chakra-ui/react";
 import React from "react";

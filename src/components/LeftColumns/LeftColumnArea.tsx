@@ -3,27 +3,11 @@ import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import {
-	VStack,
-	Box,
-	Center,
-	Heading,
-	IconButton,
-	Text,
-	GridItem,
-	HStack,
-	List,
-	ListIcon,
-	ListItem,
-	SimpleGrid,
-	Icon
-} from "@chakra-ui/react";
+import { VStack, Box, Center, Heading, IconButton, Text, HStack, Icon } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject } from "../../globalState/selector/editorState";
-import format from "date-fns/format";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 
 export const LeftColumnArea = memo(() => {
 	const setDraft = useSetRecoilState<draftObjectArray>(drafts);

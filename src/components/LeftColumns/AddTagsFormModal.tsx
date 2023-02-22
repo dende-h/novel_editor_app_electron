@@ -1,4 +1,3 @@
-import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
 	useDisclosure,
 	Button,
@@ -9,11 +8,9 @@ import {
 	ModalCloseButton,
 	ModalBody,
 	ModalFooter,
-	IconButton,
 	Input,
 	HStack,
 	List,
-	ListIcon,
 	ListItem,
 	SimpleGrid,
 	GridItem,
@@ -28,7 +25,6 @@ import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { editorState } from "../../globalState/selector/editorState";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
-import Index from "../../pages";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const AddTagsFormModal = () => {

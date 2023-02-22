@@ -1,6 +1,5 @@
 import { selector } from "recoil";
 import { drafts } from "../atoms/drafts";
-import { selectedState } from "./selectedState";
 
 export type draftObject = {
 	title: string;
@@ -16,8 +15,8 @@ export type draftObject = {
 export const editorState = selector({
 	key: "editorState",
 	get: ({ get }) => {
-		const selected = get(selectedState).indexOf(true);
-		const selectedDraftObject: draftObject = get(drafts)[selected];
+		const selectedDraftObject: draftObject = get(drafts).filter((item: draftObject) => item.isSelected)[0];
+
 		return selectedDraftObject;
 	}
 });
