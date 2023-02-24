@@ -65,7 +65,7 @@ export const LeftColumnArea = memo(() => {
 											? item.isSelected
 												? undefined
 												: {
-														_hover: { color: "gray.600", cursor: "disable" }
+														_hover: { color: "gray.600", cursor: "not-allowed" }
 												  }
 											: {
 													_hover: { shadow: "lg", color: "gray.600", cursor: "pointer" }

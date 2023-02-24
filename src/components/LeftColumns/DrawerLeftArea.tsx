@@ -24,9 +24,9 @@ export const DrawerLeftArea = ({ colorScheme, size }) => {
 	const isSelect = useRecoilValue(isSelected);
 	const btnRef = useRef();
 
-	useEffect(() => {
-		onClose();
-	}, [isSelect]);
+	// useEffect(() => {
+	// 	onClose();
+	// }, [isSelect]);
 
 	return (
 		<>
