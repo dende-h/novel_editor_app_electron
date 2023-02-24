@@ -30,14 +30,17 @@ export const EditorArea = memo(() => {
 		<>
 			{isClient ? (
 				selectedDraft ? (
-					<Box p={10}>
+					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} minW={"350px"} minH={"100vh"}>
 						<Center>
-							<VStack spacing={5}>
-								<VStack marginY={5}>
-									<Text textColor={"gray.500"}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
+							<VStack spacing={{ base: 4, md: 5, lg: 5, xl: 5 }}>
+								<VStack>
+									<Text
+										textColor={"gray.500"}
+										fontSize={{ base: "sm", md: "md" }}
+									>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
 									<Input
 										color={"gray.500"}
-										fontSize={"lg"}
+										fontSize={{ base: "md", md: "lg" }}
 										value={selectedDraft.title}
 										onChange={onChangeTitleArea}
 										border={"none"}
@@ -60,17 +63,18 @@ export const EditorArea = memo(() => {
 										autoFocus={selectedDraft.title === "" ? true : false}
 									/>
 								</VStack>
-								<HStack w={"900px"}>
-									<Text w={"25%"} textColor={isCharCountOverflow ? "red" : "gray.500"}>
+								<VStack w={{ base: "340px", md: "740px" }} spacing={0}>
+									<Text textColor={isCharCountOverflow ? "red" : "gray.500"} fontSize={{ base: "sm", md: "md" }}>
 										現在の文字数 : {charCount} / {bodyMaxLength} 文字
 									</Text>
 									<SelectMaxLengthSlider maxLength={bodyMaxLength} />
-								</HStack>
+								</VStack>
 
 								<Textarea
+									fontSize={{ base: "xs", md: "sm", lg: "md" }}
 									placeholder="Enter the text of your novel here"
-									width={"800px"}
-									height={"800px"}
+									width={{ base: "320px", md: "680px", lg: "630px", xl: "900px", xxl: "1200px" }}
+									minH={"70vh"}
 									backgroundColor={"gray.200"}
 									resize={"none"}
 									borderRadius={0}
@@ -89,7 +93,7 @@ export const EditorArea = memo(() => {
 						</Center>
 					</Box>
 				) : (
-					<Box h={"980px"} w={"880"}></Box>
+					<Box h={"100vh"}></Box>
 				)
 			) : undefined}
 		</>

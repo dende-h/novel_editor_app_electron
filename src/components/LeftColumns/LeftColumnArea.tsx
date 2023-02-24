@@ -1,21 +1,21 @@
-import { memo, useEffect, useState } from "react";
-import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
+import { memo, useEffect, useRef, useState } from "react";
+import { ImPriceTag, ImQuill } from "react-icons/im";
+import { useRecoilValue } from "recoil";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { VStack, Box, Center, Heading, IconButton, Text, HStack, Icon } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 import { isSelected } from "../../globalState/atoms/isSelected";
-import { draftObject } from "../../globalState/selector/editorState";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
 import { numberOfCharacters } from "../../constant/constant";
+import { useDraft } from "../../hooks/useDraft";
 
 export const LeftColumnArea = memo(() => {
-	const setDraft = useSetRecoilState<draftObjectArray>(drafts);
 	const draft = useRecoilValue(lastEditedTimeSort);
 	const [isClient, setIsClient] = useState(false);
-	const [isSelect, setIsSelect] = useRecoilState(isSelected);
+	const isSelect = useRecoilValue(isSelected);
+	const { onAddNovel, onEnterKey, onClickOpenDraft } = useDraft();
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
+	const scrollTopRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -23,60 +23,9 @@ export const LeftColumnArea = memo(() => {
 		}
 	}, []);
 
-	const onClickOpenDraft = (selectIndex: number) => {
-		if (isSelect === false) {
-			setDraft(
-				draft.map((item, index) =>
-					selectIndex === index
-						? { ...item, isSelected: true, lastEditedTime: new Date() }
-						: { ...item, isSelected: false }
-				)
-			);
-			setIsSelect(true);
-		} else {
-			setDraft(
-				draft.map((item) => {
-					return { ...item, isSelected: false };
-				})
-			);
-			setIsSelect(false);
-		}
-	};
-
-	const onEnterKey = (key: string, selectIndex: number) => {
-		if (key === "Enter") {
-			setDraft(
-				draft.map((item, index) =>
-					selectIndex === index ? { ...item, isSelected: true } : { ...item, isSelected: false }
-				)
-			);
-		}
-	};
-
-	const onAddNovel = () => {
-		const createTime = new Date();
-		setDraft(
-			draft.map((item) => {
-				return { ...item, isSelected: false };
-			})
-		);
-		setIsSelect(false);
-		const newDraft: draftObject = {
-			title: "",
-			body: "",
-			userName: "名無し",
-			isSelected: true,
-			maxLength: 800,
-			isPublished: false,
-			tag: [],
-			lastEditedTime: createTime
-		};
-		const oldDraft = [...draft].map((item) => {
-			return { ...item, isSelected: false };
-		});
-		setDraft([newDraft, ...oldDraft]);
-		setIsSelect(true);
-	};
+	useEffect(() => {
+		scrollTopRef?.current?.scrollIntoView();
+	}, [isSelect]);
 
 	const cssTranstionPropaty = { transitionProperty: "color , shadow , height , backgroundColor " };
 
@@ -84,9 +33,9 @@ export const LeftColumnArea = memo(() => {
 		<>
 			{/* クライアントサイドのみでのレンダリング */}
 			{isClient ? (
-				<VStack p={6}>
+				<VStack p={6} maxH={"100vh"} overflowY="scroll">
 					<Center>
-						<VStack>
+						<VStack ref={scrollTopRef}>
 							<IconButton
 								aria-label="addNewDraft"
 								icon={<ImQuill />}
@@ -95,7 +44,7 @@ export const LeftColumnArea = memo(() => {
 								border={"none"}
 								_focus={{ backgroundColor: "orange.200", shadow: "2xl" }}
 								_hover={{ backgroundColor: "orange.200", shadow: "2xl" }}
-								w={"250px"}
+								w={"300px"}
 								onClick={onAddNovel}
 								isDisabled={isSelect}
 							/>
@@ -110,10 +59,14 @@ export const LeftColumnArea = memo(() => {
 						return (
 							<Center key={index}>
 								<Box
-									visibility={isSelect ? (item.isSelected ? "visible" : "hidden") : "visible"}
+									opacity={isSelect && !item.isSelected && 0.6}
 									sx={
-										item.isSelected
-											? undefined
+										isSelect
+											? item.isSelected
+												? undefined
+												: {
+														_hover: { color: "gray.600", cursor: "disable" }
+												  }
 											: {
 													_hover: { shadow: "lg", color: "gray.600", cursor: "pointer" }
 											  }
@@ -125,7 +78,7 @@ export const LeftColumnArea = memo(() => {
 									backgroundColor={item.isSelected ? "gray.300" : "gray.200"}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
-									w={"250px"}
+									w={"290px"}
 									marginTop={3}
 									borderRadius={5}
 									border={"none"}
@@ -135,9 +88,22 @@ export const LeftColumnArea = memo(() => {
 									fontWeight={"normal"}
 									textAlign={"center"}
 									tabIndex={0}
-									onKeyUp={(e) => onEnterKey(e.key, index)}
-									onClick={() => onClickOpenDraft(index)}
+									onKeyUp={
+										isSelect
+											? item.isSelected
+												? (e) => onEnterKey(e.key, index)
+												: undefined
+											: (e) => onEnterKey(e.key, index)
+									}
+									onClick={
+										isSelect
+											? item.isSelected
+												? () => onClickOpenDraft(index)
+												: undefined
+											: () => onClickOpenDraft(index)
+									}
 									position={"relative"}
+									_hover={isSelect && !item.isSelected && { cursor: "disable" }}
 								>
 									<VStack p={2} marginBottom={"100%"}>
 										<Heading
@@ -146,7 +112,7 @@ export const LeftColumnArea = memo(() => {
 											textOverflow={"ellipsis"}
 											overflow={"hidden"}
 											whiteSpace={"nowrap"}
-											w={"200px"}
+											w={"auto"}
 										>
 											{item.title}
 										</Heading>
@@ -156,9 +122,9 @@ export const LeftColumnArea = memo(() => {
 												<Text
 													textOverflow={"ellipsis"}
 													overflow={"hidden"}
-													fontSize={"xs"}
+													fontSize={{ base: "xs", xl: "md" }}
 													whiteSpace={"nowrap"}
-													w={"160px"}
+													w={"auto"}
 													color={"gray.500"}
 												>
 													{[...item.tag].toString()}
@@ -177,29 +143,6 @@ export const LeftColumnArea = memo(() => {
 							</Center>
 						);
 					})}
-
-					<IconButton
-						size={"lg"}
-						position={"fixed"}
-						bottom={"30px"}
-						left={"30px"}
-						shadow={"lg"}
-						transitionProperty="all"
-						transitionDuration="0.8s"
-						transitionTimingFunction={"ease-out"}
-						aria-label="scrollTop"
-						_focus={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
-						_hover={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
-						icon={<ImPointUp />}
-						color={"brown"}
-						backgroundColor={"orange.100"}
-						opacity={"0.6"}
-						border={"none"}
-						borderRadius={"full"}
-						onClick={() => {
-							window.scrollTo({ top: 0, behavior: "smooth" });
-						}}
-					/>
 				</VStack>
 			) : undefined}
 		</>

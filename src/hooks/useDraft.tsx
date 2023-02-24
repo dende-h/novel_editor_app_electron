@@ -1,16 +1,70 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { drafts } from "../globalState/atoms/drafts";
 import { draftObjectArray } from "../globalState/atoms/drafts";
 import { useCallback } from "react";
 import { isSelected } from "../globalState/atoms/isSelected";
+import { draftObject } from "../globalState/selector/editorState";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDraft = () => {
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts); //下書きのオブジェクトを配列で取得
-	const setIsSelect = useSetRecoilState(isSelected);
+	const [isSelect, setIsSelect] = useRecoilState(isSelected);
 
 	//オブジェクト内のisSelectedプロパティにより処理を行う
 	//isSelectedプロパティは配列内でtrueは常に一つであり重複しない。重複する場合想定する動作をしないため修正必要
+
+	//ノベル追加ボタンで新規の小説を追加する
+	const onAddNovel = () => {
+		const createTime = new Date();
+		setDraft(
+			draft.map((item) => {
+				return { ...item, isSelected: false };
+			})
+		);
+		setIsSelect(false);
+		const newDraft: draftObject = {
+			title: "",
+			body: "",
+			userName: "名無し",
+			isSelected: true,
+			maxLength: 800,
+			isPublished: false,
+			tag: [],
+			lastEditedTime: createTime
+		};
+		const oldDraft = [...draft].map((item) => {
+			return { ...item, isSelected: false };
+		});
+		setDraft([newDraft, ...oldDraft]);
+		setIsSelect(true);
+	};
+
+	//下書き一覧をクリックもしくはフォーカスしてエンターキーでセレクトのオンオフ
+	const onClickOpenDraft = (selectIndex: number) => {
+		if (isSelect === false) {
+			setDraft(
+				draft.map((item, index) =>
+					selectIndex === index
+						? { ...item, isSelected: true, lastEditedTime: new Date() }
+						: { ...item, isSelected: false }
+				)
+			);
+			setIsSelect(true);
+		} else {
+			setDraft(
+				draft.map((item) => {
+					return { ...item, isSelected: false };
+				})
+			);
+			setIsSelect(false);
+		}
+	};
+
+	const onEnterKey = (key: string, selectIndex: number) => {
+		if (key === "Enter") {
+			onClickOpenDraft(selectIndex);
+		}
+	};
 
 	//タイトル入力エリアからフォーカスが離れた時の処理
 	const onBlurFocusTitleInput = () => {
@@ -39,5 +93,13 @@ export const useDraft = () => {
 		setIsSelect(false);
 	}, []);
 
-	return { deleteAction, onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea };
+	return {
+		deleteAction,
+		onChangeTitleArea,
+		onBlurFocusTitleInput,
+		onChangeTextArea,
+		onAddNovel,
+		onClickOpenDraft,
+		onEnterKey
+	};
 };

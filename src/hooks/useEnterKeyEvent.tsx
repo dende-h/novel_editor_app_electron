@@ -6,7 +6,7 @@ export const useEnterKeyEvent = () => {
 	const focus = useRef<HTMLTextAreaElement>(null); //タイトル入力から本文エリアへのフォーカス移動用
 
 	const focusEvent = () => {
-		focus.current.focus();
+		focus?.current?.focus();
 	};
 
 	const onEnterKeySubmitEvent = useCallback((e: React.KeyboardEvent<HTMLInputElement>, fireEvent: () => void) => {
