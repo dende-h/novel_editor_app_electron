@@ -1,6 +1,7 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { memo } from "react";
 import { DrawerLeftArea } from "../LeftColumns/DrawerLeftArea";
+import { HeaderMenu } from "./HeaderMenu";
 
 export const Header = memo(() => {
 	return (
@@ -12,6 +13,7 @@ export const Header = memo(() => {
 				<Heading as={"h1"} fontFamily="heading" fontSize={{ base: "xl", lg: "xx-large" }}>
 					“ NoA -novel aidor- ”
 				</Heading>
+				<HeaderMenu />
 			</Box>
 		</>
 	);

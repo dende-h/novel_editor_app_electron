@@ -1,14 +1,18 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { drafts } from "../globalState/atoms/drafts";
 import { draftObjectArray } from "../globalState/atoms/drafts";
 import { useCallback } from "react";
 import { isSelected } from "../globalState/atoms/isSelected";
 import { draftObject } from "../globalState/selector/editorState";
+import { isEdited } from "../globalState/atoms/isEdited";
+import { lastEditedTimeSort } from "../globalState/selector/lastEditedTimeSort";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDraft = () => {
-	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts); //下書きのオブジェクトを配列で取得
+	const setDraft = useSetRecoilState<draftObjectArray>(drafts); //下書きのオブジェクトを配列で取得
+	const draft = useRecoilValue(lastEditedTimeSort);
 	const [isSelect, setIsSelect] = useRecoilState(isSelected);
+	const [isEdit, setIsEdit] = useRecoilState(isEdited);
 
 	//オブジェクト内のisSelectedプロパティにより処理を行う
 	//isSelectedプロパティは配列内でtrueは常に一つであり重複しない。重複する場合想定する動作をしないため修正必要
@@ -44,9 +48,7 @@ export const useDraft = () => {
 		if (isSelect === false) {
 			setDraft(
 				draft.map((item, index) =>
-					selectIndex === index
-						? { ...item, isSelected: true, lastEditedTime: new Date() }
-						: { ...item, isSelected: false }
+					selectIndex === index ? { ...item, isSelected: true } : { ...item, isSelected: false }
 				)
 			);
 			setIsSelect(true);
@@ -57,6 +59,7 @@ export const useDraft = () => {
 				})
 			);
 			setIsSelect(false);
+			setIsEdit(false);
 		}
 	};
 
@@ -77,6 +80,7 @@ export const useDraft = () => {
 		const editTime = new Date();
 		const newTitle = e.target.value;
 		setDraft(draft.map((item) => (item.isSelected ? { ...item, title: newTitle, lastEditedTime: editTime } : item)));
+		setIsEdit(true);
 	};
 
 	//本文の入力を受け取ってオブジェクトのボディプロパティを更新
@@ -84,6 +88,7 @@ export const useDraft = () => {
 		const editTime = new Date();
 		const newBody = e.target.value;
 		setDraft(draft.map((item) => (item.isSelected ? { ...item, body: newBody, lastEditedTime: editTime } : item)));
+		setIsEdit(true);
 	};
 
 	//draftObjectの削除処理
@@ -91,6 +96,7 @@ export const useDraft = () => {
 		const newDraft = draft.filter((item) => item.isSelected === false);
 		setDraft(newDraft);
 		setIsSelect(false);
+		setIsEdit(false);
 	}, []);
 
 	return {

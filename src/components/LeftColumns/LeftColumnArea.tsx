@@ -8,6 +8,7 @@ import { isSelected } from "../../globalState/atoms/isSelected";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
 import { numberOfCharacters } from "../../constant/constant";
 import { useDraft } from "../../hooks/useDraft";
+import { isEdited } from "../../globalState/atoms/isEdited";
 
 export const LeftColumnArea = memo(() => {
 	const draft = useRecoilValue(lastEditedTimeSort);
@@ -16,6 +17,7 @@ export const LeftColumnArea = memo(() => {
 	const { onAddNovel, onEnterKey, onClickOpenDraft } = useDraft();
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 	const scrollTopRef = useRef<HTMLDivElement>(null);
+	const isEdit = useRecoilValue(isEdited);
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -25,7 +27,7 @@ export const LeftColumnArea = memo(() => {
 
 	useEffect(() => {
 		scrollTopRef?.current?.scrollIntoView();
-	}, [isSelect]);
+	}, [isEdit]);
 
 	const cssTranstionPropaty = { transitionProperty: "color , shadow , height , backgroundColor " };
 
