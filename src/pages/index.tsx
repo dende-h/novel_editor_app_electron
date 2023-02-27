@@ -1,9 +1,13 @@
+import { Box } from "@chakra-ui/react";
+import { NextPage } from "next";
+import TwoColumnTemplate from "../components/templates/TwoColumnTemplate";
 
-const Index = ({ user, note }) => {
-	
+const Index: NextPage = () => {
 	return (
 		<>
-		 	<p>へろーわーるど</p>
+			<Box>
+				<TwoColumnTemplate />
+			</Box>
 		</>
 	);
 };

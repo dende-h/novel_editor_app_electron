@@ -5,6 +5,7 @@
 	},
 	"extends": [
 		"eslint:recommended",
+		"plugin:storybook/recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react/recommended",
@@ -22,7 +23,7 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react", "react-hooks", "@typescript-eslint", "jest"],
-	"rules": {},
+	"rules": { "@typescript-eslint/no-unused-vars": "off", "react-hooks/exhaustive-deps": "off" },
 	"globals": {
 		"Atomics": "readonly",
 		"SharedArrayBuffer": "readonly",
