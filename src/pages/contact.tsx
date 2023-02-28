@@ -2,7 +2,18 @@ import Head from "next/head";
 import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import { VStack, Heading, FormControl, FormLabel, Input, Textarea, Button, Box } from "@chakra-ui/react";
+import {
+	VStack,
+	Heading,
+	FormControl,
+	FormLabel,
+	Input,
+	Textarea,
+	Button,
+	Box,
+	FormErrorMessage
+} from "@chakra-ui/react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 type FormValues = {
 	name: string;
@@ -18,8 +29,14 @@ export default function Contact() {
 		handleSubmit,
 		formState: { errors }
 	} = useForm<FormValues>({ mode: "onChange" });
+	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	const onSubmit = handleSubmit(async (data) => {
+		if (!executeRecaptcha) return;
+		const token = await executeRecaptcha("submit");
+		console.log(token);
+		data.googleReCaptchaToken = token;
+
 		const formData = new FormData();
 		Object.entries(data).forEach(([key, value]) => {
 			formData.append(key, value);
@@ -49,29 +66,90 @@ export default function Contact() {
 				<title>NoA問い合わせフォーム</title>
 				<meta name="description" content="NoAに関する問い合わせフォームです" />
 			</Head>
-			<Box>
-				<VStack>
-					<Heading as={"h1"}>Contact us</Heading>
+			<Box p="6" w="100%" h="100vh">
+				<VStack spacing="6">
+					<Heading as="h1" size="xl">
+						Contact Form
+					</Heading>
 					<form onSubmit={onSubmit}>
-						<VStack>
+						<VStack align="stretch" spacing="4">
 							<FormControl isInvalid={Boolean(errors.name)}>
-								<FormLabel htmlFor="name">Name</FormLabel>
+								<FormLabel htmlFor="name" fontSize={{ base: "md", md: "lg" }}>
+									Name
+								</FormLabel>
 								<Input
 									id="name"
 									{...register("name", { required: "Name is required" })}
 									aria-describedby="error-name-required"
+									size="lg"
+									variant="filled"
+									bg="white"
+									shadow="md"
+									_hover={{ shadow: "lg" }}
+									_focus={{ outline: "none", shadow: "lg" }}
 								/>
 								{errors?.name && (
-									<span id="error-name-required" aria-live="assertive">
+									<FormErrorMessage id="error-name-required" aria-live="assertive">
 										{errors.name.message}
-									</span>
+									</FormErrorMessage>
 								)}
-								<FormLabel htmlFor="email">Email</FormLabel>
-								<Input id="email" placeholder="email" type="email" {...register("email")} />
-								<FormLabel htmlFor="message">Message</FormLabel>
-								<Textarea id="message" name="message" {...register("message")}></Textarea>
 							</FormControl>
-							<Button type="submit">Submit</Button>
+							<FormControl isInvalid={Boolean(errors.email)}>
+								<FormLabel htmlFor="email" fontSize={{ base: "md", md: "lg" }}>
+									Email
+								</FormLabel>
+								<Input
+									id="email"
+									placeholder="email"
+									type="email"
+									{...register("email", {
+										required: "Email is required",
+										pattern: {
+											value: /^\S+@\S+$/i,
+											message: "Invalid email format"
+										}
+									})}
+									size="lg"
+									variant="filled"
+									bg="white"
+									shadow="md"
+									_hover={{ shadow: "lg" }}
+									_focus={{ outline: "none", shadow: "lg" }}
+								/>
+								{errors?.email && (
+									<FormErrorMessage id="error-email" aria-live="assertive">
+										{errors.email.message}
+									</FormErrorMessage>
+								)}
+							</FormControl>
+							<FormControl w={{ base: "320px", md: "400px", lg: "550px" }}>
+								<FormLabel htmlFor="message" fontSize={{ base: "md", md: "lg" }}>
+									Message
+								</FormLabel>
+								<Textarea
+									id="message"
+									name="message"
+									{...register("message")}
+									size="lg"
+									variant="filled"
+									bg="white"
+									shadow="md"
+									_hover={{ shadow: "lg" }}
+									_focus={{ outline: "none", shadow: "lg" }}
+									minH={"150px"}
+								></Textarea>
+							</FormControl>
+							<Button
+								type="submit"
+								size="lg"
+								bg="gray.800"
+								color="white"
+								_hover={{ bg: "gray.700" }}
+								w={{ base: "100%", lg: "auto" }}
+								alignSelf={{ base: "center", lg: "flex-end" }}
+							>
+								Submit
+							</Button>
 						</VStack>
 					</form>
 				</VStack>
