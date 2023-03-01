@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Box, Center, Heading, VStack, Text } from "@chakra-ui/react";
+import { Box, Heading, VStack, Text } from "@chakra-ui/react";
 
 export default function Thanks() {
 	return (

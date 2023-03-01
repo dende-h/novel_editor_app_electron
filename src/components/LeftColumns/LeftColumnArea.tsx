@@ -9,6 +9,7 @@ import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSor
 import { numberOfCharacters } from "../../constant/constant";
 import { useDraft } from "../../hooks/useDraft";
 import { isEdited } from "../../globalState/atoms/isEdited";
+import { useColorTheme } from "../../hooks/useColorTheme";
 
 export const LeftColumnArea = memo(() => {
 	const draft = useRecoilValue(lastEditedTimeSort);
@@ -18,6 +19,7 @@ export const LeftColumnArea = memo(() => {
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 	const scrollTopRef = useRef<HTMLDivElement>(null);
 	const isEdit = useRecoilValue(isEdited);
+	const bgColorValue = useColorTheme();
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -100,7 +102,7 @@ export const LeftColumnArea = memo(() => {
 									h={item.isSelected ? "200px" : "155px"}
 									color={item.isSelected ? "gray.800" : "gray.400"}
 									marginBottom={item.isSelected ? 8 : 1}
-									backgroundColor={item.isSelected ? "gray.300" : "gray.200"}
+									backgroundColor={item.isSelected ? bgColorValue.draftCardBgColor : bgColorValue.mainBgColor}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
 									w={"290px"}

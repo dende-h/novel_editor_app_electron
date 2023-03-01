@@ -1,6 +1,7 @@
 import { Box, chakra, Grid, GridItem } from "@chakra-ui/react";
 
 import { memo, FC } from "react";
+import { useColorTheme } from "../../hooks/useColorTheme";
 import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
 import { EditorArea } from "../middleColumns/EditorArea";
 
@@ -13,10 +14,10 @@ const TwoColumnTemplate: FC = memo(() => {
 				gridTemplateAreas={{ base: ` 'main' `, lg: ` 'left main' ` }}
 				gap={1}
 			>
-				<GridItem area="left" bg="gray.200" display={{ base: "none", lg: "block" }}>
+				<GridItem area="left" display={{ base: "none", lg: "block" }}>
 					<LeftColumnArea />
 				</GridItem>
-				<GridItem area="main" bg="gray.200">
+				<GridItem area="main">
 					<EditorArea />
 				</GridItem>
 			</Grid>
