@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Menu, MenuButton, Button, MenuList, MenuItem, useBreakpointValue, Box } from "@chakra-ui/react";
+import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react";
 
 export const HeaderMenu = () => {
 	return (
@@ -7,15 +7,15 @@ export const HeaderMenu = () => {
 			<MenuButton
 				as={Button}
 				rightIcon={<ChevronDownIcon />}
-				bg="gray.700"
-				color="white"
+				bg="gray.300"
+				color="gray.600"
 				borderRadius="md"
-				_hover={{ bg: "gray.600" }}
-				_active={{ bg: "gray.600" }}
+				_hover={{ bg: "gray.500", color: "white" }}
+				_active={{ bg: "gray.500", color: "white" }}
 				position={"absolute"}
 				top={{ base: 1.5, lg: 1 }}
 				right={{ base: "5px", lg: "10px" }}
-				size={{ base: "xs", lg: "md" }}
+				size={{ base: "xs", md: "sm", lg: "md" }}
 			>
 				Menu
 			</MenuButton>

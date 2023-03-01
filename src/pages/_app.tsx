@@ -1,9 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../theme/theme";
 import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { HeaderFooterLayout } from "../components/templates/HeaderFooterLayout";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import theme from "../theme/theme";
+import "@fontsource/raleway/400.css";
+import "@fontsource/open-sans/700.css";
 
 const SiteKey = process.env.NEXT_PUBLIC_GOOGLE_RECAOTCHA_KEY;
 

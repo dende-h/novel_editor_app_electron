@@ -10,9 +10,7 @@ export const Header = memo(() => {
 				<Box position={"absolute"} top={1} left={"30px"} display={{ base: "block", lg: "none" }}>
 					<DrawerLeftArea colorScheme={"gray"} size={"xs"} />
 				</Box>
-				<Heading as={"h1"} fontFamily="heading" fontSize={{ base: "lg", md: "xl", lg: "xx-large" }}>
-					“ NoA -novel aidor- ”
-				</Heading>
+				<Heading fontSize={{ base: "lg", md: "xl", lg: "xx-large" }}>“ NoA -novel aidor- ”</Heading>
 				<HeaderMenu />
 			</Box>
 		</>
