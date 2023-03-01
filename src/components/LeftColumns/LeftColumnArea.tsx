@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState } from "react";
-import { ImPriceTag, ImQuill } from "react-icons/im";
+import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import { VStack, Box, Center, Heading, IconButton, Text, HStack, Icon } from "@chakra-ui/react";
@@ -26,7 +26,7 @@ export const LeftColumnArea = memo(() => {
 	}, []);
 
 	useEffect(() => {
-		scrollTopRef?.current?.scrollIntoView();
+		scrollTopRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
 	}, [isEdit]);
 
 	const cssTranstionPropaty = { transitionProperty: "color , shadow , height , backgroundColor " };
@@ -35,7 +35,30 @@ export const LeftColumnArea = memo(() => {
 		<>
 			{/* クライアントサイドのみでのレンダリング */}
 			{isClient ? (
-				<VStack p={6} maxH={"100vh"} overflowY="scroll">
+				<VStack p={6} maxH={{ base: "100%", lg: "100vh" }} overflowY="scroll" position={"relative"} zIndex={1}>
+					<IconButton
+						size={"md"}
+						position={"fixed"}
+						bottom={"30px"}
+						left={"10px"}
+						shadow={"lg"}
+						transitionProperty="all"
+						transitionDuration="0.8s"
+						transitionTimingFunction={"ease-out"}
+						aria-label="scrollTop"
+						_focus={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
+						_hover={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
+						icon={<ImPointUp />}
+						color={"brown"}
+						backgroundColor={"orange.100"}
+						opacity={"0.6"}
+						border={"none"}
+						borderRadius={"full"}
+						onClick={() => {
+							scrollTopRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+						}}
+						zIndex={2}
+					/>
 					<Center>
 						<VStack ref={scrollTopRef}>
 							<IconButton

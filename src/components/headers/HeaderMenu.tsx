@@ -13,13 +13,16 @@ export const HeaderMenu = () => {
 				_hover={{ bg: "gray.500", color: "white" }}
 				_active={{ bg: "gray.500", color: "white" }}
 				position={"absolute"}
-				top={{ base: 1.5, lg: 1 }}
+				top={{ base: 1, lg: 1 }}
 				right={{ base: "5px", lg: "10px" }}
 				size={{ base: "xs", md: "sm", lg: "md" }}
 			>
 				Menu
 			</MenuButton>
 			<MenuList bgColor="gray.800" color="white" borderRadius="md" boxShadow="md" p={2} _focus={{ outline: "none" }}>
+				<MenuItem as={"a"} href={"/"} bgColor="gray.800" _hover={{ bgColor: "gray.600" }}>
+					Top
+				</MenuItem>
 				<MenuItem bgColor="gray.800" _hover={{ bgColor: "gray.600" }}>
 					Profile
 				</MenuItem>

@@ -43,6 +43,16 @@ export const useDraft = () => {
 		setIsSelect(true);
 	};
 
+	const seletStateReset = () => {
+		setDraft(
+			draft.map((item) => {
+				return { ...item, isSelected: false };
+			})
+		);
+		setIsSelect(false);
+		setIsEdit(false);
+	};
+
 	//下書き一覧をクリックもしくはフォーカスしてエンターキーでセレクトのオンオフ
 	const onClickOpenDraft = (selectIndex: number) => {
 		if (isSelect === false) {
@@ -53,13 +63,7 @@ export const useDraft = () => {
 			);
 			setIsSelect(true);
 		} else {
-			setDraft(
-				draft.map((item) => {
-					return { ...item, isSelected: false };
-				})
-			);
-			setIsSelect(false);
-			setIsEdit(false);
+			seletStateReset();
 		}
 	};
 
@@ -106,6 +110,7 @@ export const useDraft = () => {
 		onChangeTextArea,
 		onAddNovel,
 		onClickOpenDraft,
-		onEnterKey
+		onEnterKey,
+		seletStateReset
 	};
 };

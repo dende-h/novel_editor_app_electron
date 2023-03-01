@@ -1,6 +1,8 @@
-import { Box, Center, HStack, Input, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Center, HStack, IconButton, Input, Text, Textarea, VStack } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
+import { ImCross, ImPlus } from "react-icons/im";
 import { useRecoilValue } from "recoil";
+import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
@@ -14,6 +16,8 @@ export const EditorArea = memo(() => {
 	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
+	const isSelect = useRecoilValue(isSelected);
+	const { onAddNovel, seletStateReset } = useDraft();
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -30,7 +34,7 @@ export const EditorArea = memo(() => {
 		<>
 			{isClient ? (
 				selectedDraft ? (
-					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} minW={"350px"} minH={"100vh"}>
+					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} minW={"350px"} minH={"100vh"} position={"relative"} zIndex={1}>
 						<Center>
 							<VStack spacing={{ base: 4, md: 5, lg: 5, xl: 5 }}>
 								<VStack>
@@ -91,11 +95,32 @@ export const EditorArea = memo(() => {
 								/>
 							</VStack>
 						</Center>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
+							{isSelect ? (
+								<IconButton
+									icon={<ImCross />}
+									aria-label="openDrawer"
+									onClick={seletStateReset}
+									colorScheme="teal"
+									borderRadius={"full"}
+								/>
+							) : (
+								<IconButton
+									icon={<ImPlus />}
+									aria-label="openDrawer"
+									onClick={onAddNovel}
+									colorScheme="teal"
+									borderRadius={"full"}
+								/>
+							)}
+						</Box>
 					</Box>
 				) : (
 					<Box h={"100vh"}></Box>
 				)
-			) : undefined}
+			) : (
+				<Box h={"100vh"}></Box>
+			)}
 		</>
 	);
 });
