@@ -1,7 +1,6 @@
-import { Box, Center, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, Center, Heading, HStack, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { memo } from "react";
-import { useColorTheme } from "../../hooks/useColorTheme";
 import { DrawerLeftArea } from "../LeftColumns/DrawerLeftArea";
 import { ColorSwitchButton } from "./ColorSwitchButton";
 import { HeaderMenu } from "./HeaderMenu";
@@ -27,19 +26,17 @@ export const Header = memo(() => {
 					<Link href={"/"}>
 						<Heading
 							as={"h1"}
-							fontSize={{ base: "lg", md: "2xl", lg: "xx-large" }}
+							fontSize={{ base: "md", md: "2xl", lg: "xx-large" }}
 							_hover={{ opacity: 0.8, cursor: "pointer" }}
 						>
 							“ NoA -novel aidor- ”
 						</Heading>
 					</Link>
 				</Box>
-				<Box>
-					<ColorSwitchButton aria-label={"darkTheme"} />
-				</Box>
-				<Box>
+				<HStack position={"absolute"} top={{ base: 1, lg: 1 }} right={{ base: "3px", lg: "10px" }} zIndex={2}>
+					<ColorSwitchButton aria-label={"darkTheme"} size={{ base: "xs", md: "sm", lg: "md" }} />
 					<HeaderMenu />
-				</Box>
+				</HStack>
 			</Center>
 		</>
 	);

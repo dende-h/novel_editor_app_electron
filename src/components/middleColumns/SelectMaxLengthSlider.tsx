@@ -59,7 +59,6 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					<Tooltip
 						hasArrow
 						bg="gray.400"
-						color="gray.200"
 						placement="top"
 						isOpen={showTooltip}
 						label={

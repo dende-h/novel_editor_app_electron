@@ -16,7 +16,8 @@ import {
 	GridItem,
 	useToast,
 	Center,
-	Text
+	Text,
+	useColorModeValue
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
@@ -29,6 +30,9 @@ import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const ChangeUserNameModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const backgroundColor = useColorModeValue("gray.200", "gray.600");
+	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
+	const buttonHoverBgColor = useColorModeValue("gray.300", "gray.500");
 
 	return (
 		<>
@@ -43,27 +47,24 @@ export const ChangeUserNameModal = () => {
 			</Button>
 			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={"3xl"}>
 				<ModalOverlay />
-				<ModalContent
-					backgroundColor={"gray.700"}
-					borderRadius={"md"}
-					border={"1px"}
-					borderColor={"gray.800"}
-					boxShadow={"lg"}
-				>
-					<ModalHeader fontSize={"lg"} fontWeight={"bold"} color={"white"}>
+				<ModalContent backgroundColor={backgroundColor} borderRadius={"md"} border={"1px"} boxShadow={"lg"}>
+					<ModalHeader fontSize={"lg"} fontWeight={"bold"}>
 						ペンネームを変更する
 					</ModalHeader>
-					<ModalCloseButton color={"white"} />
+					<ModalCloseButton />
 					<ModalBody pb={6} paddingTop={"0"}>
 						<Center padding={2} marginBottom={2}>
-							<Input bg={"gray.800"} color={"white"} placeholder={"新しいペンネームを入力してください"} />
+							<Input
+								_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
+								placeholder={"新しいペンネームを入力してください"}
+							/>
 						</Center>
 					</ModalBody>
 					<ModalFooter>
 						<Button colorScheme="blue" mr={3}>
 							Save
 						</Button>
-						<Button onClick={onClose} variant={"ghost"} color={"white"} _hover={{ bg: "gray.600" }}>
+						<Button onClick={onClose} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
 							Cancel
 						</Button>
 					</ModalFooter>

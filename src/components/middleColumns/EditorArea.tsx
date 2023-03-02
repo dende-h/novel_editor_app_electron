@@ -1,4 +1,4 @@
-import { Box, Center, HStack, IconButton, Input, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Center, HStack, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { ImCross, ImPlus } from "react-icons/im";
 import { useRecoilValue } from "recoil";
@@ -18,6 +18,7 @@ export const EditorArea = memo(() => {
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
 	const isSelect = useRecoilValue(isSelected);
 	const { onAddNovel, seletStateReset } = useDraft();
+	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -38,18 +39,13 @@ export const EditorArea = memo(() => {
 						<Center>
 							<VStack spacing={{ base: 4, md: 5, lg: 5, xl: 5 }}>
 								<VStack>
-									<Text
-										textColor={"gray.500"}
-										fontSize={{ base: "sm", md: "md" }}
-									>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
+									<Text fontSize={{ base: "sm", md: "md" }}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
 									<Input
-										color={"gray.500"}
 										fontSize={{ base: "md", md: "lg" }}
 										value={selectedDraft.title}
 										onChange={onChangeTitleArea}
 										border={"none"}
 										borderRadius={0}
-										backgroundColor={"gray.200"}
 										width={"300px"}
 										onCompositionStart={() => setConposing(true)}
 										onCompositionEnd={() => {
@@ -59,7 +55,7 @@ export const EditorArea = memo(() => {
 										placeholder="novel title"
 										textAlign={"center"}
 										maxLength={30}
-										_focus={{ color: "gray.600", backgroundColor: "gray.100", boxShadow: "outline" }}
+										_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
 										transitionProperty="all"
 										transitionDuration="1.0s"
 										transitionTimingFunction={"ease-out"}
@@ -68,7 +64,7 @@ export const EditorArea = memo(() => {
 									/>
 								</VStack>
 								<VStack w={{ base: "340px", md: "740px" }} spacing={0}>
-									<Text textColor={isCharCountOverflow ? "red" : "gray.500"} fontSize={{ base: "sm", md: "md" }}>
+									<Text textColor={isCharCountOverflow && "red"} fontSize={{ base: "sm", md: "md" }}>
 										現在の文字数 : {charCount} / {bodyMaxLength} 文字
 									</Text>
 									<SelectMaxLengthSlider maxLength={bodyMaxLength} />
@@ -79,7 +75,6 @@ export const EditorArea = memo(() => {
 									placeholder="Enter the text of your novel here"
 									width={{ base: "320px", md: "680px", lg: "630px", xl: "900px", xxl: "1200px" }}
 									minH={"70vh"}
-									backgroundColor={"gray.200"}
 									resize={"none"}
 									borderRadius={0}
 									border={"none"}
@@ -87,7 +82,7 @@ export const EditorArea = memo(() => {
 									value={selectedDraft.body}
 									isInvalid={isCharCountOverflow}
 									ref={focus}
-									_focus={{ color: "gray.600", backgroundColor: "gray.100", boxShadow: "none" }}
+									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "none" }}
 									transitionProperty="all"
 									transitionDuration="1.0s"
 									transitionTimingFunction={"ease-out"}

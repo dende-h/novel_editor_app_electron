@@ -2,7 +2,19 @@ import { memo, useEffect, useRef, useState } from "react";
 import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
-import { VStack, Box, Center, Heading, IconButton, Text, HStack, Icon } from "@chakra-ui/react";
+import {
+	VStack,
+	Box,
+	Center,
+	Heading,
+	IconButton,
+	Text,
+	HStack,
+	Icon,
+	Button,
+	useColorMode,
+	useColorModeValue
+} from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
 import { isSelected } from "../../globalState/atoms/isSelected";
 import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSort";
@@ -19,7 +31,9 @@ export const LeftColumnArea = memo(() => {
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 	const scrollTopRef = useRef<HTMLDivElement>(null);
 	const isEdit = useRecoilValue(isEdited);
-	const bgColorValue = useColorTheme();
+	const fontColorIsNotSelectedDraft = useColorModeValue("gray.400", "gray.100");
+	const bgColorIsSelectedDraftCard = useColorModeValue("gray.300", "gray.500");
+	const bgColorIsNotSelectedDraftCard = useColorModeValue("gray.200", "gray.600");
 
 	useEffect(() => {
 		if (typeof window !== undefined) {
@@ -51,9 +65,8 @@ export const LeftColumnArea = memo(() => {
 						_focus={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
 						_hover={{ shadow: "2xl", cursor: "pointer", opacity: "1.0" }}
 						icon={<ImPointUp />}
-						color={"brown"}
-						backgroundColor={"orange.100"}
-						opacity={"0.6"}
+						colorScheme={"orange"}
+						opacity={0.6}
 						border={"none"}
 						borderRadius={"full"}
 						onClick={() => {
@@ -63,19 +76,18 @@ export const LeftColumnArea = memo(() => {
 					/>
 					<Center>
 						<VStack ref={scrollTopRef}>
-							<IconButton
-								aria-label="addNewDraft"
-								icon={<ImQuill />}
-								color={"brown"}
-								backgroundColor={"orange.100"}
+							<Button
+								colorScheme={"teal"}
 								border={"none"}
-								_focus={{ backgroundColor: "orange.200", shadow: "2xl" }}
-								_hover={{ backgroundColor: "orange.200", shadow: "2xl" }}
+								_focus={{ opacity: 0.8, shadow: "2xl" }}
+								_hover={{ opacity: 0.8, shadow: "2xl" }}
 								w={"300px"}
 								onClick={onAddNovel}
 								isDisabled={isSelect}
-							/>
-							<Text fontWeight={"bold"} fontStyle="italic" color={"gray.500"}>
+							>
+								Add Novel
+							</Button>
+							<Text fontWeight={"bold"} fontStyle="italic">
 								{draft.length}:drafts
 							</Text>
 						</VStack>
@@ -92,17 +104,17 @@ export const LeftColumnArea = memo(() => {
 											? item.isSelected
 												? undefined
 												: {
-														_hover: { color: "gray.600", cursor: "not-allowed" }
+														_hover: { cursor: "not-allowed" }
 												  }
 											: {
-													_hover: { shadow: "lg", color: "gray.600", cursor: "pointer" }
+													_hover: { shadow: "lg", cursor: "pointer" }
 											  }
 									}
 									shadow={item.isSelected ? "2xl" : "none"}
 									h={item.isSelected ? "200px" : "155px"}
-									color={item.isSelected ? "gray.800" : "gray.400"}
+									color={!item.isSelected && fontColorIsNotSelectedDraft}
 									marginBottom={item.isSelected ? 8 : 1}
-									backgroundColor={item.isSelected ? bgColorValue.draftCardBgColor : bgColorValue.mainBgColor}
+									backgroundColor={item.isSelected ? bgColorIsSelectedDraftCard : bgColorIsNotSelectedDraftCard}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
 									w={"290px"}
@@ -152,14 +164,13 @@ export const LeftColumnArea = memo(() => {
 													fontSize={{ base: "xs", xl: "md" }}
 													whiteSpace={"nowrap"}
 													w={"auto"}
-													color={"gray.500"}
 												>
 													{[...item.tag].toString()}
 												</Text>
 											</HStack>
 										)}
 										<Box position={"absolute"} top={0} right={2.5}>
-											<Text fontSize={"xs"} color={"gray.500"}>
+											<Text fontSize={"xs"}>
 												{item.maxLength <= veryShortNovel ? "掌編" : item.maxLength <= shortShortNovel ? "SS" : "短編"}
 											</Text>
 										</Box>

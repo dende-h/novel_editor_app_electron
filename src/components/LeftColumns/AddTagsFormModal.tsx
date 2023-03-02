@@ -16,7 +16,8 @@ import {
 	GridItem,
 	useToast,
 	Center,
-	Text
+	Text,
+	useColorModeValue
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
@@ -37,6 +38,9 @@ export const AddTagsFormModal = () => {
 	const [tags, setTags] = useState<string[]>([]);
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const [isChanged, setIsChanged] = useState(false);
+	const backgroundColor = useColorModeValue("gray.200", "gray.600");
+	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
+	const buttonHoverBgColor = useColorModeValue("gray.300", "gray.500");
 
 	useEffect(() => {
 		setIsChanged(false);
@@ -106,9 +110,7 @@ export const AddTagsFormModal = () => {
 		<>
 			<PrimaryIconButton
 				icon={<ImPriceTags />}
-				defaultColor={"twitter.500"}
-				changeColor={"twitter.700"}
-				bgColor={"gray.300"}
+				colorScheme={"teal"}
 				aria-label="titleInput"
 				focusOutline="none"
 				onClick={(e) => {
@@ -118,7 +120,7 @@ export const AddTagsFormModal = () => {
 			/>
 			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={"3xl"}>
 				<ModalOverlay />
-				<ModalContent backgroundColor={"gray.300"}>
+				<ModalContent backgroundColor={backgroundColor}>
 					<ModalHeader>Tag追加</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6}>
@@ -130,7 +132,6 @@ export const AddTagsFormModal = () => {
 									onChange={inputs.onChangeInputForm}
 									maxLength={maxLength}
 									w={"300px"}
-									backgroundColor={"gray.200"}
 									onCompositionStart={() => {
 										setConposing(true);
 									}}
@@ -140,14 +141,13 @@ export const AddTagsFormModal = () => {
 									onKeyUp={(e) => {
 										onEnterKeySubmitEvent(e, onEnterKeyUp);
 									}}
+									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
 								/>
 								<PrimaryIconButton
 									isDisabled={inputs.value.length === 0}
 									isDisableHoverAnimation={inputs.value.length === 0}
 									icon={<ImPlus />}
-									defaultColor={"teal.400"}
-									changeColor={"teal.600"}
-									bgColor={"gray.300"}
+									colorScheme={"twitter"}
 									aria-label="addTagsButton"
 									onClick={onClickAddTagsButton}
 								/>
@@ -162,14 +162,13 @@ export const AddTagsFormModal = () => {
 												<HStack spacing={0}>
 													<PrimaryIconButton
 														icon={<ImCancelCircle />}
-														defaultColor="red.500"
-														changeColor="red.500"
-														bgColor={"gray.300"}
+														colorScheme={"red"}
 														onClick={() => onClickTagDelete(index)}
 														aria-label="tagDelete"
 														focusOutline="none"
+														size={"2xs"}
 													/>
-													<Text fontStyle={"italic"} fontWeight={"bold"} color={"gray.700"}>
+													<Text fontStyle={"italic"} fontWeight={"bold"}>
 														{item}
 													</Text>
 												</HStack>
@@ -184,7 +183,9 @@ export const AddTagsFormModal = () => {
 						<Button colorScheme="blue" mr={3} onClick={onClickSave} isDisabled={!isChanged}>
 							Save
 						</Button>
-						<Button onClick={onClose}>Cancel</Button>
+						<Button onClick={onClose} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
+							Cancel
+						</Button>
 					</ModalFooter>
 				</ModalContent>
 			</Modal>

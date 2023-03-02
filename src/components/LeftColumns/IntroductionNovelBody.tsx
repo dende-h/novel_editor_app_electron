@@ -21,12 +21,11 @@ export const IntroductionNovelBody = memo((props: Props) => {
 		h: "auto",
 		maxW: "220px",
 		paddingX: "3",
-		color: "gray.500",
 		textAlign: "left",
 		fontSize: "xs",
 		fontStyle: "italic",
-		_before: { content: `"“"`, color: "gray" },
-		_after: { content: `"”"`, color: "gray" }
+		_before: { content: `"“"` },
+		_after: { content: `"”"` }
 	};
 
 	return (

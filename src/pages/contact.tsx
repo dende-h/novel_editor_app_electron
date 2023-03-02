@@ -79,11 +79,11 @@ export default function Contact() {
 								</FormLabel>
 								<Input
 									id="name"
+									placeholder="お名前"
 									{...register("name", { required: "Name is required" })}
 									aria-describedby="error-name-required"
 									size="lg"
 									variant="filled"
-									bg="white"
 									shadow="md"
 									_hover={{ shadow: "lg" }}
 									_focus={{ outline: "none", shadow: "lg" }}
@@ -111,7 +111,6 @@ export default function Contact() {
 									})}
 									size="lg"
 									variant="filled"
-									bg="white"
 									shadow="md"
 									_hover={{ shadow: "lg" }}
 									_focus={{ outline: "none", shadow: "lg" }}
@@ -129,10 +128,10 @@ export default function Contact() {
 								<Textarea
 									id="message"
 									name="message"
+									placeholder="お問い合わせ内容を入力してください"
 									{...register("message")}
 									size="lg"
 									variant="filled"
-									bg="white"
 									shadow="md"
 									_hover={{ shadow: "lg" }}
 									_focus={{ outline: "none", shadow: "lg" }}
@@ -142,9 +141,7 @@ export default function Contact() {
 							<Button
 								type="submit"
 								size="lg"
-								bg="gray.800"
-								color="white"
-								_hover={{ bg: "gray.700" }}
+								colorScheme={"teal"}
 								w={{ base: "100%", lg: "auto" }}
 								alignSelf={{ base: "center", lg: "flex-end" }}
 							>

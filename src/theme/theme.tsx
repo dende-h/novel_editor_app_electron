@@ -24,27 +24,32 @@ const theme = extendTheme({
 		body: `'Open Sans', sans-serif`
 	},
 	breakpoints,
-	global: (props: StyleFunctionProps) => ({
-		body: {
-			color: mode("gray.750", "gray.100")(props),
-			bg: mode("gray.200", "gray.800")(props),
-			fonts: "Open Sans"
-		}
-	})
-	// styles: {
-	// 	global: {
-	// 		body: {
-	// 			backgroundColor: "gray.200",
-	// 			color: "gray.750",
-	// 			fonts: "Open Sans"
-	// 		},
-	// 		heading: {
-	// 			backgroundColor: "gray.200",
-	// 			color: "gray.750",
-	// 			fonts:
-	// 		}
-	// 	}
-	// }
+	styles: {
+		global: (props: StyleFunctionProps) => ({
+			body: {
+				color: mode("gray.700", "gray.100")(props),
+				bg: mode("gray.200", "gray.800")(props),
+				fontFamily: "body"
+			},
+			heading: {
+				color: mode("gray.800", "gray.100")(props),
+				fontFamily: "heading"
+			},
+			input: {
+				color: mode("gray.600", "gray.200")(props),
+				bgColor: mode("gray.200", "gray.500")(props),
+				fontFamily: "heading"
+			},
+			textarea: {
+				color: mode("gray.600", "gray.200")(props),
+				bgColor: mode("gray.200", "gray.500")(props),
+				fontFamily: "heading"
+			},
+			placeholder: {
+				color: mode("gray.400", "gray.200")(props)
+			}
+		})
+	}
 });
 
 export default theme;

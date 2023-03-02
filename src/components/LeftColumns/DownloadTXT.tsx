@@ -42,9 +42,7 @@ export const DownloadTXT = () => {
 			<PrimaryIconButton
 				aria-label="downloadText"
 				icon={<ImDownload2 />}
-				defaultColor={"teal.300"}
-				changeColor={"teal.500"}
-				bgColor={"gray.300"}
+				colorScheme={"telegram"}
 				focusOutline={"none"}
 				onClick={(e) => {
 					onOpen();

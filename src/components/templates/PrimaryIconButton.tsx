@@ -2,9 +2,9 @@ import { IconButton, IconButtonProps } from "@chakra-ui/react";
 
 type Props = {
 	icon: JSX.Element;
-	defaultColor: string;
-	changeColor: string;
-	bgColor: string;
+	defaultColor?: string;
+	changeColor?: string;
+	bgColor?: string;
 	focusOutline?: string;
 	isDisableHoverAnimation?: boolean;
 } & IconButtonProps;

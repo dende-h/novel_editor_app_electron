@@ -11,7 +11,8 @@ import {
 	Input,
 	DrawerFooter,
 	IconButton,
-	color
+	color,
+	useColorModeValue
 } from "@chakra-ui/react";
 import { LegacyRef, useEffect, useRef, useState } from "react";
 import { LeftColumnArea } from "./LeftColumnArea";
@@ -20,6 +21,7 @@ import { ImMenu, ImPointUp } from "react-icons/im";
 export const DrawerLeftArea = ({ colorScheme, size }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef: LegacyRef<HTMLButtonElement> = useRef();
+	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 
 	// useEffect(() => {
 	// 	onClose();
@@ -48,7 +50,7 @@ export const DrawerLeftArea = ({ colorScheme, size }) => {
 
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} size={"sm"}>
 				<DrawerOverlay />
-				<DrawerContent backgroundColor={"gray.200"} sx={css}>
+				<DrawerContent sx={css} bgColor={backgroundColor}>
 					<DrawerCloseButton />
 					<DrawerHeader>List of Drafts</DrawerHeader>
 					<DrawerBody>
