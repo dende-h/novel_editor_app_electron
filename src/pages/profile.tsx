@@ -1,4 +1,4 @@
-import { Box, Divider, Heading, HStack } from "@chakra-ui/react";
+import { Box, Divider, Heading } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
 import { ChangeUserNameModal } from "../components/profilePage/ChangeUserNameModal";
@@ -14,8 +14,8 @@ export default function Profile() {
 				<meta name="description" content="ユーザープロフィール" />
 			</Head>
 			<Box textAlign={"center"} p={6} h={"100vh"}>
-				<Divider borderColor={"gray.700"} borderWidth="2px" />
-				<Divider borderColor={"gray.600"} marginTop={1} marginLeft={0.5} />
+				<Divider borderWidth="2px" />
+				<Divider marginTop={1} marginLeft={0.5} />
 
 				<Heading
 					w={"auto"}
@@ -27,8 +27,8 @@ export default function Profile() {
 					{userPenName}の書斎
 				</Heading>
 
-				<Divider borderColor={"gray.600"} marginBottom={1} marginLeft={0.5} />
-				<Divider borderColor={"gray.700"} borderWidth="2px" />
+				<Divider marginBottom={1} marginLeft={0.5} />
+				<Divider borderWidth="2px" />
 				<Box textAlign={"end"}>
 					<ChangeUserNameModal />
 				</Box>

@@ -6,13 +6,15 @@ import { isSelected } from "../globalState/atoms/isSelected";
 import { draftObject } from "../globalState/selector/editorState";
 import { isEdited } from "../globalState/atoms/isEdited";
 import { lastEditedTimeSort } from "../globalState/selector/lastEditedTimeSort";
+import { userName } from "../globalState/atoms/userName";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDraft = () => {
 	const setDraft = useSetRecoilState<draftObjectArray>(drafts); //下書きのオブジェクトを配列で取得
 	const draft = useRecoilValue(lastEditedTimeSort);
 	const [isSelect, setIsSelect] = useRecoilState(isSelected);
-	const [isEdit, setIsEdit] = useRecoilState(isEdited);
+	const setIsEdit = useSetRecoilState(isEdited);
+	const setUserName = useSetRecoilState(userName);
 
 	//オブジェクト内のisSelectedプロパティにより処理を行う
 	//isSelectedプロパティは配列内でtrueは常に一つであり重複しない。重複する場合想定する動作をしないため修正必要
@@ -103,6 +105,11 @@ export const useDraft = () => {
 		setIsEdit(false);
 	}, []);
 
+	const onSetUserName = useCallback((newUserName: string) => {
+		setDraft(draft.map((item) => ({ ...item, userName: newUserName })));
+		setUserName(newUserName);
+	}, []);
+
 	return {
 		deleteAction,
 		onChangeTitleArea,
@@ -111,6 +118,7 @@ export const useDraft = () => {
 		onAddNovel,
 		onClickOpenDraft,
 		onEnterKey,
-		seletStateReset
+		seletStateReset,
+		onSetUserName
 	};
 };

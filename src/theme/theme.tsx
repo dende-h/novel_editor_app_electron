@@ -24,6 +24,13 @@ const theme = extendTheme({
 		body: `'Open Sans', sans-serif`
 	},
 	breakpoints,
+	components: {
+		Divider: {
+			baseStyle: {
+				borderColor: "gray.500"
+			}
+		}
+	},
 	styles: {
 		global: (props: StyleFunctionProps) => ({
 			body: {
@@ -38,15 +45,12 @@ const theme = extendTheme({
 			input: {
 				color: mode("gray.600", "gray.200")(props),
 				bgColor: mode("gray.200", "gray.500")(props),
-				fontFamily: "heading"
+				fontFamily: "body"
 			},
 			textarea: {
 				color: mode("gray.600", "gray.200")(props),
 				bgColor: mode("gray.200", "gray.500")(props),
-				fontFamily: "heading"
-			},
-			placeholder: {
-				color: mode("gray.400", "gray.200")(props)
+				fontFamily: "body"
 			}
 		})
 	}

@@ -24,6 +24,8 @@ import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { editorState } from "../../globalState/selector/editorState";
+import { useCalcCharCount } from "../../hooks/useCalcCharCount";
+import { useDraft } from "../../hooks/useDraft";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
@@ -33,6 +35,14 @@ export const ChangeUserNameModal = () => {
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 	const buttonHoverBgColor = useColorModeValue("gray.300", "gray.500");
+	const { onSetUserName } = useDraft();
+	const { onChangeInputForm, value, setValue } = useInput(20);
+
+	const onSave = () => {
+		onSetUserName(value);
+		setValue("");
+		onClose();
+	};
 
 	return (
 		<>
@@ -57,11 +67,12 @@ export const ChangeUserNameModal = () => {
 							<Input
 								_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
 								placeholder={"新しいペンネームを入力してください"}
+								onChange={onChangeInputForm}
 							/>
 						</Center>
 					</ModalBody>
 					<ModalFooter>
-						<Button colorScheme="blue" mr={3}>
+						<Button colorScheme="blue" mr={3} onClick={onSave}>
 							Save
 						</Button>
 						<Button onClick={onClose} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
