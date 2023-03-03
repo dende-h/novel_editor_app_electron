@@ -15,13 +15,14 @@ export const profileItem = selector({
 		const numberOfPublishedDrafts: number = draftsArray.filter((item) => {
 			return item.isPublished === true;
 		}).length;
-		const totalNumberOfCharactersInTheDrafts: number[] = draftsArray.map((item) => {
-			const charArray = [...item.body].filter((char) => {
-				return !char.match(/(\s+|　)/g); //空白文字、全角半角スペース、改行は除外
-			}).length;
-			return charArray ? charArray : 0;
-		});
-		console.log(totalNumberOfCharactersInTheDrafts);
+		const totalNumberOfCharactersInTheDrafts: number = draftsArray
+			.map((item) => {
+				const charArray = [...item.body].filter((char) => {
+					return !char.match(/(\s+|　)/g); //空白文字、全角半角スペース、改行は除外
+				}).length;
+				return charArray ? charArray : 0;
+			})
+			.reduce((a, b) => a + b, 0);
 
 		const description = [userPenName, totalNumberOfDrafts, numberOfPublishedDrafts, totalNumberOfCharactersInTheDrafts];
 		const prfileArray = profileHeading.map((item, index) => {
