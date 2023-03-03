@@ -1,5 +1,5 @@
-import { memo, useEffect, useRef, useState } from "react";
-import { ImPointUp, ImPriceTag, ImQuill } from "react-icons/im";
+import { memo, useEffect, useRef } from "react";
+import { ImPointUp, ImPriceTag } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
 import {
@@ -12,7 +12,6 @@ import {
 	HStack,
 	Icon,
 	Button,
-	useColorMode,
 	useColorModeValue
 } from "@chakra-ui/react";
 import { DraftControllButton } from "./DraftControllButton";
@@ -21,11 +20,10 @@ import { lastEditedTimeSort } from "../../globalState/selector/lastEditedTimeSor
 import { numberOfCharacters } from "../../constant/constant";
 import { useDraft } from "../../hooks/useDraft";
 import { isEdited } from "../../globalState/atoms/isEdited";
-import { useColorTheme } from "../../hooks/useColorTheme";
+import { isClientState } from "../../globalState/atoms/isClientState";
 
 export const LeftColumnArea = memo(() => {
 	const draft = useRecoilValue(lastEditedTimeSort);
-	const [isClient, setIsClient] = useState(false);
 	const isSelect = useRecoilValue(isSelected);
 	const { onAddNovel, onEnterKey, onClickOpenDraft } = useDraft();
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
@@ -34,12 +32,7 @@ export const LeftColumnArea = memo(() => {
 	const fontColorIsNotSelectedDraft = useColorModeValue("gray.400", "gray.100");
 	const bgColorIsSelectedDraftCard = useColorModeValue("gray.300", "gray.500");
 	const bgColorIsNotSelectedDraftCard = useColorModeValue("gray.200", "gray.600");
-
-	useEffect(() => {
-		if (typeof window !== undefined) {
-			setIsClient(true);
-		}
-	}, []);
+	const isClient = useRecoilValue(isClientState);
 
 	useEffect(() => {
 		scrollTopRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -56,7 +49,7 @@ export const LeftColumnArea = memo(() => {
 						size={"md"}
 						position={"fixed"}
 						bottom={"30px"}
-						left={"10px"}
+						left={{ base: "10px", lg: "75px" }}
 						shadow={"lg"}
 						transitionProperty="all"
 						transitionDuration="0.8s"

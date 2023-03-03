@@ -1,7 +1,8 @@
-import { Box, Center, HStack, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
+import { Box, Center, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { ImCross, ImPlus } from "react-icons/im";
 import { useRecoilValue } from "recoil";
+import { isClientState } from "../../globalState/atoms/isClientState";
 import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
@@ -13,18 +14,12 @@ export const EditorArea = memo(() => {
 	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
 	const { focus, onEnterKeyFocusEvent, setConposing } = useEnterKeyEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
-	const [isClient, setIsClient] = useState(false);
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
 	const isSelect = useRecoilValue(isSelected);
 	const { onAddNovel, seletStateReset } = useDraft();
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
-
-	useEffect(() => {
-		if (typeof window !== undefined) {
-			setIsClient(true);
-		}
-	}, []);
+	const isClient = useRecoilValue(isClientState);
 
 	useEffect(() => {
 		calcCharCount(selectedDraft ? selectedDraft.body : "", selectedDraft ? selectedDraft.maxLength : 0);

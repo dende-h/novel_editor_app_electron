@@ -17,9 +17,10 @@ import {
 	useToast,
 	Center,
 	Text,
-	useColorModeValue
+	useColorModeValue,
+	Box
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
@@ -36,13 +37,24 @@ export const ChangeUserNameModal = () => {
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 	const buttonHoverBgColor = useColorModeValue("gray.300", "gray.500");
 	const { onSetUserName } = useDraft();
-	const { onChangeInputForm, value, setValue } = useInput(20);
+	const { onChangeInputForm, value, setValue } = useInput();
+	const { calcCharCount, charCount } = useCalcCharCount();
+	const maxLength = 15;
 
 	const onSave = () => {
 		onSetUserName(value);
 		setValue("");
 		onClose();
 	};
+
+	const onCloseModal = () => {
+		setValue("");
+		onClose();
+	};
+
+	useEffect(() => {
+		calcCharCount(value);
+	}, [value]);
 
 	return (
 		<>
@@ -55,7 +67,7 @@ export const ChangeUserNameModal = () => {
 			>
 				Change Name
 			</Button>
-			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={"3xl"}>
+			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onCloseModal} size={"3xl"}>
 				<ModalOverlay />
 				<ModalContent backgroundColor={backgroundColor} borderRadius={"md"} border={"1px"} boxShadow={"lg"}>
 					<ModalHeader fontSize={"lg"} fontWeight={"bold"}>
@@ -63,19 +75,27 @@ export const ChangeUserNameModal = () => {
 					</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6} paddingTop={"0"}>
-						<Center padding={2} marginBottom={2}>
-							<Input
-								_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
-								placeholder={"新しいペンネームを入力してください"}
-								onChange={onChangeInputForm}
-							/>
+						<Center padding={2}>
+							<HStack>
+								<Input
+									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
+									placeholder={"新しいペンネームを入力してください"}
+									onChange={onChangeInputForm}
+									maxLength={maxLength}
+									w={"330px"}
+									overflow={"hidden"}
+								/>
+								<Text>
+									{charCount}/{maxLength}
+								</Text>
+							</HStack>
 						</Center>
 					</ModalBody>
 					<ModalFooter>
-						<Button colorScheme="blue" mr={3} onClick={onSave}>
+						<Button colorScheme="blue" mr={3} onClick={onSave} isDisabled={charCount === 0}>
 							Save
 						</Button>
-						<Button onClick={onClose} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
+						<Button onClick={onCloseModal} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
 							Cancel
 						</Button>
 					</ModalFooter>

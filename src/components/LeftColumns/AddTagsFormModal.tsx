@@ -19,28 +19,31 @@ import {
 	Text,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { editorState } from "../../globalState/selector/editorState";
+import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
+import { useToastTemplate } from "../../hooks/useToastTemplate";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const AddTagsFormModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const displayDraft = useRecoilValue(editorState);
 	const { setConposing, onEnterKeySubmitEvent } = useEnterKeyEvent();
-	const toast = useToast();
-	const maxLength = 15;
-	const inputs = useInput(maxLength);
+	const { praimaryErrorToast } = useToastTemplate();
+	const { onChangeInputForm, value, setValue } = useInput();
 	const [tags, setTags] = useState<string[]>([]);
 	const [draft, setDraft] = useRecoilState<draftObjectArray>(drafts);
 	const [isChanged, setIsChanged] = useState(false);
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 	const buttonHoverBgColor = useColorModeValue("gray.300", "gray.500");
+	const { calcCharCount, charCount } = useCalcCharCount();
+	const maxLength = 12;
 
 	useEffect(() => {
 		setIsChanged(false);
@@ -48,48 +51,39 @@ export const AddTagsFormModal = () => {
 	}, [isOpen]);
 
 	const onEnterKeyUp = () => {
-		if (inputs.value.length === 0) {
-			toast({
-				title: "入力がありません",
-				position: "top",
-				isClosable: true,
-				status: "error",
-				duration: 3000
-			});
+		if (value.length === 0) {
+			praimaryErrorToast("入力がありません");
 		} else {
 			onClickAddTagsButton();
 		}
 	};
 
+	const onCloseModal = () => {
+		setValue("");
+		onClose();
+	};
+
+	useEffect(() => {
+		calcCharCount(value);
+	}, [value]);
+
 	const onClickAddTagsButton = () => {
 		const duplicateCheckArray = tags.filter((item) => {
-			return item !== inputs.value;
+			return item !== value;
 		});
 		if (tags.length > duplicateCheckArray.length) {
-			toast({
-				title: "Tagは重複することはできません",
-				position: "top",
-				isClosable: true,
-				status: "error",
-				duration: 3000
-			});
+			praimaryErrorToast("重複することはできません");
 		} else {
-			const newTags = [...tags, inputs.value];
+			const newTags = [...tags, value];
 			const tagArrayMaxLength = 4;
 			if (newTags.length < tagArrayMaxLength + 1) {
 				setTags(newTags);
 			} else {
-				toast({
-					title: "Tagは4つまでしか設定できません",
-					position: "top",
-					isClosable: true,
-					status: "error",
-					duration: 3000
-				});
+				praimaryErrorToast("Tagは4つまでしか設定できません");
 			}
 		}
 		setIsChanged(true);
-		inputs.setValue("");
+		setValue("");
 	};
 
 	const onClickSave = () => {
@@ -98,7 +92,7 @@ export const AddTagsFormModal = () => {
 				return item.isSelected ? { ...item, tag: tags } : item;
 			})
 		);
-		onClose();
+		onCloseModal();
 	};
 
 	const onClickTagDelete = (deleteIndex: number) => {
@@ -118,19 +112,20 @@ export const AddTagsFormModal = () => {
 					e.stopPropagation(); //親要素へのバブリングを停止
 				}}
 			/>
-			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} size={"3xl"}>
+			<Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onCloseModal} size={"3xl"}>
 				<ModalOverlay />
 				<ModalContent backgroundColor={backgroundColor}>
 					<ModalHeader>Tag追加</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6}>
 						<Center padding={2} marginBottom={2}>
-							<HStack>
+							<HStack position={"relative"} zIndex={1}>
 								<Input
-									value={inputs.value}
-									placeholder={"Add tags(12文字まで)"}
-									onChange={inputs.onChangeInputForm}
+									value={value}
+									placeholder={"追加するタグを入力して下さい"}
+									onChange={onChangeInputForm}
 									maxLength={maxLength}
+									overflow={"hidden"}
 									w={"300px"}
 									onCompositionStart={() => {
 										setConposing(true);
@@ -144,13 +139,16 @@ export const AddTagsFormModal = () => {
 									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
 								/>
 								<PrimaryIconButton
-									isDisabled={inputs.value.length === 0}
-									isDisableHoverAnimation={inputs.value.length === 0}
+									isDisabled={value.length === 0}
+									isDisableHoverAnimation={value.length === 0}
 									icon={<ImPlus />}
 									colorScheme={"twitter"}
 									aria-label="addTagsButton"
 									onClick={onClickAddTagsButton}
 								/>
+								<Text position={"absolute"} top={2} left={"250px"} zIndex={2}>
+									{charCount}/{maxLength}
+								</Text>
 							</HStack>
 						</Center>
 						<List>
@@ -183,7 +181,7 @@ export const AddTagsFormModal = () => {
 						<Button colorScheme="blue" mr={3} onClick={onClickSave} isDisabled={!isChanged}>
 							Save
 						</Button>
-						<Button onClick={onClose} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
+						<Button onClick={onCloseModal} variant={"ghost"} _hover={{ bg: buttonHoverBgColor }}>
 							Cancel
 						</Button>
 					</ModalFooter>

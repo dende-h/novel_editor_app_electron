@@ -19,7 +19,7 @@ export const Header = memo(() => {
 				position={"relative"}
 				zIndex={2}
 			>
-				<Box position={"absolute"} top={1} left={"30px"} display={{ base: "block", lg: "none" }}>
+				<Box position={"absolute"} top={"1px"} left={"30px"} display={{ base: "block", lg: "none" }}>
 					<DrawerLeftArea colorScheme={"gray"} size={"xs"} />
 				</Box>
 				<Box>
@@ -33,8 +33,8 @@ export const Header = memo(() => {
 						</Heading>
 					</Link>
 				</Box>
-				<HStack position={"absolute"} top={{ base: 1, lg: 1 }} right={{ base: "3px", lg: "10px" }} zIndex={2}>
-					<ColorSwitchButton aria-label={"darkTheme"} size={{ base: "xs", md: "sm", lg: "md" }} />
+				<HStack position={"absolute"} top={"1px"} right={"3px"} zIndex={2} display={{ base: "block", lg: "none" }}>
+					<ColorSwitchButton aria-label={"darkTheme"} size={{ base: "xs", md: "sm" }} />
 					<HeaderMenu />
 				</HStack>
 			</Center>
