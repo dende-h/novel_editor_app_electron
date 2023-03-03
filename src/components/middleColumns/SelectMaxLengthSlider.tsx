@@ -20,9 +20,9 @@ export const SelectMaxLengthSlider = (props: Props) => {
 
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [draftLength, setDraftLength] = useRecoilState<draftObjectArray>(drafts);
+	const { veryShortNovel, shortShortNovel, shortNovel } = numberOfCharacters;
 	const minCharCount = 400;
-	const maxCharCount = 18000;
-	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
+	const maxCharCount = shortNovel;
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	const onChangeMaxLength = (setLength: number) => {

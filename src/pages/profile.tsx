@@ -1,13 +1,16 @@
-import { Box, Divider, Heading } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Spacer, VStack, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
 import { ChangeUserNameModal } from "../components/profilePage/ChangeUserNameModal";
+import { userProfileItem } from "../constant/constant";
 import { isClientState } from "../globalState/atoms/isClientState";
 import { userName } from "../globalState/atoms/userName";
+import { profileItem } from "../globalState/selector/profileItem";
 
 export default function Profile() {
 	const isClient = useRecoilValue(isClientState);
 	const userPenName = useRecoilValue(userName);
+	const profileArray = useRecoilValue(profileItem);
 
 	return (
 		<>
@@ -35,6 +38,24 @@ export default function Profile() {
 					<Box textAlign={"end"}>
 						<ChangeUserNameModal />
 					</Box>
+					<VStack>
+						{profileArray.map((item, index) => {
+							return (
+								<Box key={index}>
+									<Divider />
+									<Flex>
+										<Heading as={"h3"}>{item.heading}</Heading>
+										<Spacer />
+										<Text>
+											`${item.description} $
+											{index === 1 ? undefined : index === 2 || index === 3 ? "Drafts" : "Characters"}`
+										</Text>
+									</Flex>
+									<Divider />
+								</Box>
+							);
+						})}
+					</VStack>
 				</Box>
 			) : undefined}
 		</>
