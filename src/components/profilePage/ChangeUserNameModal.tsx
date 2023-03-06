@@ -62,7 +62,7 @@ export const ChangeUserNameModal = () => {
 				colorScheme={"teal"}
 				onClick={onOpen}
 				size={{ base: "xs", md: "sm", lg: "md" }}
-				fontSize={{ base: "2xs", md: "sm", lg: "lg" }}
+				fontSize={{ base: "xs", md: "sm", lg: "lg" }}
 				margin={1}
 			>
 				Change Name

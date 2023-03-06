@@ -12,7 +12,7 @@ export const Header = memo(() => {
 		<>
 			<Center
 				textAlign={"center"}
-				w={"full"}
+				w={"auto"}
 				bgColor={headerBgColor}
 				h={"auto"}
 				p={1.5}
@@ -26,7 +26,7 @@ export const Header = memo(() => {
 					<Link href={"/"}>
 						<Heading
 							as={"h1"}
-							fontSize={{ base: "md", md: "2xl", lg: "xx-large" }}
+							fontSize={{ base: "md", md: "xl", lg: "2xl" }}
 							_hover={{ opacity: 0.8, cursor: "pointer" }}
 						>
 							“ NoA -novel aidor- ”

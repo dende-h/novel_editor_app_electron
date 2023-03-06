@@ -13,7 +13,7 @@ const Index: NextPage = () => {
 					content="短い小説を繰り返し書いて、小説のトレーニングをすることを目的とした小説ライターアプリです。"
 				/>
 			</Head>
-			<Box>
+			<Box height={"100vh"}>
 				<TwoColumnTemplate />
 			</Box>
 		</>

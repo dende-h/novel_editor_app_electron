@@ -1,9 +1,9 @@
-import { Box, Divider, Flex, Heading, Spacer, VStack, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Spacer, VStack, Text, Card, CardBody, HStack } from "@chakra-ui/react";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
 import { ChangeUserNameModal } from "../components/profilePage/ChangeUserNameModal";
-import { userProfileItem } from "../constant/constant";
 import { isClientState } from "../globalState/atoms/isClientState";
+
 import { userName } from "../globalState/atoms/userName";
 import { profileItem } from "../globalState/selector/profileItem";
 
@@ -38,21 +38,31 @@ export default function Profile() {
 					<Box textAlign={"end"}>
 						<ChangeUserNameModal />
 					</Box>
-					<VStack>
+					<VStack padding={4}>
 						{profileArray.map((item, index) => {
 							return (
-								<Box key={index}>
-									<Divider />
-									<Flex>
-										<Heading as={"h3"}>{item.heading}</Heading>
-										<Spacer />
-										<Text>
-											`${item.description} $
-											{index === 1 ? undefined : index === 2 || index === 3 ? "Drafts" : "Characters"}`
-										</Text>
-									</Flex>
-									<Divider />
-								</Box>
+								<Card key={index} w={{ base: "350px", md: "400px", lg: "600px" }} h={"auto"}>
+									<CardBody>
+										<Flex>
+											<Heading as={"h5"} fontSize={{ base: "lg", lg: "x-large" }}>
+												{item.heading}
+											</Heading>
+											<Spacer />
+											<HStack>
+												<Text fontSize={{ base: "md", md: "lg", lg: "xl" }}>{item.description}</Text>
+												<Text fontSize={{ base: "md", md: "lg", lg: "xl" }}>
+													{index === 0
+														? undefined
+														: index === 1 || index === 2
+														? "Drafts"
+														: index === 3
+														? "Characters"
+														: undefined}
+												</Text>
+											</HStack>
+										</Flex>
+									</CardBody>
+								</Card>
 							);
 						})}
 					</VStack>

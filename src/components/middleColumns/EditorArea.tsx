@@ -30,61 +30,61 @@ export const EditorArea = memo(() => {
 		<>
 			{isClient ? (
 				selectedDraft ? (
-					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} minW={"350px"} minH={"100vh"} position={"relative"} zIndex={1}>
-						<Center>
-							<VStack spacing={{ base: 4, md: 5, lg: 5, xl: 5 }}>
-								<VStack>
-									<Text fontSize={{ base: "sm", md: "md" }}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
-									<Input
-										fontSize={{ base: "md", md: "lg" }}
-										value={selectedDraft.title}
-										onChange={onChangeTitleArea}
-										border={"none"}
-										borderRadius={0}
-										width={"300px"}
-										onCompositionStart={() => setConposing(true)}
-										onCompositionEnd={() => {
-											setConposing(false);
-										}}
-										onKeyUp={onEnterKeyFocusEvent} //KeyDownだとテキストエリアに改行が入ってしまうのでUp
-										placeholder="novel title"
-										textAlign={"center"}
-										maxLength={30}
-										_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
-										transitionProperty="all"
-										transitionDuration="1.0s"
-										transitionTimingFunction={"ease-out"}
-										onBlur={onBlurFocusTitleInput}
-										autoFocus={selectedDraft.title === "" ? true : false}
-									/>
-								</VStack>
-								<VStack w={{ base: "340px", md: "740px" }} spacing={0}>
-									<Text textColor={isCharCountOverflow && "red"} fontSize={{ base: "sm", md: "md" }}>
-										現在の文字数 : {charCount} / {bodyMaxLength} 文字
-									</Text>
-									<SelectMaxLengthSlider maxLength={bodyMaxLength} />
-								</VStack>
-
-								<Textarea
-									fontSize={{ base: "xs", md: "sm", lg: "md" }}
-									placeholder="Enter the text of your novel here"
-									width={{ base: "320px", md: "680px", lg: "630px", xl: "900px", xxl: "1200px" }}
-									minH={"70vh"}
-									resize={"none"}
-									borderRadius={0}
+					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} w={"100%"} h={"auto"} position={"relative"} zIndex={1}>
+						<VStack spacing={4} h={"90vh"}>
+							<VStack>
+								<Text fontSize={{ base: "sm", md: "md" }}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
+								<Input
+									fontSize={{ base: "md", md: "lg" }}
+									value={selectedDraft.title}
+									onChange={onChangeTitleArea}
 									border={"none"}
-									onChange={onChangeTextArea}
-									value={selectedDraft.body}
-									isInvalid={isCharCountOverflow}
-									ref={focus}
-									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "none" }}
+									borderRadius={0}
+									width={"30%"}
+									onCompositionStart={() => setConposing(true)}
+									onCompositionEnd={() => {
+										setConposing(false);
+									}}
+									onKeyUp={onEnterKeyFocusEvent} //KeyDownだとテキストエリアに改行が入ってしまうのでUp
+									placeholder="novel title"
+									textAlign={"center"}
+									maxLength={30}
+									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "outline" }}
 									transitionProperty="all"
 									transitionDuration="1.0s"
 									transitionTimingFunction={"ease-out"}
-									autoFocus={selectedDraft.title !== "" ? true : false}
+									onBlur={onBlurFocusTitleInput}
+									autoFocus={selectedDraft.title === "" ? true : false}
 								/>
 							</VStack>
-						</Center>
+							<VStack w={"50%"} spacing={0}>
+								<Text textColor={isCharCountOverflow && "red"} fontSize={{ base: "sm", md: "md" }}>
+									現在の文字数 : {charCount} / {bodyMaxLength} 文字
+								</Text>
+								<SelectMaxLengthSlider maxLength={bodyMaxLength} />
+							</VStack>
+
+							<Textarea
+								fontSize={{ base: "xs", md: "sm", lg: "md" }}
+								placeholder="Enter the text of your novel here"
+								width={"80%"}
+								height={"80%"}
+								resize={"none"}
+								borderRadius={0}
+								border={"none"}
+								onChange={onChangeTextArea}
+								value={selectedDraft.body}
+								isInvalid={isCharCountOverflow}
+								ref={focus}
+								_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "none" }}
+								transitionProperty="all"
+								transitionDuration="1.0s"
+								transitionTimingFunction={"ease-out"}
+								autoFocus={selectedDraft.title !== "" ? true : false}
+								padding={5}
+							/>
+						</VStack>
+
 						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
 							{isSelect ? (
 								<IconButton

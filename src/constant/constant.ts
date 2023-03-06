@@ -10,4 +10,4 @@ export const numberOfCharacters: numberOfCharacters = {
 	shortNovel: 24000
 };
 
-export const userProfileItem: string[] = ["ペンネーム：", "原稿数：", "公開原稿数：", "本文総文字数："];
+export const userProfileItem: string[] = ["ペンネーム：", "原稿数：", "公開原稿数：", "本文総文字数：", "最終更新日"];

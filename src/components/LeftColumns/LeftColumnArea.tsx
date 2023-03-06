@@ -44,7 +44,7 @@ export const LeftColumnArea = memo(() => {
 		<>
 			{/* クライアントサイドのみでのレンダリング */}
 			{isClient ? (
-				<VStack p={6} maxH={{ base: "100%", lg: "100vh" }} overflowY="scroll" position={"relative"} zIndex={1}>
+				<VStack p={6} maxH={{ base: "100%", lg: "100%" }} overflowY="scroll" position={"relative"} zIndex={1}>
 					<IconButton
 						size={"md"}
 						position={"fixed"}
@@ -74,7 +74,7 @@ export const LeftColumnArea = memo(() => {
 								border={"none"}
 								_focus={{ opacity: 0.8, shadow: "2xl" }}
 								_hover={{ opacity: 0.8, shadow: "2xl" }}
-								w={"300px"}
+								w={{ lg: "270px", xl: "290px" }}
 								onClick={onAddNovel}
 								isDisabled={isSelect}
 							>
@@ -110,7 +110,7 @@ export const LeftColumnArea = memo(() => {
 									backgroundColor={item.isSelected ? bgColorIsSelectedDraftCard : bgColorIsNotSelectedDraftCard}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
-									w={"290px"}
+									w={{ lg: "270px", xl: "290px" }}
 									marginTop={3}
 									borderRadius={5}
 									border={"none"}

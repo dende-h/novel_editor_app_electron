@@ -42,7 +42,7 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					onChange={onChangeMaxLength}
 					onMouseEnter={() => setShowTooltip(true)}
 					onMouseLeave={() => setShowTooltip(false)}
-					w={{ base: "240px", md: "360px", xl: "500px", xxl: "800px" }}
+					w={"90%"}
 				>
 					<SliderMark value={12} mt="1" ml="-2.5" fontSize="xs">
 						1200
@@ -50,8 +50,8 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					<SliderMark value={60} mt="1" ml="-2.5" fontSize="xs">
 						6000
 					</SliderMark>
-					<SliderMark value={180} mt="1" ml="-2.5" fontSize="xs">
-						18000
+					<SliderMark value={240} mt="1" ml="-2.5" fontSize="xs">
+						24000
 					</SliderMark>
 					<SliderTrack>
 						<SliderFilledTrack />

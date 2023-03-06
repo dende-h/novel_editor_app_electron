@@ -1,8 +1,10 @@
 /* eslint-disable no-irregular-whitespace */
+import format from "date-fns/format";
 import { selector } from "recoil";
 import { userProfileItem } from "../../constant/constant";
 import { draftObjectArray, drafts } from "../atoms/drafts";
 import { userName } from "../atoms/userName";
+import { lastEditedTimeSort } from "./lastEditedTimeSort";
 
 const profileHeading = userProfileItem;
 
@@ -23,12 +25,21 @@ export const profileItem = selector({
 				return charArray ? charArray : 0;
 			})
 			.reduce((a, b) => a + b, 0);
+		const lastEditedDay = get(lastEditedTimeSort).map((item) => {
+			return format(new Date(item.lastEditedTime), "yyyy/MM/dd");
+		})[0];
 
-		const description = [userPenName, totalNumberOfDrafts, numberOfPublishedDrafts, totalNumberOfCharactersInTheDrafts];
-		const prfileArray = profileHeading.map((item, index) => {
+		const description = [
+			userPenName,
+			totalNumberOfDrafts,
+			numberOfPublishedDrafts,
+			totalNumberOfCharactersInTheDrafts,
+			lastEditedDay
+		];
+		const profileArray = profileHeading.map((item, index) => {
 			return { heading: item, description: description[index] };
 		});
 
-		return prfileArray;
+		return profileArray;
 	}
 });
