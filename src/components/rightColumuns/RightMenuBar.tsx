@@ -8,7 +8,7 @@ import { AiFillHome } from "react-icons/ai";
 export const RightMenuBar = memo(() => {
 	return (
 		<>
-			<IconButton aria-label="menuList" icon={<AiFillHome />} variant="solid" colorScheme={"whiteAlpha"} size={"sm"} />
+			<IconButton aria-label="menuList" icon={<AiFillHome />} variant="ghost" colorScheme={"twitter"} size={"lg"} />
 		</>
 	);
 });

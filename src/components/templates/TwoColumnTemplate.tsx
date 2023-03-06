@@ -2,7 +2,7 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { memo, FC } from "react";
 import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
 import { EditorArea } from "../middleColumns/EditorArea";
-import { RightMenuBar } from "../rightColumuns/rightMenuBar";
+import { RightMenuBar } from "../rightColumuns/RightMenuBar";
 
 const TwoColumnTemplate: FC = memo(() => {
 	return (
