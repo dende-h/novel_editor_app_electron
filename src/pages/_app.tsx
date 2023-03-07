@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { HeaderFooterLayout } from "../components/templates/HeaderFooterLayout";

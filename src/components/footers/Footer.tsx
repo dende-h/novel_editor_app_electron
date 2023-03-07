@@ -5,7 +5,7 @@ export const Footer = memo(() => {
 	const footerBgColor = useColorModeValue("gray.300", "gray.700");
 	return (
 		<>
-			<Box width={"full"} bgColor={footerBgColor}>
+			<Box width={"full"} bgColor={footerBgColor} h={"25px"}>
 				<Center>©2022 dende-h</Center>
 			</Box>
 		</>

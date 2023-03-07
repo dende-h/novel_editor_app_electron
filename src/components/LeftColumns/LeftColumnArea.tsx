@@ -44,7 +44,14 @@ export const LeftColumnArea = memo(() => {
 		<>
 			{/* クライアントサイドのみでのレンダリング */}
 			{isClient ? (
-				<VStack p={6} maxH={{ base: "100%", lg: "100%" }} overflowY="scroll" position={"relative"} zIndex={1}>
+				<VStack
+					p={6}
+					maxH={{ base: "100%", lg: "100%" }}
+					overflowY="scroll"
+					position={"relative"}
+					zIndex={1}
+					h={"100%"}
+				>
 					<IconButton
 						size={"md"}
 						position={"fixed"}

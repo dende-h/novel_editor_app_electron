@@ -14,13 +14,13 @@ export const Header = memo(() => {
 				textAlign={"center"}
 				w={"auto"}
 				bgColor={headerBgColor}
-				h={"auto"}
+				h={"40px"}
 				p={1.5}
 				position={"relative"}
 				zIndex={2}
 			>
-				<Box position={"absolute"} top={"1px"} left={"30px"} display={{ base: "block", lg: "none" }}>
-					<DrawerLeftArea colorScheme={"gray"} size={"xs"} />
+				<Box position={"absolute"} top={"4px"} left={"10px"} display={{ base: "block", lg: "none" }}>
+					<HeaderMenu />
 				</Box>
 				<Box>
 					<Link href={"/"}>
@@ -33,9 +33,16 @@ export const Header = memo(() => {
 						</Heading>
 					</Link>
 				</Box>
-				<HStack position={"absolute"} top={"1px"} right={"3px"} zIndex={2} display={{ base: "block", lg: "none" }}>
-					<ColorSwitchButton aria-label={"darkTheme"} size={{ base: "xs", md: "sm" }} />
-					<HeaderMenu />
+				<HStack
+					position={"absolute"}
+					spacing={2}
+					top={"4px"}
+					right={"10px"}
+					zIndex={2}
+					display={{ base: "block", lg: "none" }}
+				>
+					<ColorSwitchButton aria-label={"darkTheme"} size={"sm"} borderRadius={"full"} />
+					<DrawerLeftArea colorScheme={"gray"} size={"sm"} />
 				</HStack>
 			</Center>
 		</>

@@ -30,7 +30,7 @@ export const EditorArea = memo(() => {
 		<>
 			{isClient ? (
 				selectedDraft ? (
-					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} w={"100%"} h={"auto"} position={"relative"} zIndex={1}>
+					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} w={"auto"} position={"relative"} zIndex={1}>
 						<VStack spacing={4} h={"90vh"}>
 							<VStack>
 								<Text fontSize={{ base: "sm", md: "md" }}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
@@ -106,10 +106,10 @@ export const EditorArea = memo(() => {
 						</Box>
 					</Box>
 				) : (
-					<Box h={"100vh"}></Box>
+					<Box h={"100%"}></Box>
 				)
 			) : (
-				<Box h={"100vh"}></Box>
+				<Box h={"100%"}>Loading...</Box>
 			)}
 		</>
 	);

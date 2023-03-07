@@ -14,7 +14,7 @@ export const HeaderMenu = () => {
 				borderRadius="md"
 				_hover={{ bg: "gray.500", color: "white" }}
 				_active={{ bg: "gray.500", color: "white" }}
-				size={{ base: "xs", md: "sm", lg: "md" }}
+				size={"sm"}
 			>
 				Menu
 			</MenuButton>

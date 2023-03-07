@@ -16,7 +16,13 @@ export default function Drafts() {
 				<meta name="description" content="原稿一覧" />
 			</Head>
 			{isClient ? (
-				<SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(200px, 1fr))" padding={5}>
+				<SimpleGrid
+					spacing={4}
+					templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+					h={"100%"}
+					padding={5}
+					overflow="scroll"
+				>
 					{drafts.map((item, index) => {
 						return (
 							<Card key={index} colorScheme={"facebook"} position={"relative"}>
