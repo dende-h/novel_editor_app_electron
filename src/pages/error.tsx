@@ -10,7 +10,7 @@ export default function Error() {
 				<meta name="description" content="問い合わせの送信が失敗しました" />
 			</Head>
 
-			<Box textAlign="center" marginTop={"50px"}>
+			<Box textAlign="center" marginTop={"50px"} h={"90vh"}>
 				<VStack spacing={4}>
 					<Heading as="h1" fontSize="3xl" mb="4">
 						Error!

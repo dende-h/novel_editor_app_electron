@@ -19,7 +19,7 @@ export default function Profile() {
 				<meta name="description" content="ユーザープロフィール" />
 			</Head>
 			{isClient ? (
-				<Box textAlign={"center"} paddingY={4} h={"auto"} w={"100%"}>
+				<Box textAlign={"center"} paddingY={4} h={"90vh"} w={"100%"}>
 					<Divider borderWidth="2px" w={"auto"} />
 					<Divider marginTop={1} marginLeft={0.5} w={"auto"} />
 

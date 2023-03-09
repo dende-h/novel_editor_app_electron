@@ -81,7 +81,7 @@ export const LeftColumnArea = memo(() => {
 								border={"none"}
 								_focus={{ opacity: 0.8, shadow: "2xl" }}
 								_hover={{ opacity: 0.8, shadow: "2xl" }}
-								w={{ lg: "270px", xl: "290px" }}
+								w={{ base: "270px", xl: "290px" }}
 								onClick={onAddNovel}
 								isDisabled={isSelect}
 							>
@@ -117,7 +117,7 @@ export const LeftColumnArea = memo(() => {
 									backgroundColor={item.isSelected ? bgColorIsSelectedDraftCard : bgColorIsNotSelectedDraftCard}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
-									w={{ lg: "270px", xl: "290px" }}
+									w={{ base: "270px", xl: "290px" }}
 									marginTop={3}
 									borderRadius={5}
 									border={"none"}

@@ -10,7 +10,7 @@ export default function Thanks() {
 				<meta name="description" content="問い合わせの送信が成功しました" />
 			</Head>
 
-			<Box textAlign="center" marginTop={"50px"} h={"100%"}>
+			<Box textAlign="center" marginTop={"50px"} h={"90vh"}>
 				<VStack spacing={4}>
 					<Heading as="h1" fontSize="3xl" mb="4">
 						Thank you!

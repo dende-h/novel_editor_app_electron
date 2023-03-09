@@ -1,9 +1,8 @@
-import { Box, Center, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
+import { Box, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { ImCross, ImPlus } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { isClientState } from "../../globalState/atoms/isClientState";
-import { isSelected } from "../../globalState/atoms/isSelected";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
@@ -16,7 +15,6 @@ export const EditorArea = memo(() => {
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
-	const isSelect = useRecoilValue(isSelected);
 	const { onAddNovel, seletStateReset } = useDraft();
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 	const isClient = useRecoilValue(isClientState);
@@ -30,8 +28,8 @@ export const EditorArea = memo(() => {
 		<>
 			{isClient ? (
 				selectedDraft ? (
-					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} w={"auto"} position={"relative"} zIndex={1}>
-						<VStack spacing={4} h={"90vh"}>
+					<Box p={{ base: 2, md: 3, lg: 4, xl: 6 }} w={"auto"} position={"relative"} zIndex={1} h={"90vh"}>
+						<VStack spacing={4}>
 							<VStack>
 								<Text fontSize={{ base: "sm", md: "md" }}>{`タイトル : ${selectedDraft.title.length} / 30文字`}</Text>
 								<Input
@@ -40,7 +38,7 @@ export const EditorArea = memo(() => {
 									onChange={onChangeTitleArea}
 									border={"none"}
 									borderRadius={0}
-									width={"30%"}
+									width={"auto"}
 									onCompositionStart={() => setConposing(true)}
 									onCompositionEnd={() => {
 										setConposing(false);
@@ -85,28 +83,28 @@ export const EditorArea = memo(() => {
 							/>
 						</VStack>
 
-						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
-							{isSelect ? (
-								<IconButton
-									icon={<ImCross />}
-									aria-label="openDrawer"
-									onClick={seletStateReset}
-									colorScheme="teal"
-									borderRadius={"full"}
-								/>
-							) : (
-								<IconButton
-									icon={<ImPlus />}
-									aria-label="openDrawer"
-									onClick={onAddNovel}
-									colorScheme="teal"
-									borderRadius={"full"}
-								/>
-							)}
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"20px"} right={"30px"} zIndex={2}>
+							<IconButton
+								icon={<ImCross />}
+								aria-label="resetSelect"
+								onClick={seletStateReset}
+								colorScheme="teal"
+								borderRadius={"full"}
+							/>
 						</Box>
 					</Box>
 				) : (
-					<Box h={"100%"}></Box>
+					<Box h={"90vh"}>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"20px"} right={"30px"} zIndex={2}>
+							<IconButton
+								icon={<ImPlus />}
+								aria-label="addNovel"
+								onClick={onAddNovel}
+								colorScheme="teal"
+								borderRadius={"full"}
+							/>
+						</Box>
+					</Box>
 				)
 			) : (
 				<Box h={"100%"}>Loading...</Box>

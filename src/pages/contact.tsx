@@ -66,7 +66,7 @@ export default function Contact() {
 				<title>NoA問い合わせフォーム</title>
 				<meta name="description" content="NoAに関する問い合わせフォームです" />
 			</Head>
-			<Box p="6" w="100%">
+			<Box p="6" w="100%" h={"90vh"}>
 				<VStack spacing="6">
 					<Heading as="h1" size="xl">
 						Contact Form

@@ -1,12 +1,15 @@
 import { Box, Center, Heading, HStack, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { memo } from "react";
+import { useRecoilValue } from "recoil";
+import { isSelected } from "../../globalState/atoms/isSelected";
 import { DrawerLeftArea } from "../LeftColumns/DrawerLeftArea";
 import { ColorSwitchButton } from "./ColorSwitchButton";
 import { HeaderMenu } from "./HeaderMenu";
 
 export const Header = memo(() => {
 	const headerBgColor = useColorModeValue("gray.300", "gray.700");
+	const isSelect = useRecoilValue(isSelected);
 
 	return (
 		<>
@@ -42,7 +45,7 @@ export const Header = memo(() => {
 					display={{ base: "block", lg: "none" }}
 				>
 					<ColorSwitchButton aria-label={"darkTheme"} size={"sm"} borderRadius={"full"} />
-					<DrawerLeftArea colorScheme={"gray"} size={"sm"} />
+					<DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} size={"sm"} />
 				</HStack>
 			</Center>
 		</>

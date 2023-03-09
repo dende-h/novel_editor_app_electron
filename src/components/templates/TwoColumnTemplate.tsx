@@ -8,7 +8,7 @@ const TwoColumnTemplate: FC = memo(() => {
 		<>
 			<Grid
 				gridTemplateColumns={{ base: "1fr", lg: " 355px 1fr" }}
-				gridTemplateRows={"100%"}
+				gridTemplateRows={"90vh"}
 				gridTemplateAreas={{ base: ` 'main' `, lg: `" left main"` }}
 			>
 				<GridItem area="left" display={{ base: "none", lg: "block" }}>

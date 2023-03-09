@@ -19,7 +19,7 @@ export default function Drafts() {
 				<SimpleGrid
 					spacing={4}
 					templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-					h={"100%"}
+					h={"90vh"}
 					padding={5}
 					overflow="scroll"
 				>
