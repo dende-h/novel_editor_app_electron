@@ -20,9 +20,9 @@ export const SelectMaxLengthSlider = (props: Props) => {
 
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [draftLength, setDraftLength] = useRecoilState<draftObjectArray>(drafts);
+	const { veryShortNovel, shortShortNovel, shortNovel } = numberOfCharacters;
 	const minCharCount = 400;
-	const maxCharCount = 18000;
-	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
+	const maxCharCount = shortNovel;
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	const onChangeMaxLength = (setLength: number) => {
@@ -42,7 +42,7 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					onChange={onChangeMaxLength}
 					onMouseEnter={() => setShowTooltip(true)}
 					onMouseLeave={() => setShowTooltip(false)}
-					w={{ base: "240px", md: "360px", xl: "500px", xxl: "800px" }}
+					w={"90%"}
 				>
 					<SliderMark value={12} mt="1" ml="-2.5" fontSize="xs">
 						1200
@@ -50,8 +50,8 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					<SliderMark value={60} mt="1" ml="-2.5" fontSize="xs">
 						6000
 					</SliderMark>
-					<SliderMark value={180} mt="1" ml="-2.5" fontSize="xs">
-						18000
+					<SliderMark value={240} mt="1" ml="-2.5" fontSize="xs">
+						24000
 					</SliderMark>
 					<SliderTrack>
 						<SliderFilledTrack />
@@ -59,7 +59,6 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					<Tooltip
 						hasArrow
 						bg="gray.400"
-						color="gray.200"
 						placement="top"
 						isOpen={showTooltip}
 						label={

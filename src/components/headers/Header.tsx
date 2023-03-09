@@ -1,18 +1,53 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Center, Heading, HStack, useColorModeValue } from "@chakra-ui/react";
+import Link from "next/link";
 import { memo } from "react";
+import { useRecoilValue } from "recoil";
+import { isSelected } from "../../globalState/atoms/isSelected";
 import { DrawerLeftArea } from "../LeftColumns/DrawerLeftArea";
+import { ColorSwitchButton } from "./ColorSwitchButton";
+import { HeaderMenu } from "./HeaderMenu";
 
 export const Header = memo(() => {
+	const headerBgColor = useColorModeValue("gray.300", "gray.700");
+	const isSelect = useRecoilValue(isSelected);
+
 	return (
 		<>
-			<Box textAlign={"center"} w={"full"} bgColor={"gray.300"} h={"auto"} p={1.5} position={"relative"}>
-				<Box position={"absolute"} top={1} left={"30px"} display={{ base: "block", lg: "none" }}>
-					<DrawerLeftArea colorScheme={"gray"} size={"xs"} />
+			<Center
+				textAlign={"center"}
+				w={"auto"}
+				bgColor={headerBgColor}
+				h={"40px"}
+				p={1.5}
+				position={"relative"}
+				zIndex={2}
+			>
+				<Box position={"absolute"} top={"4px"} left={"10px"} display={{ base: "block", lg: "none" }}>
+					<HeaderMenu />
 				</Box>
-				<Heading as={"h1"} fontFamily="heading" fontSize={{ base: "xl", lg: "xx-large" }}>
-					“ NoA -novel aidor- ”
-				</Heading>
-			</Box>
+				<Box>
+					<Link href={"/"}>
+						<Heading
+							as={"h1"}
+							fontSize={{ base: "md", md: "xl", lg: "2xl" }}
+							_hover={{ opacity: 0.8, cursor: "pointer" }}
+						>
+							“ NoA -novel aidor- ”
+						</Heading>
+					</Link>
+				</Box>
+				<HStack
+					position={"absolute"}
+					spacing={2}
+					top={"4px"}
+					right={"10px"}
+					zIndex={2}
+					display={{ base: "block", lg: "none" }}
+				>
+					<ColorSwitchButton aria-label={"darkTheme"} size={"sm"} borderRadius={"full"} />
+					<DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} size={"sm"} />
+				</HStack>
+			</Center>
 		</>
 	);
 });

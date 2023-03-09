@@ -10,8 +10,8 @@ export const IntroductionNovelBody = memo((props: Props) => {
 	const displayCharacters = 45;
 	const displayDate =
 		lastEditedTime instanceof Date
-			? format(lastEditedTime, "yyyy-MM-dd-hh:mm")
-			: format(new Date(lastEditedTime), "yyyy-MM-dd-hh:mm");
+			? format(lastEditedTime, "yyyy/MM/dd-HH:mm")
+			: format(new Date(lastEditedTime), "yyyy/MM/dd-HH:mm");
 
 	const introductionBody = [...bodyText].filter((char) => {
 		return !char.match(/(\s+|　)/g); //空白文字、全角半角スペース、改行は除外
@@ -21,12 +21,11 @@ export const IntroductionNovelBody = memo((props: Props) => {
 		h: "auto",
 		maxW: "220px",
 		paddingX: "3",
-		color: "gray.500",
 		textAlign: "left",
 		fontSize: "xs",
 		fontStyle: "italic",
-		_before: { content: `"“"`, color: "gray" },
-		_after: { content: `"”"`, color: "gray" }
+		_before: { content: `"“"` },
+		_after: { content: `"”"` }
 	};
 
 	return (

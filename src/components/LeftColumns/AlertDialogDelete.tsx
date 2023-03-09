@@ -27,9 +27,7 @@ export const AlertDialogDelete = () => {
 			<PrimaryIconButton
 				aria-label="deleteDraft"
 				icon={<ImFire />}
-				defaultColor={"orange.300"}
-				changeColor={"red.500"}
-				bgColor={"gray.300"}
+				colorScheme={"orange"}
 				focusOutline={"none"}
 				onClick={(e) => {
 					onOpen();

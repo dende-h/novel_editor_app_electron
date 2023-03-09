@@ -11,22 +11,30 @@ import {
 	Input,
 	DrawerFooter,
 	IconButton,
-	color
+	color,
+	useColorModeValue
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import { LeftColumnArea } from "./LeftColumnArea";
-import { ImMenu } from "react-icons/im";
-import { useRecoilValue } from "recoil";
-import { isSelected } from "../../globalState/atoms/isSelected";
+import { ImMenu, ImPointUp } from "react-icons/im";
 
 export const DrawerLeftArea = ({ colorScheme, size }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const isSelect = useRecoilValue(isSelected);
-	const btnRef = useRef();
+	const btnRef: LegacyRef<HTMLButtonElement> = useRef();
+	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 
 	// useEffect(() => {
 	// 	onClose();
 	// }, [isSelect]);
+
+	const css = {
+		overflow: "auto",
+		scrollbarWidth: "none",
+		webkitScrollbar: {
+			width: "0",
+			height: "0"
+		}
+	};
 
 	return (
 		<>
@@ -42,7 +50,7 @@ export const DrawerLeftArea = ({ colorScheme, size }) => {
 
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} size={"sm"}>
 				<DrawerOverlay />
-				<DrawerContent backgroundColor={"gray.200"}>
+				<DrawerContent sx={css} bgColor={backgroundColor}>
 					<DrawerCloseButton />
 					<DrawerHeader>List of Drafts</DrawerHeader>
 					<DrawerBody>

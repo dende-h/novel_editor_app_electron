@@ -5,6 +5,7 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogOverlay,
+	Box,
 	Button,
 	useDisclosure
 } from "@chakra-ui/react";
@@ -39,39 +40,39 @@ export const DownloadTXT = () => {
 
 	return (
 		<>
-			<PrimaryIconButton
-				aria-label="downloadText"
-				icon={<ImDownload2 />}
-				defaultColor={"teal.300"}
-				changeColor={"teal.500"}
-				bgColor={"gray.300"}
-				focusOutline={"none"}
-				onClick={(e) => {
-					onOpen();
-					e.stopPropagation(); //親要素へのバブリングを停止
-				}}
-			/>
+			<Box display={{ base: "none", lg: "block" }}>
+				<PrimaryIconButton
+					aria-label="downloadText"
+					icon={<ImDownload2 />}
+					colorScheme={"telegram"}
+					focusOutline={"none"}
+					onClick={(e) => {
+						onOpen();
+						e.stopPropagation(); //親要素へのバブリングを停止
+					}}
+				/>
 
-			<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-				<AlertDialogOverlay>
-					<AlertDialogContent>
-						<AlertDialogHeader fontSize="lg" fontWeight="bold">
-							小説のダウンロード
-						</AlertDialogHeader>
+				<AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+					<AlertDialogOverlay>
+						<AlertDialogContent>
+							<AlertDialogHeader fontSize="lg" fontWeight="bold">
+								小説のダウンロード
+							</AlertDialogHeader>
 
-						<AlertDialogBody>テキスト形式で小説を保存できます</AlertDialogBody>
+							<AlertDialogBody>テキスト形式で小説を保存できます</AlertDialogBody>
 
-						<AlertDialogFooter>
-							<Button ref={cancelRef} onClick={onClose} _focus={{ boxShadow: "none" }}>
-								キャンセル
-							</Button>
-							<Button colorScheme="teal" onClick={onClickDownloadButton} ml={3} _focus={{ boxShadow: "none" }}>
-								ダウンロード
-							</Button>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialogOverlay>
-			</AlertDialog>
+							<AlertDialogFooter>
+								<Button ref={cancelRef} onClick={onClose} _focus={{ boxShadow: "none" }}>
+									キャンセル
+								</Button>
+								<Button colorScheme="teal" onClick={onClickDownloadButton} ml={3} _focus={{ boxShadow: "none" }}>
+									ダウンロード
+								</Button>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialogOverlay>
+				</AlertDialog>
+			</Box>
 		</>
 	);
 };
