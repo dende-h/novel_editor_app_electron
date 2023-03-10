@@ -13,7 +13,7 @@ import { LegacyRef, useRef } from "react";
 import { LeftColumnArea } from "./LeftColumnArea";
 import { ImMenu } from "react-icons/im";
 
-export const DrawerLeftArea = ({ colorScheme, size }) => {
+export const DrawerLeftArea = ({ colorScheme }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef: LegacyRef<HTMLButtonElement> = useRef();
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
@@ -40,7 +40,7 @@ export const DrawerLeftArea = ({ colorScheme, size }) => {
 				onClick={onOpen}
 				colorScheme={colorScheme}
 				borderRadius={2}
-				size={size}
+				boxSize={8}
 			/>
 
 			<Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} size={"sm"}>

@@ -53,7 +53,7 @@ export const LeftColumnArea = memo(() => {
 					h={"100%"}
 				>
 					<IconButton
-						size={"md"}
+						boxSize={12}
 						position={"fixed"}
 						bottom={"30px"}
 						left={{ base: "10px", lg: "75px" }}

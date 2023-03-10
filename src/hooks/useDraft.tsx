@@ -33,7 +33,7 @@ export const useDraft = () => {
 			body: "",
 			userName: "名無し",
 			isSelected: true,
-			maxLength: 800,
+			maxLength: 3800,
 			isPublished: false,
 			tag: [],
 			lastEditedTime: createTime

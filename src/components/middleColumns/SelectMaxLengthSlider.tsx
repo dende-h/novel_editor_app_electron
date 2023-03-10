@@ -38,7 +38,7 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					min={minCharCount / 100}
 					max={maxCharCount / 100}
 					step={2}
-					colorScheme="gray"
+					colorScheme="teal"
 					onChange={onChangeMaxLength}
 					onMouseEnter={() => setShowTooltip(true)}
 					onMouseLeave={() => setShowTooltip(false)}
@@ -53,12 +53,12 @@ export const SelectMaxLengthSlider = (props: Props) => {
 					<SliderMark value={240} mt="1" ml="-2.5" fontSize="xs">
 						24000
 					</SliderMark>
-					<SliderTrack>
+					<SliderTrack bgColor={"facebook.200"}>
 						<SliderFilledTrack />
 					</SliderTrack>
 					<Tooltip
 						hasArrow
-						bg="gray.400"
+						bg="gray.600"
 						placement="top"
 						isOpen={showTooltip}
 						label={

@@ -55,32 +55,33 @@ export const EditorArea = memo(() => {
 									autoFocus={selectedDraft.title === "" ? true : false}
 								/>
 							</VStack>
-							<VStack w={"50%"} spacing={0}>
+							<VStack w={"85%"} spacing={0}>
 								<Text textColor={isCharCountOverflow && "red"} fontSize={{ base: "sm", md: "md" }}>
 									現在の文字数 : {charCount} / {bodyMaxLength} 文字
 								</Text>
 								<SelectMaxLengthSlider maxLength={bodyMaxLength} />
 							</VStack>
-
-							<Textarea
-								fontSize={{ base: "sm", lg: "md" }}
-								placeholder="Enter the text of your novel here"
-								width={"80%"}
-								height={{ base: "60vh", lg: "70vh" }}
-								resize={"none"}
-								borderRadius={0}
-								border={"none"}
-								onChange={onChangeTextArea}
-								value={selectedDraft.body}
-								isInvalid={isCharCountOverflow}
-								ref={focus}
-								_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "none" }}
-								transitionProperty="all"
-								transitionDuration="1.0s"
-								transitionTimingFunction={"ease-out"}
-								autoFocus={selectedDraft.title !== "" ? true : false}
-								padding={5}
-							/>
+							<Box position={"relative"} zIndex={1}>
+								<Textarea
+									fontSize={{ base: "sm", lg: "md" }}
+									placeholder="Enter the text of your novel here"
+									width={"85%"}
+									height={{ base: "60vh", lg: "70vh" }}
+									resize={"none"}
+									borderRadius={0}
+									border={"none"}
+									onChange={onChangeTextArea}
+									value={selectedDraft.body}
+									isInvalid={isCharCountOverflow}
+									ref={focus}
+									_focus={{ backgroundColor: inputFocusBgColor, boxShadow: "none" }}
+									transitionProperty="all"
+									transitionDuration="1.0s"
+									transitionTimingFunction={"ease-out"}
+									autoFocus={selectedDraft.title !== "" ? true : false}
+									padding={5}
+								/>
+							</Box>
 						</VStack>
 
 						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"35px"} right={"30px"} zIndex={2}>
@@ -90,7 +91,7 @@ export const EditorArea = memo(() => {
 								onClick={selectStateReset}
 								colorScheme="teal"
 								borderRadius={"full"}
-								size={"lg"}
+								boxSize={12}
 								shadow="lg"
 							/>
 						</Box>
@@ -104,7 +105,7 @@ export const EditorArea = memo(() => {
 								onClick={onAddNovel}
 								colorScheme="teal"
 								borderRadius={"full"}
-								size={"lg"}
+								boxSize={12}
 								shadow="lg"
 							/>
 						</Box>

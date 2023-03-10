@@ -47,8 +47,8 @@ export const LeftMenuBar = memo(() => {
 				h={"100%"}
 				display={{ base: "none", lg: "block" }}
 				textAlign={"center"}
-				spacing={3}
-				paddingY={6}
+				spacing={4}
+				paddingY={8}
 			>
 				{menuIcons.map((item, index) => {
 					return (
@@ -59,7 +59,7 @@ export const LeftMenuBar = memo(() => {
 							variant="ghost"
 							colorScheme={"twitter"}
 							fontSize="24px"
-							size={"lg"}
+							boxSize={10}
 							onClick={() => onClickMenu(index)}
 						/>
 					);

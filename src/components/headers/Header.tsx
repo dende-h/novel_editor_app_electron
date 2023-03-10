@@ -44,8 +44,8 @@ export const Header = memo(() => {
 					zIndex={2}
 					display={{ base: "block", lg: "none" }}
 				>
-					<ColorSwitchButton aria-label={"darkTheme"} size={"sm"} borderRadius={"full"} />
-					<DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} size={"sm"} />
+					<ColorSwitchButton aria-label={"darkTheme"} boxSize={8} borderRadius={"full"} />
+					<DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} />
 				</HStack>
 			</Center>
 		</>

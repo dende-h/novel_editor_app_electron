@@ -12,7 +12,7 @@ const SiteKey = process.env.NEXT_PUBLIC_GOOGLE_RECAOTCHA_KEY;
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<ChakraProvider theme={theme}>
+		<ChakraProvider resetCSS theme={theme}>
 			<RecoilRoot>
 				<HeaderFooterLayout>
 					<GoogleReCaptchaProvider reCaptchaKey={SiteKey} language="ja">
