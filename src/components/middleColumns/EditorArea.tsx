@@ -97,7 +97,8 @@ export const EditorArea = memo(() => {
 								/>
 								<Text
 									fontFamily={"heading"}
-									fontSize={{ base: "11px", md: "12px", lg: "14px" }}
+									fontSize={{ base: "11px", md: "12px", lg: "13px" }}
+									_hover={{ fontSize: "14px", cursor: "pointer" }}
 									fontStyle={"italic"}
 									fontWeight={"bold"}
 									as={"a"}
