@@ -1,16 +1,30 @@
-import { Box, IconButton, Input, Text, Textarea, useColorModeValue, VStack } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Icon,
+	IconButton,
+	Input,
+	Text,
+	Textarea,
+	Tooltip,
+	useClipboard,
+	useColorModeValue,
+	VStack
+} from "@chakra-ui/react";
 import { memo, useEffect, useState } from "react";
 import { ImCross, ImPlus } from "react-icons/im";
+import { GrCopy } from "react-icons/gr";
 import { useRecoilValue } from "recoil";
 import { isClientState } from "../../globalState/atoms/isClientState";
 import { draftObject, editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
+import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 import { SelectMaxLengthSlider } from "./SelectMaxLengthSlider";
 
 export const EditorArea = memo(() => {
-	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea } = useDraft(); //Draftオブジェクトの操作hooks
+	const { onChangeTitleArea, onBlurFocusTitleInput, onChangeTextArea, onCopy, hasCopied } = useDraft(); //Draftオブジェクトの操作hooks
 	const { focus, onEnterKeyFocusEvent, setConposing } = useEnterKeyEvent();
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const selectedDraft: draftObject = useRecoilValue(editorState);
@@ -61,12 +75,12 @@ export const EditorArea = memo(() => {
 								</Text>
 								<SelectMaxLengthSlider maxLength={bodyMaxLength} />
 							</VStack>
-							<Box position={"relative"} zIndex={1}>
+							<Box zIndex={1} w={"100%"} h={"100%"} textAlign={"center"} position={"relative"}>
 								<Textarea
 									fontSize={{ base: "sm", lg: "md" }}
 									placeholder="Enter the text of your novel here"
 									width={"85%"}
-									height={{ base: "60vh", lg: "70vh" }}
+									height={{ base: "65vh", lg: "70vh" }}
 									resize={"none"}
 									borderRadius={0}
 									border={"none"}
@@ -81,6 +95,21 @@ export const EditorArea = memo(() => {
 									autoFocus={selectedDraft.title !== "" ? true : false}
 									padding={5}
 								/>
+								<Text
+									fontFamily={"heading"}
+									fontSize={{ base: "11px", md: "12px", lg: "14px" }}
+									fontStyle={"italic"}
+									fontWeight={"bold"}
+									as={"a"}
+									onClick={onCopy}
+									color={hasCopied && "green.500"}
+									position={"absolute"}
+									top={"1%"}
+									right={"8%"}
+									zIndex={2}
+								>
+									{hasCopied ? "Copied!" : "Copy"}
+								</Text>
 							</Box>
 						</VStack>
 

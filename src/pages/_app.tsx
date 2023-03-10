@@ -1,4 +1,4 @@
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { HeaderFooterLayout } from "../components/templates/HeaderFooterLayout";
@@ -12,7 +12,7 @@ const SiteKey = process.env.NEXT_PUBLIC_GOOGLE_RECAOTCHA_KEY;
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<ChakraProvider resetCSS theme={theme}>
+		<ChakraProvider resetCSS={true} theme={theme}>
 			<RecoilRoot>
 				<HeaderFooterLayout>
 					<GoogleReCaptchaProvider reCaptchaKey={SiteKey} language="ja">

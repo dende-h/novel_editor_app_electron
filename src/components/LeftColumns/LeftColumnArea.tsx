@@ -157,7 +157,7 @@ export const LeftColumnArea = memo(() => {
 										</Heading>
 										{item.tag.length === 0 ? undefined : (
 											<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2}>
-												<Icon as={ImPriceTag} size={"xs"} color={"teal.400"} />
+												<Icon as={ImPriceTag} boxSize={4} color={"teal.400"} />
 												<Text
 													textOverflow={"ellipsis"}
 													overflow={"hidden"}

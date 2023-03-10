@@ -164,7 +164,6 @@ export const AddTagsFormModal = () => {
 														onClick={() => onClickTagDelete(index)}
 														aria-label="tagDelete"
 														focusOutline="none"
-														size={"xs"}
 													/>
 													<Text fontStyle={"italic"} fontWeight={"bold"}>
 														{item}
