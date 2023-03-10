@@ -10,26 +10,14 @@ import {
 	ModalFooter,
 	Input,
 	HStack,
-	List,
-	ListItem,
-	SimpleGrid,
-	GridItem,
-	useToast,
 	Center,
 	Text,
-	useColorModeValue,
-	Box
+	useColorModeValue
 } from "@chakra-ui/react";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
-import { editorState } from "../../globalState/selector/editorState";
+import { useEffect } from "react";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
-import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
-import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
 export const ChangeUserNameModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();

@@ -26,6 +26,7 @@ export const PrimaryIconButton = (props: Props) => {
 				backgroundColor={bgColor}
 				border={"none"}
 				borderRadius={"full"}
+				size={"md"}
 			/>
 		</>
 	);

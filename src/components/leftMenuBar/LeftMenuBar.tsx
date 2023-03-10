@@ -58,6 +58,7 @@ export const LeftMenuBar = memo(() => {
 							icon={item}
 							variant="ghost"
 							colorScheme={"twitter"}
+							fontSize="24px"
 							size={"lg"}
 							onClick={() => onClickMenu(index)}
 						/>

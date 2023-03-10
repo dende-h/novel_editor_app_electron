@@ -15,7 +15,7 @@ export const EditorArea = memo(() => {
 	const { charCount, calcCharCount, isCharCountOverflow } = useCalcCharCount(); //文字数計算のロジック部
 	const selectedDraft: draftObject = useRecoilValue(editorState);
 	const [bodyMaxLength, setBodyMaxLength] = useState<number>(0);
-	const { onAddNovel, seletStateReset } = useDraft();
+	const { onAddNovel, selectStateReset } = useDraft();
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
 	const isClient = useRecoilValue(isClientState);
 
@@ -63,10 +63,10 @@ export const EditorArea = memo(() => {
 							</VStack>
 
 							<Textarea
-								fontSize={{ base: "xs", md: "sm", lg: "md" }}
+								fontSize={{ base: "sm", lg: "md" }}
 								placeholder="Enter the text of your novel here"
 								width={"80%"}
-								height={"70vh"}
+								height={{ base: "60vh", lg: "70vh" }}
 								resize={"none"}
 								borderRadius={0}
 								border={"none"}
@@ -83,25 +83,29 @@ export const EditorArea = memo(() => {
 							/>
 						</VStack>
 
-						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"35px"} right={"30px"} zIndex={2}>
 							<IconButton
 								icon={<ImCross />}
 								aria-label="resetSelect"
-								onClick={seletStateReset}
+								onClick={selectStateReset}
 								colorScheme="teal"
 								borderRadius={"full"}
+								size={"lg"}
+								shadow="lg"
 							/>
 						</Box>
 					</Box>
 				) : (
 					<Box h={"90vh"}>
-						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"35px"} right={"30px"} zIndex={2}>
 							<IconButton
 								icon={<ImPlus />}
 								aria-label="addNovel"
 								onClick={onAddNovel}
 								colorScheme="teal"
 								borderRadius={"full"}
+								size={"lg"}
+								shadow="lg"
 							/>
 						</Box>
 					</Box>

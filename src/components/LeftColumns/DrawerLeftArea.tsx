@@ -1,22 +1,17 @@
-import { IoIosAdd } from "react-icons/io";
 import {
 	useDisclosure,
-	Button,
 	Drawer,
 	DrawerOverlay,
 	DrawerContent,
 	DrawerCloseButton,
 	DrawerHeader,
 	DrawerBody,
-	Input,
-	DrawerFooter,
 	IconButton,
-	color,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { LegacyRef, useEffect, useRef, useState } from "react";
+import { LegacyRef, useRef } from "react";
 import { LeftColumnArea } from "./LeftColumnArea";
-import { ImMenu, ImPointUp } from "react-icons/im";
+import { ImMenu } from "react-icons/im";
 
 export const DrawerLeftArea = ({ colorScheme, size }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();

@@ -45,7 +45,7 @@ export const useDraft = () => {
 		setIsSelect(true);
 	};
 
-	const seletStateReset = () => {
+	const selectStateReset = () => {
 		setDraft(
 			draft.map((item) => {
 				return { ...item, isSelected: false };
@@ -65,7 +65,7 @@ export const useDraft = () => {
 			);
 			setIsSelect(true);
 		} else {
-			seletStateReset();
+			selectStateReset();
 		}
 	};
 
@@ -118,7 +118,7 @@ export const useDraft = () => {
 		onAddNovel,
 		onClickOpenDraft,
 		onEnterKey,
-		seletStateReset,
+		selectStateReset,
 		onSetUserName
 	};
 };
