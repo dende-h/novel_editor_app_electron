@@ -66,7 +66,7 @@ export const EditorArea = memo(() => {
 								fontSize={{ base: "xs", md: "sm", lg: "md" }}
 								placeholder="Enter the text of your novel here"
 								width={"80%"}
-								height={"80%"}
+								height={"70vh"}
 								resize={"none"}
 								borderRadius={0}
 								border={"none"}
@@ -83,7 +83,7 @@ export const EditorArea = memo(() => {
 							/>
 						</VStack>
 
-						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"20px"} right={"30px"} zIndex={2}>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
 							<IconButton
 								icon={<ImCross />}
 								aria-label="resetSelect"
@@ -95,7 +95,7 @@ export const EditorArea = memo(() => {
 					</Box>
 				) : (
 					<Box h={"90vh"}>
-						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"20px"} right={"30px"} zIndex={2}>
+						<Box display={{ base: "block", lg: "none" }} position={"fixed"} bottom={"30px"} right={"30px"} zIndex={2}>
 							<IconButton
 								icon={<ImPlus />}
 								aria-label="addNovel"
