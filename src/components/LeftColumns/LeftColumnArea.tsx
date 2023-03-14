@@ -117,7 +117,7 @@ export const LeftColumnArea = memo(() => {
 									backgroundColor={item.isSelected ? bgColorIsSelectedDraftCard : bgColorIsNotSelectedDraftCard}
 									// ここから下は固定値、上は受け取った真偽値によって変化
 									paddingTop={6}
-									w={{ base: "270px", xl: "290px" }}
+									w={"300px"}
 									marginTop={3}
 									borderRadius={5}
 									border={"none"}
@@ -144,34 +144,43 @@ export const LeftColumnArea = memo(() => {
 									position={"relative"}
 									_hover={isSelect && !item.isSelected && { cursor: "disable" }}
 								>
-									<VStack p={2} marginBottom={"100%"}>
+									<VStack p={2} marginBottom={"100%"} w={"100%"}>
 										<Heading
 											fontSize={"lg"}
 											fontWeight="bold"
 											textOverflow={"ellipsis"}
 											overflow={"hidden"}
 											whiteSpace={"nowrap"}
-											w={"auto"}
+											w={"60%"}
 										>
 											{item.title}
 										</Heading>
-										{item.tag.length === 0 ? undefined : (
-											<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2}>
+										{item.tag.length === 0 ? (
+											<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2} w={"100%"}>
+												<Icon as={ImPriceTag} boxSize={4} color={"teal.400"} />
+												<Text fontSize={{ base: "xs", xl: "md" }}>未設定</Text>
+											</HStack>
+										) : (
+											<HStack spacing={2} position={"absolute"} textAlign={"left"} top={0} left={2} w={"100%"}>
 												<Icon as={ImPriceTag} boxSize={4} color={"teal.400"} />
 												<Text
 													textOverflow={"ellipsis"}
 													overflow={"hidden"}
 													fontSize={{ base: "xs", xl: "md" }}
 													whiteSpace={"nowrap"}
-													w={"auto"}
+													w={"85%"}
 												>
 													{[...item.tag].toString()}
 												</Text>
 											</HStack>
 										)}
-										<Box position={"absolute"} top={0} right={2.5}>
-											<Text fontSize={"xs"}>
-												{item.maxLength <= veryShortNovel ? "掌編" : item.maxLength <= shortShortNovel ? "SS" : "短編"}
+										<Box position={"absolute"} top={5} left={1}>
+											<Text fontSize={"xs"} fontWeight={"bold"} fontStyle={"italic"}>
+												{item.maxLength <= veryShortNovel
+													? "《 掌編 》"
+													: item.maxLength <= shortShortNovel
+													? "《 SS 》"
+													: "《 短編 》"}
 											</Text>
 										</Box>
 										<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />

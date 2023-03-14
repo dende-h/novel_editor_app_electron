@@ -1,4 +1,16 @@
-import { Box, Divider, Flex, Heading, Spacer, VStack, Text, Card, CardBody, HStack } from "@chakra-ui/react";
+import {
+	Box,
+	Divider,
+	Flex,
+	Heading,
+	Spacer,
+	VStack,
+	Text,
+	Card,
+	CardBody,
+	HStack,
+	useColorModeValue
+} from "@chakra-ui/react";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
 import { ChangeUserNameModal } from "../components/profilePage/ChangeUserNameModal";
@@ -11,6 +23,7 @@ export default function Profile() {
 	const isClient = useRecoilValue(isClientState);
 	const userPenName = useRecoilValue(userName);
 	const profileArray = useRecoilValue(profileItem);
+	const backgroundColor = useColorModeValue("gray.100", "gray.600");
 
 	return (
 		<>
@@ -41,7 +54,12 @@ export default function Profile() {
 					<VStack padding={3} h={"auto"}>
 						{profileArray.map((item, index) => {
 							return (
-								<Card key={index} w={{ base: "240px", md: "400px", lg: "600px" }} h={"auto"}>
+								<Card
+									key={index}
+									w={{ base: "300px", md: "400px", lg: "600px" }}
+									h={"auto"}
+									backgroundColor={backgroundColor}
+								>
 									<CardBody>
 										<Flex>
 											<Heading as={"h5"} fontSize={{ base: "md", lg: "x-large" }}>
