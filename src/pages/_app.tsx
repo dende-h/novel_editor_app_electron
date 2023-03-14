@@ -17,11 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<Global
 				styles={`
           ::-webkit-scrollbar {
-            width: 8px;
+            width: 3px;
              background-color: transparent;
           }
           ::-webkit-scrollbar-thumb {
-            background-color: #c1c1c1;
+            background-color: gray;
             border-radius: 6px;
           }
           ::-webkit-scrollbar-thumb:hover {

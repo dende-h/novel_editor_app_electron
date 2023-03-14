@@ -5,6 +5,7 @@ import { ImBlog } from "react-icons/im";
 import { IoLibrarySharp } from "react-icons/io5";
 import { HiLibrary } from "react-icons/hi";
 import { useRouter } from "next/router";
+import { ColorSwitchButton } from "../headers/ColorSwitchButton";
 
 export const LeftMenuBar = memo(() => {
 	const router = useRouter();
@@ -64,6 +65,13 @@ export const LeftMenuBar = memo(() => {
 						/>
 					);
 				})}
+				<ColorSwitchButton
+					aria-label={"dark-sw"}
+					boxSize={10}
+					borderRadius={"full"}
+					variant="ghost"
+					colorScheme={"teal"}
+				/>
 			</VStack>
 		</>
 	);
