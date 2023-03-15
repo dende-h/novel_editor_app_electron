@@ -37,7 +37,7 @@ export const HeaderMenu = () => {
 						<MenuItem as={"a"} href={"/drafts"} bgColor={"gray.800"} _hover={{ bgColor: headerMenuHoverColor }}>
 							Draft Preview
 						</MenuItem>
-						<MenuItem bgColor={"gray.800"} _hover={{ bgColor: headerMenuHoverColor }}>
+						<MenuItem as={"a"} href={"/commingsoon"} bgColor={"gray.800"} _hover={{ bgColor: headerMenuHoverColor }}>
 							Novel Site
 						</MenuItem>
 						<MenuItem

@@ -21,13 +21,13 @@ export const LeftMenuBar = memo(() => {
 				router.push("/profile"); //プロフィールページ
 				break;
 			case 2:
-				router.push("drafts"); //一覧ページ
+				router.push("/drafts"); //一覧ページ
 				break;
 			case 3:
-				router.push("/"); //
+				router.push("/commingsoon"); //
 				break;
 			case 4:
-				router.push("/"); //
+				window.location.href = "https://notion-blog-nextjs-nine.vercel.app/";
 				break;
 			case 5:
 				router.push("/contact"); //問い合わせページ
