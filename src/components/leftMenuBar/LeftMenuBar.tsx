@@ -5,6 +5,7 @@ import { ImBlog } from "react-icons/im";
 import { IoLibrarySharp } from "react-icons/io5";
 import { HiLibrary } from "react-icons/hi";
 import { useRouter } from "next/router";
+import { ColorSwitchButton } from "../headers/ColorSwitchButton";
 
 export const LeftMenuBar = memo(() => {
 	const router = useRouter();
@@ -20,13 +21,13 @@ export const LeftMenuBar = memo(() => {
 				router.push("/profile"); //プロフィールページ
 				break;
 			case 2:
-				router.push("drafts"); //一覧ページ
+				router.push("/drafts"); //一覧ページ
 				break;
 			case 3:
-				router.push("/"); //
+				router.push("/commingsoon"); //
 				break;
 			case 4:
-				router.push("/"); //
+				window.location.href = "https://notion-blog-nextjs-nine.vercel.app/";
 				break;
 			case 5:
 				router.push("/contact"); //問い合わせページ
@@ -47,7 +48,7 @@ export const LeftMenuBar = memo(() => {
 				h={"100%"}
 				display={{ base: "none", lg: "block" }}
 				textAlign={"center"}
-				spacing={4}
+				spacing={6}
 				paddingY={8}
 			>
 				{menuIcons.map((item, index) => {
@@ -64,6 +65,13 @@ export const LeftMenuBar = memo(() => {
 						/>
 					);
 				})}
+				<ColorSwitchButton
+					aria-label={"dark-sw"}
+					boxSize={10}
+					borderRadius={"full"}
+					variant="ghost"
+					colorScheme={"teal"}
+				/>
 			</VStack>
 		</>
 	);

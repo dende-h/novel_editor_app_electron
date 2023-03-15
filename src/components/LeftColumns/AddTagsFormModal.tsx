@@ -14,12 +14,11 @@ import {
 	ListItem,
 	SimpleGrid,
 	GridItem,
-	useToast,
 	Center,
 	Text,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
@@ -146,7 +145,7 @@ export const AddTagsFormModal = () => {
 									aria-label="addTagsButton"
 									onClick={onClickAddTagsButton}
 								/>
-								<Text position={"absolute"} top={2} left={"250px"} zIndex={2}>
+								<Text position={"absolute"} top={2} left={"245px"} zIndex={2}>
 									{charCount}/{maxLength}
 								</Text>
 							</HStack>
@@ -164,9 +163,18 @@ export const AddTagsFormModal = () => {
 														onClick={() => onClickTagDelete(index)}
 														aria-label="tagDelete"
 														focusOutline="none"
-														size={"xs"}
+														variant={"ghost"}
+														boxsize={5}
 													/>
-													<Text fontStyle={"italic"} fontWeight={"bold"}>
+													<Text
+														w={"12em"}
+														fontStyle={"italic"}
+														fontWeight={"bold"}
+														fontSize={{ base: "13px", md: "14px", lg: "24px" }}
+														textOverflow={"ellipsis"}
+														overflow={"hidden"}
+														whiteSpace={"nowrap"}
+													>
 														{item}
 													</Text>
 												</HStack>

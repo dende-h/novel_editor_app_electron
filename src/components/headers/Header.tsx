@@ -1,5 +1,6 @@
 import { Box, Center, Heading, HStack, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { memo } from "react";
 import { useRecoilValue } from "recoil";
 import { isSelected } from "../../globalState/atoms/isSelected";
@@ -10,6 +11,7 @@ import { HeaderMenu } from "./HeaderMenu";
 export const Header = memo(() => {
 	const headerBgColor = useColorModeValue("gray.300", "gray.700");
 	const isSelect = useRecoilValue(isSelected);
+	const router = useRouter();
 
 	return (
 		<>
@@ -26,7 +28,7 @@ export const Header = memo(() => {
 					<HeaderMenu />
 				</Box>
 				<Box>
-					<Link href={"/"}>
+					<Link href={"/"} passHref>
 						<Heading
 							as={"h1"}
 							fontSize={{ base: "md", md: "xl", lg: "2xl" }}
@@ -45,7 +47,7 @@ export const Header = memo(() => {
 					display={{ base: "block", lg: "none" }}
 				>
 					<ColorSwitchButton aria-label={"darkTheme"} boxSize={8} borderRadius={"full"} />
-					<DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} />
+					{router.pathname === "/" && <DrawerLeftArea colorScheme={isSelect ? "orange" : "gray"} />}
 				</HStack>
 			</Center>
 		</>

@@ -70,7 +70,7 @@ export const ChangeUserNameModal = () => {
 									placeholder={"新しいペンネームを入力してください"}
 									onChange={onChangeInputForm}
 									maxLength={maxLength}
-									w={"330px"}
+									w={"300px"}
 									overflow={"hidden"}
 								/>
 								<Text>

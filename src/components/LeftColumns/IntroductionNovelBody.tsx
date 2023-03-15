@@ -7,7 +7,7 @@ type Props = { bodyText: string; lastEditedTime: Date };
 
 export const IntroductionNovelBody = memo((props: Props) => {
 	const { bodyText, lastEditedTime } = props;
-	const displayCharacters = 45;
+	const displayCharacters = 40;
 	const displayDate =
 		lastEditedTime instanceof Date
 			? format(lastEditedTime, "yyyy/MM/dd-HH:mm")
@@ -19,7 +19,7 @@ export const IntroductionNovelBody = memo((props: Props) => {
 
 	const css = {
 		h: "auto",
-		maxW: "220px",
+		maxW: "280px",
 		paddingX: "3",
 		textAlign: "left",
 		fontSize: "xs",

@@ -7,6 +7,7 @@ import { draftObject } from "../globalState/selector/editorState";
 import { isEdited } from "../globalState/atoms/isEdited";
 import { lastEditedTimeSort } from "../globalState/selector/lastEditedTimeSort";
 import { userName } from "../globalState/atoms/userName";
+import { useClipboard } from "@chakra-ui/react";
 
 //タイトルエリアの編集時のカスタムフック
 export const useDraft = () => {
@@ -15,6 +16,7 @@ export const useDraft = () => {
 	const [isSelect, setIsSelect] = useRecoilState(isSelected);
 	const setIsEdit = useSetRecoilState(isEdited);
 	const setUserName = useSetRecoilState(userName);
+	const { onCopy, setValue, hasCopied } = useClipboard("");
 
 	//オブジェクト内のisSelectedプロパティにより処理を行う
 	//isSelectedプロパティは配列内でtrueは常に一つであり重複しない。重複する場合想定する動作をしないため修正必要
@@ -93,6 +95,7 @@ export const useDraft = () => {
 	const onChangeTextArea: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
 		const editTime = new Date();
 		const newBody = e.target.value;
+		setValue(newBody); //textコピー用
 		setDraft(draft.map((item) => (item.isSelected ? { ...item, body: newBody, lastEditedTime: editTime } : item)));
 		setIsEdit(true);
 	};
@@ -119,6 +122,8 @@ export const useDraft = () => {
 		onClickOpenDraft,
 		onEnterKey,
 		selectStateReset,
-		onSetUserName
+		onSetUserName,
+		onCopy,
+		hasCopied
 	};
 };

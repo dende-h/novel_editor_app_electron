@@ -7,10 +7,20 @@ type Props = {
 	bgColor?: string;
 	focusOutline?: string;
 	isDisableHoverAnimation?: boolean;
+	boxsize?: number | string;
 } & IconButtonProps;
 
 export const PrimaryIconButton = (props: Props) => {
-	const { icon, defaultColor, changeColor, bgColor, focusOutline, isDisableHoverAnimation, ...IconButtonProps } = props;
+	const {
+		icon,
+		defaultColor,
+		changeColor,
+		bgColor,
+		focusOutline,
+		isDisableHoverAnimation,
+		boxsize,
+		...IconButtonProps
+	} = props;
 
 	return (
 		<>
@@ -26,7 +36,7 @@ export const PrimaryIconButton = (props: Props) => {
 				backgroundColor={bgColor}
 				border={"none"}
 				borderRadius={"full"}
-				boxSize={10}
+				boxSize={boxsize ? boxsize : 10}
 			/>
 		</>
 	);
