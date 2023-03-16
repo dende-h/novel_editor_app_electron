@@ -31,7 +31,8 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 		"linear(to-r, green.500,green.600,green.700 ,green.700, green.700,green.600,green.500)",
 		"linear(to-r, green.400,green.500,green.600 ,green.600, green.600,green.500,green.400)"
 	);
-	const css = { "writing-mode": "vertical-rl", "text-orientation": "upright" };
+	const css = { writingMode: "vertical-rl", textOrientation: "upright" };
+
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -87,13 +88,39 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 			<Modal isOpen={isOpen} onClose={onClose} size="full">
 				<ModalOverlay />
 				<ModalContent backgroundColor={backgroundColor} textAlign="right" position={"relative"}>
-					<ModalHeader textOverflow={"ellipsis"} overflow={"hidden"} whiteSpace={"nowrap"} fontFamily={"Noto Serif JP"}>
+					<ModalHeader
+						maxW={"300px"}
+						textOverflow={"ellipsis"}
+						overflow={"hidden"}
+						whiteSpace={"nowrap"}
+						fontFamily={"Noto Serif JP"}
+						marginX={"auto"}
+						fontSize={{ base: "14px", md: "16px", lg: "18px" }}
+					>
 						{title}
 					</ModalHeader>
 					<ModalCloseButton position={"absolute"} top={1} left={1} />
 					<ModalBody>
-						<Box overflowX={"scroll"} textAlign={"right"} display="inline-block" w={"1fr"}>
-							<Text sx={css} fontFamily={"Noto Serif JP"} textIndent={"1em"} display="inline-block" textAlign={"left"}>
+						<Box
+							sx={css}
+							bgColor={"gray.100"}
+							borderRadius={"md"}
+							margin={"0"}
+							marginLeft={"auto"}
+							w={"100%"}
+							h={"80%"}
+							p={6}
+							overflowX={"scroll"}
+						>
+							<Text
+								margin={2}
+								sx={css}
+								fontFamily={"Noto Serif JP"}
+								display="inline-block"
+								textAlign={"left"}
+								whiteSpace={"pre-wrap"}
+								fontSize={{ base: "12px", md: "14px", lg: "16px" }}
+							>
 								{body}
 							</Text>
 						</Box>
