@@ -1,5 +1,5 @@
 import { join } from "path";
-import { URL } from "url";
+import { format } from "url";
 import { BrowserWindow, app, shell } from "electron";
 import isDev from "electron-is-dev";
 import prepareNext from "electron-next";
@@ -11,8 +11,7 @@ app.on("ready", async () => {
 		width: 1600,
 		height: 900,
 		webPreferences: {
-			nodeIntegration: false,
-			preload: join(__dirname, "preload.ts")
+			nodeIntegration: false
 		}
 	});
 
@@ -21,7 +20,13 @@ app.on("ready", async () => {
 		shell.openExternal(url);
 	});
 
-	const url = isDev ? "http://localhost:8000/" : new URL("../out/index.html", `file://${__dirname}`).toString();
+	const url = isDev
+		? "http://localhost:8000/"
+		: format({
+				pathname: join(__dirname, "../out/index.html"),
+				protocol: "file:",
+				slashes: true
+		  });
 
 	mainWindow.loadURL(url);
 });

@@ -13,13 +13,13 @@ import {
 	Box,
 	FormErrorMessage
 } from "@chakra-ui/react";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 type FormValues = {
 	name: string;
 	email: string;
 	message: string;
-	googleReCaptchaToken: string;
+	googleReCaptchaToken?: string;
 };
 
 export default function Contact() {
@@ -29,13 +29,13 @@ export default function Contact() {
 		handleSubmit,
 		formState: { errors }
 	} = useForm<FormValues>({ mode: "onChange" });
-	const { executeRecaptcha } = useGoogleReCaptcha();
+	// const { executeRecaptcha } = useGoogleReCaptcha();
 
 	const onSubmit = handleSubmit(async (data) => {
-		if (!executeRecaptcha) return;
-		const token = await executeRecaptcha("submit");
-		console.log(token);
-		data.googleReCaptchaToken = token;
+		// if (!executeRecaptcha) return;
+		// const token = await executeRecaptcha("submit");
+		// console.log(token);
+		// data.googleReCaptchaToken = token;
 
 		const formData = new FormData();
 		Object.entries(data).forEach(([key, value]) => {
