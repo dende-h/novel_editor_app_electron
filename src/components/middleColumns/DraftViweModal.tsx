@@ -34,7 +34,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 	const css = { writingMode: "vertical-rl", textOrientation: "upright" };
 
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
-
+	const textBackgroundColor = useColorModeValue("gray.100", "gray.500");
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
@@ -103,7 +103,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 					<ModalBody>
 						<Box
 							sx={css}
-							bgColor={"gray.100"}
+							bgColor={textBackgroundColor}
 							borderRadius={"md"}
 							margin={"0"}
 							marginLeft={"auto"}
