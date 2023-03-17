@@ -4,6 +4,14 @@
 	"main": "main/index.js",
 	"private": true,
 	"productName": "noa",
+	"mac": {
+		"target": "dmg",
+		"icon": "appIcon/penicon.png"
+	},
+	"win": {
+		"target": "nsis",
+		"icon": "appIcon/penicon.png"
+	},
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
