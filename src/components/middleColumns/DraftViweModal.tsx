@@ -36,6 +36,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 	const textBackgroundColor = useColorModeValue("gray.100", "gray.500");
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	console.log(body);
 	return (
 		<>
 			<Tooltip hasArrow label={title} placement={"top-start"}>
@@ -111,6 +112,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 							h={"80%"}
 							p={6}
 							overflowX={"scroll"}
+							position="relative"
 						>
 							<Text
 								margin={2}
@@ -120,6 +122,9 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 								textAlign={"left"}
 								whiteSpace={"pre-wrap"}
 								fontSize={{ base: "12px", md: "14px", lg: "16px" }}
+								position="absolute"
+								right="0"
+								top="10px"
 							>
 								{body}
 							</Text>
