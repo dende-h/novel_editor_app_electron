@@ -7,7 +7,7 @@ const Index: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>NoA-novel editor-</title>
+				<title>Write Novel Now</title>
 				<meta
 					name="description"
 					content="短い小説を繰り返し書いて、小説のトレーニングをすることを目的とした小説ライターアプリです。"

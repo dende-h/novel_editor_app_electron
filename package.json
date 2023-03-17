@@ -1,16 +1,18 @@
 {
-	"name": "noa",
+	"name": "wnn",
 	"version": "1.0.0",
 	"main": "main/index.js",
 	"private": true,
-	"productName": "noa",
-	"mac": {
-		"target": "dmg",
-		"icon": "appIcon/penicon.png"
-	},
-	"win": {
-		"target": "nsis",
-		"icon": "appIcon/penicon.png"
+	"build": {
+		"productName": "Write Novel Now",
+		"mac": {
+			"target": "dmg",
+			"icon": "appIcon/penicon.png"
+		},
+		"win": {
+			"target": "nsis",
+			"icon": "appIcon/penicon.png"
+		}
 	},
 	"scripts": {
 		"dev": "next",

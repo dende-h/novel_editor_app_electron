@@ -34,7 +34,7 @@ export const Header = memo(() => {
 							fontSize={{ base: "md", md: "xl", lg: "2xl" }}
 							_hover={{ opacity: 0.8, cursor: "pointer" }}
 						>
-							“ NoA -novel aidor- ”
+							“ Write Novel Now ”
 						</Heading>
 					</Link>
 				</Box>
