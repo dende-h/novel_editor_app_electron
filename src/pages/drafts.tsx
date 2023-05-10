@@ -7,6 +7,7 @@ import "@fontsource/noto-serif-jp";
 import { DraftViweModal } from "../components/middleColumns/DraftViweModal";
 import { TagSearchBar } from "../components/middleColumns/TagSearchBar";
 import { viweDraftsSelector } from "../globalState/selector/viweDraftsSelector";
+import Seo from "../components/util/Seo";
 
 export default function Drafts() {
 	const isClient = useRecoilValue(isClientState);
@@ -15,10 +16,14 @@ export default function Drafts() {
 
 	return (
 		<>
-			<Head>
-				<title>原稿一覧</title>
-				<meta name="description" content="原稿一覧" />
-			</Head>
+			<Seo
+				pageTitle="原稿一覧ページ"
+				pageDescription="書いた小説を縦書きビューワーで読むことができます。ルビ記法のルビが反映されます。"
+				pagePath="https://next-novel-editor.vercel.app/drafts"
+				pageImg={null}
+				pageImgWidth="1200"
+				pageImgHeight="630"
+			/>
 			{isClient ? (
 				<>
 					<Box h={"12vh"} w={"100%"}>
@@ -77,3 +82,11 @@ export default function Drafts() {
 		</>
 	);
 }
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			data: "This is static data"
+		}
+	};
+};

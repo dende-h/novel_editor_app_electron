@@ -7,5 +7,6 @@ export const useInput = () => {
 	const onChangeInputForm: React.ChangeEventHandler<HTMLInputElement> = (e) => {
 		setValue(e.target.value);
 	};
+
 	return { onChangeInputForm, value, setValue };
 };

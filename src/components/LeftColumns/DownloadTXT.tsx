@@ -9,13 +9,13 @@ import {
 	Button,
 	useDisclosure
 } from "@chakra-ui/react";
-import React from "react";
+import React, { memo } from "react";
 import { ImDownload2 } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { editorState } from "../../globalState/selector/editorState";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
-export const DownloadTXT = () => {
+export const DownloadTXT = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = React.useRef();
 	const downloadDraft = useRecoilValue(editorState);
@@ -75,4 +75,5 @@ export const DownloadTXT = () => {
 			</Box>
 		</>
 	);
-};
+});
+DownloadTXT.displayName = "DownloadTXT";

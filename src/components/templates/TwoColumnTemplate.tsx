@@ -1,9 +1,12 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { memo, FC } from "react";
 import { LeftColumnArea } from "../LeftColumns/LeftColumnArea";
 import { EditorArea } from "../middleColumns/EditorArea";
+import { ProfileArea } from "../profilePage/ProfileArea";
 
 const TwoColumnTemplate: FC = memo(() => {
+	const router = useRouter();
 	return (
 		<>
 			<Grid
@@ -15,7 +18,8 @@ const TwoColumnTemplate: FC = memo(() => {
 					<LeftColumnArea />
 				</GridItem>
 				<GridItem area="main">
-					<EditorArea />
+					{router.pathname === "/" && <EditorArea />}
+					{router.pathname === "/profile" && <ProfileArea />}
 				</GridItem>
 			</Grid>
 		</>

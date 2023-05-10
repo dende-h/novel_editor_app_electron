@@ -1,20 +1,21 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.minimap.enabled": false,
-  "cSpell.allowCompoundWords": true,
-  "indentRainbow.colorOnWhiteSpaceOnly": true,
-  "editor.quickSuggestions": {
-    "comments": false,
-    "strings": true,
-    "other": true
-  },
-  "editor.guides.indentation": false,
-  "editor.renderLineHighlight": "none",
-  "editor.tabSize": 2,
-  "editor.cursorBlinking": "expand"
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.minimap.enabled": false,
+	"cSpell.allowCompoundWords": true,
+	"indentRainbow.colorOnWhiteSpaceOnly": true,
+	"editor.quickSuggestions": {
+		"comments": false,
+		"strings": true,
+		"other": true
+	},
+	"editor.guides.indentation": false,
+	"editor.renderLineHighlight": "none",
+	"editor.tabSize": 2,
+	"editor.cursorBlinking": "expand",
+	"typescript.tsdk": "node_modules\\typescript\\lib"
 }

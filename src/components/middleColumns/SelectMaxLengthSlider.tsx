@@ -1,6 +1,5 @@
 import { Slider, SliderMark, SliderTrack, SliderFilledTrack, Tooltip, SliderThumb } from "@chakra-ui/react";
-
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { drafts } from "../../globalState/atoms/drafts";
 import { numberOfCharacters } from "../../constant/constant";
@@ -9,7 +8,7 @@ import { draftObjectArray } from "../../globalState/atoms/drafts";
 
 type Props = { maxLength: number };
 
-export const SelectMaxLengthSlider = (props: Props) => {
+export const SelectMaxLengthSlider = memo((props: Props) => {
 	const { maxLength } = props;
 	const [isClient, setIsClient] = useState(false);
 	useEffect(() => {
@@ -75,4 +74,5 @@ export const SelectMaxLengthSlider = (props: Props) => {
 			) : undefined}
 		</>
 	);
-};
+});
+SelectMaxLengthSlider.displayName = "SelectMaxLengthSlider";

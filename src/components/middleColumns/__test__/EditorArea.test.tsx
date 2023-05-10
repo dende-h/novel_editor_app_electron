@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { EditorArea } from "../EditorArea";
 import userEvent from "@testing-library/user-event";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { useNovelBodyEdit } from "../../../hooks/useNovelBodyEdit";
 import { useCalcCharCount } from "../../../hooks/useCalcCharCount";
 import { Textarea } from "@chakra-ui/react";
 import { RecoilRoot } from "recoil";

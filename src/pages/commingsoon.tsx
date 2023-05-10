@@ -26,3 +26,11 @@ export default function Commingsoon() {
 		</>
 	);
 }
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			data: "This is static data"
+		}
+	};
+};

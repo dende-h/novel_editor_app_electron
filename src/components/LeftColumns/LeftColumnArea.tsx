@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useRef } from "react";
 import { ImPointUp, ImPriceTag } from "react-icons/im";
 import { useRecoilValue } from "recoil";
 import { IntroductionNovelBody } from "./IntroductionNovelBody";
@@ -28,15 +28,17 @@ export const LeftColumnArea = memo(() => {
 	const { onAddNovel, onEnterKey, onClickOpenDraft } = useDraft();
 	const { veryShortNovel, shortShortNovel } = numberOfCharacters;
 	const scrollTopRef = useRef<HTMLDivElement>(null);
-	const isEdit = useRecoilValue(isEdited);
 	const fontColorIsNotSelectedDraft = useColorModeValue("gray.400", "gray.100");
 	const bgColorIsSelectedDraftCard = useColorModeValue("gray.300", "gray.500");
 	const bgColorIsNotSelectedDraftCard = useColorModeValue("gray.200", "gray.600");
 	const isClient = useRecoilValue(isClientState);
+	const isEdit = useRecoilValue(isEdited);
 
-	useEffect(() => {
-		scrollTopRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-	}, [isEdit]);
+	if (scrollTopRef) {
+		if (isEdit) {
+			scrollTopRef?.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+		}
+	}
 
 	const cssTranstionPropaty = { transitionProperty: "color , shadow , height , backgroundColor " };
 
@@ -104,7 +106,7 @@ export const LeftColumnArea = memo(() => {
 											? item.isSelected
 												? undefined
 												: {
-														_hover: { cursor: "not-allowed" }
+														_hover: { cursor: "pointer" }
 												  }
 											: {
 													_hover: { shadow: "lg", cursor: "pointer" }
@@ -120,29 +122,17 @@ export const LeftColumnArea = memo(() => {
 									w={"300px"}
 									marginTop={3}
 									borderRadius={5}
-									border={"none"}
+									border={item.lengthOver ? "2px" : "none"}
+									borderColor="red"
 									css={cssTranstionPropaty}
 									transitionDuration="0.8s"
 									transitionTimingFunction={"ease-out"}
 									fontWeight={"normal"}
 									textAlign={"center"}
 									tabIndex={0}
-									onKeyUp={
-										isSelect
-											? item.isSelected
-												? (e) => onEnterKey(e.key, index)
-												: undefined
-											: (e) => onEnterKey(e.key, index)
-									}
-									onClick={
-										isSelect
-											? item.isSelected
-												? () => onClickOpenDraft(index)
-												: undefined
-											: () => onClickOpenDraft(index)
-									}
+									onKeyUp={(e) => onEnterKey(e.key, index)}
+									onClick={() => onClickOpenDraft(index)}
 									position={"relative"}
-									_hover={isSelect && !item.isSelected && { cursor: "disable" }}
 								>
 									<VStack p={2} marginBottom={"100%"} w={"100%"}>
 										<Heading
@@ -174,7 +164,7 @@ export const LeftColumnArea = memo(() => {
 												</Text>
 											</HStack>
 										)}
-										<Box position={"absolute"} top={5} left={1}>
+										<VStack position={"absolute"} top={5} left={1} spacing={0}>
 											<Text fontSize={"xs"} fontWeight={"bold"} fontStyle={"italic"}>
 												{item.maxLength <= veryShortNovel
 													? "《 掌編 》"
@@ -182,7 +172,12 @@ export const LeftColumnArea = memo(() => {
 													? "《 SS 》"
 													: "《 短編 》"}
 											</Text>
-										</Box>
+											{item.isPublished && (
+												<Text color={"twitter.600"} fontWeight={"bold"} fontSize={"xs"}>
+													公開
+												</Text>
+											)}
+										</VStack>
 										<IntroductionNovelBody bodyText={item.body} lastEditedTime={item.lastEditedTime} />
 										<DraftControllButton isAccordionOpen={item.isSelected} />
 									</VStack>

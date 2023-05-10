@@ -1,6 +1,5 @@
-import { indexOf } from "lodash";
 import { selector } from "recoil";
-import { draftObjectArray, drafts } from "../atoms/drafts";
+import { draftObjectArray } from "../atoms/drafts";
 import { tagSearchState } from "../atoms/tagSearchState";
 import { lastEditedTimeSort } from "./lastEditedTimeSort";
 

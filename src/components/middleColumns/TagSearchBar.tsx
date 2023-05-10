@@ -1,39 +1,16 @@
-import {
-	useDisclosure,
-	Button,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalCloseButton,
-	ModalBody,
-	ModalFooter,
-	Input,
-	HStack,
-	List,
-	ListItem,
-	SimpleGrid,
-	GridItem,
-	Center,
-	Text,
-	useColorModeValue,
-	Box,
-	Tooltip
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { ImCancelCircle, ImPlus, ImPriceTags } from "react-icons/im";
+import { Input, HStack, Center, Text, useColorModeValue, Box, Tooltip } from "@chakra-ui/react";
+import { memo, useEffect } from "react";
+import { ImCancelCircle, ImPlus } from "react-icons/im";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { draftObjectArray, drafts } from "../../globalState/atoms/drafts";
 import { tagSearchState } from "../../globalState/atoms/tagSearchState";
 import { allTagsArray } from "../../globalState/selector/allTagsArray";
-import { editorState } from "../../globalState/selector/editorState";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useEnterKeyEvent } from "../../hooks/useEnterKeyEvent";
 import { useInput } from "../../hooks/useInput";
 import { useToastTemplate } from "../../hooks/useToastTemplate";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
-export const TagSearchBar = () => {
+export const TagSearchBar = memo(() => {
 	const { setConposing, onEnterKeySubmitEvent } = useEnterKeyEvent();
 	const { praimaryErrorToast } = useToastTemplate();
 	const { onChangeInputForm, value, setValue } = useInput();
@@ -162,4 +139,5 @@ export const TagSearchBar = () => {
 			</Box>
 		</>
 	);
-};
+});
+TagSearchBar.displayName = "TagSearchBar";

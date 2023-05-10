@@ -14,12 +14,12 @@ import {
 	Text,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useCalcCharCount } from "../../hooks/useCalcCharCount";
 import { useDraft } from "../../hooks/useDraft";
 import { useInput } from "../../hooks/useInput";
 
-export const ChangeUserNameModal = () => {
+export const ChangeUserNameModal = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 	const inputFocusBgColor = useColorModeValue("gray.100", "gray.700");
@@ -91,4 +91,5 @@ export const ChangeUserNameModal = () => {
 			</Modal>
 		</>
 	);
-};
+});
+ChangeUserNameModal.displayName = "ChangeUserNameModal";

@@ -27,3 +27,11 @@ export default function Error() {
 		</>
 	);
 }
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			data: "This is static data"
+		}
+	};
+};

@@ -13,8 +13,20 @@ export const useToastTemplate = () => {
 			duration: 3000
 		});
 	};
+
+	const praimaryInfoToast = (word: string) => {
+		toast({
+			title: word,
+			position: "top",
+			isClosable: true,
+			status: "info",
+			duration: 3000
+		});
+	};
+
 	const toastCloseAll = () => {
 		toast.closeAll();
 	};
-	return { praimaryErrorToast, toastCloseAll };
+
+	return { praimaryInfoToast, praimaryErrorToast, toastCloseAll };
 };

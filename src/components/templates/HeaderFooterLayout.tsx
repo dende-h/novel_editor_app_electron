@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { Footer } from "../footers/Footer";
 import { Header } from "../headers/Header";
 import { LeftMenuBar } from "../leftMenuBar/LeftMenuBar";

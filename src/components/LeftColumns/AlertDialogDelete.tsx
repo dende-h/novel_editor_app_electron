@@ -8,12 +8,12 @@ import {
 	Button,
 	useDisclosure
 } from "@chakra-ui/react";
-import React from "react";
+import React, { memo } from "react";
 import { ImFire } from "react-icons/im";
 import { useDraft } from "../../hooks/useDraft";
 import { PrimaryIconButton } from "../templates/PrimaryIconButton";
 
-export const AlertDialogDelete = () => {
+export const AlertDialogDelete = memo(() => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const cancelRef = React.useRef();
 	const { deleteAction } = useDraft();
@@ -57,4 +57,5 @@ export const AlertDialogDelete = () => {
 			</AlertDialog>
 		</>
 	);
-};
+});
+AlertDialogDelete.displayName = "AlertDialogDelete";

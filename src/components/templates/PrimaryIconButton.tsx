@@ -1,4 +1,5 @@
 import { IconButton, IconButtonProps } from "@chakra-ui/react";
+import { memo } from "react";
 
 type Props = {
 	icon: JSX.Element;
@@ -10,7 +11,7 @@ type Props = {
 	boxsize?: number | string;
 } & IconButtonProps;
 
-export const PrimaryIconButton = (props: Props) => {
+export const PrimaryIconButton = memo((props: Props) => {
 	const {
 		icon,
 		defaultColor,
@@ -40,4 +41,5 @@ export const PrimaryIconButton = (props: Props) => {
 			/>
 		</>
 	);
-};
+});
+PrimaryIconButton.displayName = "PrimaryIconButton";

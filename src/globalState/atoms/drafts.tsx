@@ -5,14 +5,14 @@ import { draftObject } from "../selector/editorState";
 export type draftObjectArray = draftObject[];
 
 const { persistAtom } = recoilPersist({
-	key: "recoil-persist",
+	key: "recoil-indexeddb",
 	storage: typeof window === "undefined" ? undefined : localStorage
 });
 
-const defaultArray: draftObjectArray = [];
+const defaultObjectArray: draftObjectArray = [];
 
 export const drafts = atom({
 	key: "drafts",
-	default: defaultArray,
+	default: defaultObjectArray,
 	effects_UNSTABLE: [persistAtom]
 });

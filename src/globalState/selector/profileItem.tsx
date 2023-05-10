@@ -3,8 +3,10 @@ import format from "date-fns/format";
 import { selector } from "recoil";
 import { userProfileItem } from "../../constant/constant";
 import { draftObjectArray, drafts } from "../atoms/drafts";
+import { publishedCount } from "../atoms/publishedCount";
 import { userName } from "../atoms/userName";
 import { lastEditedTimeSort } from "./lastEditedTimeSort";
+import { publishSettingsDraftsSelector } from "./publishSettingsDraftsSelector";
 
 const profileHeading = userProfileItem;
 
@@ -14,9 +16,8 @@ export const profileItem = selector({
 		const userPenName: string = get(userName);
 		const draftsArray: draftObjectArray = get(drafts);
 		const totalNumberOfDrafts: number = draftsArray.length;
-		const numberOfPublishedDrafts: number = draftsArray.filter((item) => {
-			return item.isPublished === true;
-		}).length;
+		const numberOfPublishedDrafts: number = get(publishSettingsDraftsSelector).length;
+		const published: number = get(publishedCount);
 		const totalNumberOfCharactersInTheDrafts: number = draftsArray
 			.map((item) => {
 				const charArray = [...item.body].filter((char) => {
@@ -33,6 +34,7 @@ export const profileItem = selector({
 			userPenName,
 			totalNumberOfDrafts,
 			numberOfPublishedDrafts,
+			published,
 			totalNumberOfCharactersInTheDrafts,
 			lastEditedDay
 		];

@@ -9,11 +9,16 @@ import {
 	IconButton,
 	useColorModeValue
 } from "@chakra-ui/react";
-import { LegacyRef, useRef } from "react";
+import { LegacyRef, memo, useRef } from "react";
 import { LeftColumnArea } from "./LeftColumnArea";
 import { ImMenu } from "react-icons/im";
 
-export const DrawerLeftArea = ({ colorScheme }) => {
+type Props = {
+	colorScheme: string;
+};
+
+export const DrawerLeftArea = memo((props: Props) => {
+	const { colorScheme } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const btnRef: LegacyRef<HTMLButtonElement> = useRef();
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
@@ -55,4 +60,5 @@ export const DrawerLeftArea = ({ colorScheme }) => {
 			</Drawer>
 		</>
 	);
-};
+});
+DrawerLeftArea.displayName = "DrawerLeftArea";

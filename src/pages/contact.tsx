@@ -1,6 +1,5 @@
-import Head from "next/head";
+import Seo from "../components/util/Seo";
 import { useForm } from "react-hook-form";
-
 import { useRouter } from "next/router";
 import {
 	VStack,
@@ -13,13 +12,13 @@ import {
 	Box,
 	FormErrorMessage
 } from "@chakra-ui/react";
-// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 type FormValues = {
 	name: string;
 	email: string;
 	message: string;
-	googleReCaptchaToken?: string;
+	googleReCaptchaToken: string;
 };
 
 export default function Contact() {
@@ -29,13 +28,13 @@ export default function Contact() {
 		handleSubmit,
 		formState: { errors }
 	} = useForm<FormValues>({ mode: "onChange" });
-	// const { executeRecaptcha } = useGoogleReCaptcha();
+	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	const onSubmit = handleSubmit(async (data) => {
-		// if (!executeRecaptcha) return;
-		// const token = await executeRecaptcha("submit");
-		// console.log(token);
-		// data.googleReCaptchaToken = token;
+		if (!executeRecaptcha) return;
+		const token = await executeRecaptcha("submit");
+		console.log(token);
+		data.googleReCaptchaToken = token;
 
 		const formData = new FormData();
 		Object.entries(data).forEach(([key, value]) => {
@@ -62,10 +61,14 @@ export default function Contact() {
 	});
 	return (
 		<>
-			<Head>
-				<title>NoA問い合わせフォーム</title>
-				<meta name="description" content="NoAに関する問い合わせフォームです" />
-			</Head>
+			<Seo
+				pageTitle="問い合わせフォーム"
+				pageDescription="管理人への問い合わせメールを送信できます"
+				pagePath="https://next-novel-editor.vercel.app/contact"
+				pageImg={null}
+				pageImgWidth="1200"
+				pageImgHeight="630"
+			/>
 			<Box p="6" w="100%" h={"90vh"}>
 				<VStack spacing="6">
 					<Heading as="h1" size="xl">
@@ -154,3 +157,11 @@ export default function Contact() {
 		</>
 	);
 }
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			data: "This is static data"
+		}
+	};
+};

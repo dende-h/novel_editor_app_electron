@@ -14,14 +14,13 @@ import {
 	useColorModeValue,
 	useDisclosure,
 	VStack,
-	Text,
 	Tooltip
 } from "@chakra-ui/react";
-import { FC } from "react";
-
+import { FC, memo } from "react";
 import { draftObject } from "../../globalState/selector/editorState";
+import { NovelViewer } from "./NovelViwer";
 
-export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title, body }) => {
+export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = memo(({ title, body }) => {
 	const titleBgColor = useColorModeValue(
 		"linear(to-r,gray.100,gray.200,gray.300,gray.200,gray.100)",
 		"linear(to-r,gray.500,gray.600,gray.700,gray.600,gray.500)"
@@ -36,7 +35,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 	const backgroundColor = useColorModeValue("gray.200", "gray.600");
 	const textBackgroundColor = useColorModeValue("gray.100", "gray.500");
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	console.log(body);
+
 	return (
 		<>
 			<Tooltip hasArrow label={title} placement={"top-start"}>
@@ -88,7 +87,7 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 
 			<Modal isOpen={isOpen} onClose={onClose} size="full">
 				<ModalOverlay />
-				<ModalContent backgroundColor={backgroundColor} textAlign="right" position={"relative"}>
+				<ModalContent backgroundColor={backgroundColor} position={"relative"}>
 					<ModalHeader
 						maxW={"300px"}
 						textOverflow={"ellipsis"}
@@ -112,22 +111,9 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 							h={"80%"}
 							p={6}
 							overflowX={"scroll"}
-							position="relative"
+							position={"relative"}
 						>
-							<Text
-								margin={2}
-								sx={css}
-								fontFamily={"Noto Serif JP"}
-								display="inline-block"
-								textAlign={"left"}
-								whiteSpace={"pre-wrap"}
-								fontSize={{ base: "12px", md: "14px", lg: "16px" }}
-								position="absolute"
-								right="0"
-								top="10px"
-							>
-								{body}
-							</Text>
+							<NovelViewer text={body} />
 						</Box>
 					</ModalBody>
 					<ModalFooter>
@@ -139,4 +125,5 @@ export const DraftViweModal: FC<Pick<draftObject, "title" | "body">> = ({ title,
 			</Modal>
 		</>
 	);
-};
+});
+DraftViweModal.displayName = "DraftViweModal";
